@@ -25,7 +25,10 @@
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SHOP.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="SoundManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="UPGRADE.cpp" />
@@ -42,7 +45,10 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PMSData.h" />
     <ClInclude Include="SHOP.h" />
-    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="SoundManager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="UPGRADE.h" />

@@ -13,6 +13,7 @@ void Init(GameState& state)
 
 	SetConsoleSize(WIDTH, HEIGHT);
 	SetConsoleWindowStyle(true);
+
 	state = GameState{};
 }
 
