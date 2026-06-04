@@ -1,13 +1,18 @@
 #include "SHOP.h"
 
-void InitShop(GameState& state)
+void ShopScene::Enter()
+{
+	cout << "Shop";
+}
+
+void ShopScene::Update()
 {
 }
 
-void UpdateShop(GameState& state)
+void ShopScene::Render() const
 {
 }
 
-void RenderShop(const GameState& state)
+void ShopScene::Exit()
 {
 }

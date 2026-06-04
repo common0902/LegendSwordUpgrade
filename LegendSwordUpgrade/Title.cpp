@@ -3,27 +3,43 @@
 
 Scene GetScene(int curMenu);
 
-void InitTitle(GameState& state)
+void TitleScene::Enter()
 {
 	state.LrwData.curMenu = 1;
-
 }
 
-void UpdateTitle(GameState& state)
+void TitleScene::Update()
 {
-	
 	if (GetKeyDown(VK_UP)) state.LrwData.curMenu -= 1;
-	if (GetKeyDown(VK_DOWN))state.LrwData.curMenu += 1;
+	if (GetKeyDown(VK_DOWN)) state.LrwData.curMenu += 1;
 
-	if (state.LrwData.curMenu == 0) state.LrwData.curMenu += 3;
-	if (state.LrwData.curMenu == 4) state.LrwData.curMenu -= 3;
-	
+	if (state.LrwData.curMenu == 0) state.LrwData.curMenu = 3;
+	if (state.LrwData.curMenu == 4) state.LrwData.curMenu = 1;
+
 
 	if (GetKeyDown(VK_RETURN))
 	{
-		state.curScene = GetScene(state.LrwData.curMenu);
+		state.fsm->ChangeState((int)GetScene(state.LrwData.curMenu));
 	}
 }
+
+void TitleScene::Render() const
+{
+	GotoXY(0, 0);
+	cout << "테스용 Title";
+	const string lables[] = { "SHOP", "UPGRADE", "BATTLE" };
+	for (int i = 0;i < 3;++i)
+	{
+		GotoXY(5, 5 + i);
+		cout << (i + 1 == (int)state.curMenu ? "> " : "  ") << lables[i];
+	}
+}
+
+void TitleScene::Exit()
+{
+
+}
+
 
 Scene GetScene(int curMenu)
 {
@@ -36,23 +52,14 @@ Scene GetScene(int curMenu)
 	{
 		scene = Scene::SHOP;
 	}
-	else if (curMenu == 2)
+	else if (curMenu == 3)
 	{
 		scene = Scene::BATTLE;
 	}
+
 	return scene;
 }
 
-void RenderTitle(const GameState& state)
-{
-	GotoXY(0,0);
-	cout << "테스용";
-
-	for (int i = 0;i < 3;++i)
-	{
-		GotoXY(5, 5 + i);
-		
-	}
 
 
-}
+
