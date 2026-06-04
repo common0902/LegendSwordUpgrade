@@ -1,5 +1,12 @@
 ﻿#include "Game.h"
 #include "console.h"
+#include "Enums.h"
+#include "SHOP.h"
+#include "UPGRADE.h"
+#include "BATTLE.h"
+#include "Title.h"
+#include "GameOver.h"
+
 void Init(GameState& state)
 {
 	srand((unsigned int)time(nullptr));
@@ -16,47 +23,59 @@ void Update(GameState& state)
 	state.prevScene = state.curScene;
 	UpdateInput();
 
-	/*if (GetKeyDown(VK_ESCAPE))
-		state.isRunning = false;*/
-	/*switch (state.curScene)
+	switch (state.curScene)
 	{
 	case Scene::TITLE:
 		if (sceneChanged)
 			InitTitle(state);
 		UpdateTitle(state);
 		break;
-	case Scene::INGAME:
+	case Scene::SHOP:
 		if (sceneChanged)
-			InitInGame(state);
-		UpdateInGame(state);
-
+			InitShop(state);
+		UpdateShop(state);
 		break;
-	case Scene::INFO:
-		UpdateInfo(state);
+	case Scene::UPGRADE:
+		if (sceneChanged)
+			InitUpgrade(state);
+		UpdateUpgrade(state);
+		break;
+	case Scene::BATTLE:
+		if (sceneChanged)
+			InitBattle(state);
+		UpdateBattle(state);
 		break;
 	case Scene::GAMEOVER:
+		if (sceneChanged)
+			InitGameOver(state);
+		UpdateGameOver(state);
 		break;
-	}*/
+	}
 }
 
 void Renderer(const GameState& state)
 {
+	SetColor();
 	if (state.prevScene != state.curScene)
 		system("cls");
 	GotoXY(0, 0);
 
-	/*switch (state.curScene)
+	switch (state.curScene)
 	{
 	case Scene::TITLE:
 		RenderTitle(state);
 		break;
-	case Scene::INGAME:
-		RenderInGame(state);
+	case Scene::SHOP:
+		RenderShop(state);
 		break;
-	case Scene::INFO:
-		RenderInfo(state);
+	case Scene::UPGRADE:
+		RenderUpgrade(state);
+		break;
+	case Scene::BATTLE:
+		RenderBattle(state);
 		break;
 	case Scene::GAMEOVER:
+		RenderGameOver(state);
 		break;
-	}*/
+	}
 }

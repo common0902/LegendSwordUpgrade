@@ -3,6 +3,11 @@
 class Player
 {
 public:
-	Sword m_sword;
+	int maxHp;
+	int curHp;
+	float str;
+
+
+
 };
 
