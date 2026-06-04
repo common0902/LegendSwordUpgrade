@@ -3,7 +3,7 @@ struct LRWData
 {
 #pragma region TestTitle
 public:
-	int curMenu;
+	int curMenu; //
 
 #pragma endregion
 
