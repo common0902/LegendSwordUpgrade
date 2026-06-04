@@ -35,6 +35,7 @@ void SetConsoleMouseInputDisabled();
 // 커서 제어  함수
 void GotoXY(int x, int y);
 void SetCursorVisible(bool visible, DWORD size = 1);
+COORD GetConsoleResolution();
 BOOL IsGotoXY(int x, int y);
 
 enum class Color
