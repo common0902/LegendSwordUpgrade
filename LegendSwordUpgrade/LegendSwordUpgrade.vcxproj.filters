@@ -8,15 +8,6 @@
     <Filter Include="Main">
       <UniqueIdentifier>{a4f5e53b-5fa9-48fb-8152-dc126df5bc4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main\LRW">
-      <UniqueIdentifier>{bcdf6da7-963b-4dc5-9a8e-70f9261e4fc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\CHG">
-      <UniqueIdentifier>{0792507d-108d-4541-a125-6303b82df3a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main\PMS">
-      <UniqueIdentifier>{fdfb2e11-448c-4ffe-b25e-a6dabab445f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main\소스 파일">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -24,6 +15,15 @@
     <Filter Include="Main\헤더 파일">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Main\소스 파일\CHG">
+      <UniqueIdentifier>{0792507d-108d-4541-a125-6303b82df3a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\소스 파일\PMS">
+      <UniqueIdentifier>{fdfb2e11-448c-4ffe-b25e-a6dabab445f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\소스 파일\LRW">
+      <UniqueIdentifier>{bcdf6da7-963b-4dc5-9a8e-70f9261e4fc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,9 +33,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Main\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Sword.cpp">
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
@@ -43,6 +40,21 @@
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SHOP.cpp">
+      <Filter>Main\소스 파일\CHG</Filter>
+    </ClCompile>
+    <ClCompile Include="BATTLE.cpp">
+      <Filter>Main\소스 파일\LRW</Filter>
+    </ClCompile>
+    <ClCompile Include="UPGRADE.cpp">
+      <Filter>Main\소스 파일\PMS</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOver.cpp">
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -67,6 +79,30 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SHOP.h">
+      <Filter>Main\소스 파일\CHG</Filter>
+    </ClInclude>
+    <ClInclude Include="BATTLE.h">
+      <Filter>Main\소스 파일\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="UPGRADE.h">
+      <Filter>Main\소스 파일\PMS</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CHGData.h">
+      <Filter>Main\소스 파일\CHG</Filter>
+    </ClInclude>
+    <ClInclude Include="LRWData.h">
+      <Filter>Main\소스 파일\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="PMSData.h">
+      <Filter>Main\소스 파일\PMS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
