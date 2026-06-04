@@ -11,3 +11,5 @@ void UpdateBattle(GameState& state)
 void RenderBattle(const GameState& state)
 {
 }
+
+
