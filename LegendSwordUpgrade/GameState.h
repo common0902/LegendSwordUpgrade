@@ -9,6 +9,9 @@
 #include "LRWData.h"
 #include "PMSData.h"
 
+constexpr int WIDTH = 160;
+constexpr int HEIGHT = 45;
+
 struct GameState
 {
 public:
