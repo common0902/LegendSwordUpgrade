@@ -107,5 +107,11 @@
     <ClInclude Include="SHOP.h">
       <Filter>Main\CHG</Filter>
     </ClInclude>
+    <ClInclude Include="AbstractState.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
