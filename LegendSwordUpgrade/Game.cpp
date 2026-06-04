@@ -13,7 +13,7 @@ void Init(GameState& state)
 
 	SetConsoleSize(WIDTH, HEIGHT);
 	SetConsoleWindowStyle(true);
-
+	SetCursorVisible(false);
 	state = GameState{};
 }
 
