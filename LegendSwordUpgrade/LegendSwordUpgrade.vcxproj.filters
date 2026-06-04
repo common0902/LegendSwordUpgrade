@@ -104,5 +104,8 @@
     <ClInclude Include="PMSData.h">
       <Filter>Main\소스 파일\PMS</Filter>
     </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

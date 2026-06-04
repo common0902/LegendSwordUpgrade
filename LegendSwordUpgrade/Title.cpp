@@ -1,6 +1,8 @@
 #include "Title.h"
 #include "Console.h"
 
+Scene GetScene(int curMenu);
+
 void InitTitle(GameState& state)
 {
 	state.LrwData.curMenu = 1;

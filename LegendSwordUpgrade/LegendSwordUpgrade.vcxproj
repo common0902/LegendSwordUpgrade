@@ -26,8 +26,8 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SHOP.cpp" />
     <ClCompile Include="SoundManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Title.cpp" />
@@ -37,6 +37,7 @@
     <ClInclude Include="BATTLE.h" />
     <ClInclude Include="CHGData.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="Defines.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameOver.h" />
@@ -46,8 +47,8 @@
     <ClInclude Include="PMSData.h" />
     <ClInclude Include="SHOP.h" />
     <ClInclude Include="SoundManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Title.h" />
