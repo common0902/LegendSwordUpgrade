@@ -31,13 +31,13 @@ void TitleScene::Render() const
 	for (int i = 0;i < 3;++i)
 	{
 		GotoXY(5, 5 + i);
-		cout << (i + 1 == (int)state.curMenu ? "> " : "  ") << lables[i];
+		cout << (i + 1 == state.LrwData.curMenu ? "> " : "  ") << lables[i];
 	}
 }
 
 void TitleScene::Exit()
 {
-
+	system("cls");
 }
 
 
@@ -46,11 +46,11 @@ Scene GetScene(int curMenu)
 	Scene scene = Scene::NONE;
 	if (curMenu == 1)
 	{
-		scene = Scene::UPGRADE;
+		scene = Scene::SHOP;
 	}
 	else if (curMenu == 2)
 	{
-		scene = Scene::SHOP;
+		scene = Scene::UPGRADE;
 	}
 	else if (curMenu == 3)
 	{
