@@ -29,6 +29,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Sword.cpp" />
+    <ClCompile Include="Title.cpp" />
     <ClCompile Include="UPGRADE.cpp" />
   </ItemGroup>
   <ItemGroup>
