@@ -26,6 +26,7 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="UPGRADE.cpp" />
+    <ClCompile Include="UpgradeAsciiArt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
@@ -37,6 +38,7 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="UPGRADE.h" />
+    <ClInclude Include="UpgradeAsciiArt.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
