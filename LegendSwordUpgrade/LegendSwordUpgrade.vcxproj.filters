@@ -45,17 +45,17 @@
     <ClCompile Include="UPGRADE.cpp">
       <Filter>Main\PMS</Filter>
     </ClCompile>
-    <ClCompile Include="BATTLE.cpp">
-      <Filter>Main\소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SHOP.cpp">
-      <Filter>Main\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Title.cpp">
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="GameOver.cpp">
       <Filter>Main\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BATTLE.cpp">
+      <Filter>Main\LRW</Filter>
+    </ClCompile>
+    <ClCompile Include="SHOP.cpp">
+      <Filter>Main\CHG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,18 +89,6 @@
     <ClInclude Include="Defines.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="BATTLE.h">
-      <Filter>Main\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CHGData.h">
-      <Filter>Main\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="LRWData.h">
-      <Filter>Main\헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SHOP.h">
-      <Filter>Main\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Test.h">
       <Filter>Main\PMS</Filter>
     </ClInclude>
@@ -109,6 +97,18 @@
     </ClInclude>
     <ClInclude Include="GameOver.h">
       <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LRWData.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="BATTLE.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="CHGData.h">
+      <Filter>Main\CHG</Filter>
+    </ClInclude>
+    <ClInclude Include="SHOP.h">
+      <Filter>Main\CHG</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
