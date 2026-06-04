@@ -17,7 +17,7 @@ public:
 	void SetState(int key)
 	{
 		curScene = stateMap[key];
-		curScene->Enter();
+		if (curScene != nullptr) curScene->Enter();
 	}
 	void ChangeState(int key)
 	{
@@ -28,11 +28,11 @@ public:
 public:
 	void Update()
 	{
-		curScene->Update();
+		if (curScene != nullptr) curScene->Update();
 	}
 	void Render() const
 	{
-		curScene->Render();
+		if (curScene != nullptr) curScene->Render();
 	}
 
 };
