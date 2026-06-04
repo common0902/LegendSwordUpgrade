@@ -206,6 +206,16 @@ void SetCursorVisible(bool visible, DWORD size)
 	SetConsoleCursorInfo(handle, &curInfo);
 }
 
+COORD GetConsoleResolution()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	short width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	short height = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+	//return COORD { width,height };
+	return { width,height };
+
+}
 BOOL IsGotoXY(int x, int y)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
