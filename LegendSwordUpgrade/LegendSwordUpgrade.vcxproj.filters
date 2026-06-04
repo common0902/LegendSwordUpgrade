@@ -45,6 +45,9 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="UPGRADE.cpp">
+      <Filter>Main\PMS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -66,6 +69,15 @@
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PMSData.h">
+      <Filter>Main\PMS</Filter>
+    </ClInclude>
+    <ClInclude Include="UPGRADE.h">
+      <Filter>Main\PMS</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
