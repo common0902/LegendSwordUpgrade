@@ -10,7 +10,8 @@ struct Point
 public:
 	int x;
 	int y;
-//
+
+public:
 	Point operator+ (Point p)
 	{
 		return Point{ x + p.x,y + p.y };

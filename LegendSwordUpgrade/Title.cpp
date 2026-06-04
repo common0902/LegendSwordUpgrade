@@ -13,10 +13,10 @@ void UpdateTitle(GameState& state)
 {
 	
 	if (GetKeyDown(VK_UP)) state.LrwData.curMenu -= 1;
-	if (GetKeyDown(VK_DOWN))state.LrwData.curMenu += 1;
+	if (GetKeyDown(VK_DOWN)) state.LrwData.curMenu += 1;
 
-	if (state.LrwData.curMenu == 0) state.LrwData.curMenu += 3;
-	if (state.LrwData.curMenu == 4) state.LrwData.curMenu -= 3;
+	if (state.LrwData.curMenu == 0) state.LrwData.curMenu = 3;
+	if (state.LrwData.curMenu == 4) state.LrwData.curMenu = 1;
 	
 
 	if (GetKeyDown(VK_RETURN))
@@ -36,10 +36,11 @@ Scene GetScene(int curMenu)
 	{
 		scene = Scene::SHOP;
 	}
-	else if (curMenu == 2)
+	else if (curMenu == 3)
 	{
 		scene = Scene::BATTLE;
 	}
+
 	return scene;
 }
 
@@ -47,11 +48,11 @@ void RenderTitle(const GameState& state)
 {
 	GotoXY(0,0);
 	cout << "ев╫╨©К";
-
+	const string lables[] = { "SHOP", "UPGRADE", "BATTLE" };
 	for (int i = 0;i < 3;++i)
 	{
 		GotoXY(5, 5 + i);
-		
+		cout << (i + 1 == (int)state.curMenu ? "> " : "  ") << lables[i];
 	}
 
 

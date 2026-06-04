@@ -51,7 +51,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Sword.h" />
-    <ClInclude Include="Test.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="UPGRADE.h" />
   </ItemGroup>
