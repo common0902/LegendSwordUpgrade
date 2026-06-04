@@ -7,12 +7,15 @@ void BattleScene::Enter()
 
 void BattleScene::Update()
 {
+
 }
 
 void BattleScene::Render() const
 {
+
 }
 
 void BattleScene::Exit()
 {
+
 }
