@@ -54,6 +54,9 @@
     <ClCompile Include="Title.cpp">
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -102,6 +105,9 @@
       <Filter>Main\PMS</Filter>
     </ClInclude>
     <ClInclude Include="Title.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
