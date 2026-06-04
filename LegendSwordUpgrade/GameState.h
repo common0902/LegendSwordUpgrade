@@ -16,7 +16,7 @@ constexpr int HEIGHT = 45;
 
 struct GameState
 {
-	FSM* fsm;
+	FSM& fsm;
 	Menu curMenu = Menu::START;
 	bool isRunning = true;
 	Player player;

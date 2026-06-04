@@ -19,7 +19,7 @@ void TitleScene::Update()
 
 	if (GetKeyDown(VK_RETURN))
 	{
-		state.fsm->ChangeState((int)GetScene(state.LrwData.curMenu));
+		state.fsm.ChangeState((int)GetScene(state.LrwData.curMenu));
 	}
 }
 
