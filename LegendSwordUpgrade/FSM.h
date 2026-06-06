@@ -21,11 +21,7 @@ public:
 	}
 	void ChangeState(int key)
 	{
-		if (curScene != nullptr)
-		{
-			curScene->Exit();
-			system("cls");
-		}
+		if (curScene != nullptr) curScene->Exit();
 		SetState(key);
 	}
 	
