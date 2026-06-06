@@ -1,13 +1,11 @@
 #include "BATTLE.h"
 
 
-Vector2 GetMoveDir();
-
 void BattleScene::Enter()
 {
 	
 
-	
+	 
 
 }
 
@@ -17,14 +15,25 @@ void BattleScene::Update()
 	
 	if (vec2 == Vector2{ 0,0 }) return;
 
+	lastInput = GetTickCount64();
 
-
+	state.LrwData.lastPlayerPos = state.LrwData.curPlayerPos;
+	state.LrwData.curPlayerPos += vec2;
 
 
 }
 
 void BattleScene::Render() const
 {
+
+
+	GotoXY(state.LrwData.lastPlayerPos);
+	cout << " ";
+
+
+	GotoXY(state.LrwData.curPlayerPos);
+	cout << "P";
+
 
 
 
@@ -34,7 +43,7 @@ void BattleScene::Exit()
 {
 
 
-
+	
 }
 
 Vector2 GetMoveDir()
@@ -46,3 +55,9 @@ Vector2 GetMoveDir()
 	if (GetKey('D')) vec2.x += 1;
 	return vec2;
 }
+
+void GotoXY(Vector2 pos)
+{
+	GotoXY(pos.x, pos.y);
+}
+

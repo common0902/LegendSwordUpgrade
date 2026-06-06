@@ -1,7 +1,8 @@
 #pragma once
 #include "GameState.h"
 
-struct Vector2;
+Vector2 GetMoveDir();
+void GotoXY(Vector2 pos);
 
 class BattleScene : public AbstractState
 {
@@ -13,31 +14,11 @@ public:
 	void Exit() override;
 public:
 	ULONGLONG lastInput;
-
-
+	
+	
 };
 
-struct Vector2
-{
-public:
-	int x;
-	int y;
 
-public:
-	Vector2 operator+ (Vector2 p)
-	{
-		return Vector2{ x + p.x,y + p.y };
-	}
-	Vector2 operator- (Vector2 p)
-	{
-		return Vector2{ x - p.x,y - p.y };
-	}
-	Vector2 operator* (Vector2 p)
-	{
-		return Vector2{ x * p.x,y * p.y };
-	}
-	bool operator==(Vector2 p)
-	{
-		return x == p.x && y == p.y;
-	}
-};
+
+
+
