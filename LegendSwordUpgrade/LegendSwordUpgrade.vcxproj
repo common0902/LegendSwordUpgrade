@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CHGAsciiArt.cpp" />
     <ClCompile Include="BATTLE.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="UPGRADE.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CHGAsciiArt.h" />
     <ClInclude Include="BATTLE.h" />
     <ClInclude Include="CHGData.h" />
     <ClInclude Include="Console.h" />
