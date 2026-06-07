@@ -1,13 +1,18 @@
 #include "UPGRADE.h"
 
-void InitUpgrade(GameState& state)
+void UpgradeScene::Enter()
+{
+	cout << "Upgrade";
+}
+
+void UpgradeScene::Update()
 {
 }
 
-void UpdateUpgrade(GameState& state)
+void UpgradeScene::Render() const
 {
 }
 
-void RenderUpgrade(const GameState& state)
+void UpgradeScene::Exit()
 {
 }

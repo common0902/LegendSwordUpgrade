@@ -1,6 +1,6 @@
 ﻿#include "Console.h"
-#include "GameState.h"
 #include "Game.h"
+#include"GameState.h"
 
 int main()
 {

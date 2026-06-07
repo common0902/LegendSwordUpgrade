@@ -1,27 +1,24 @@
 #pragma once
 #include "GameState.h"
 
-void InitBattle(GameState& state);
-void UpdateBattle(GameState& state);
-void RenderBattle(const GameState& state);
+Vector2 GetMoveDir();
+void GotoXY(Vector2 pos);
 
-struct Point
+class BattleScene : public AbstractState
 {
 public:
-	int x;
-	int y;
-//
-	Point operator+ (Point p)
-	{
-		return Point{ x + p.x,y + p.y };
-	}
-	Point operator- (Point p)
-	{
-		return Point{ x - p.x,y - p.y };
-	}
-	Point operator* (Point p)
-	{
-		return Point{ x * p.x,y * p.y };
-	}
-
+	BattleScene(GameState& gameState) : AbstractState(gameState) {}
+	void Enter() override;
+	void Update() override;
+	void Render() const override;
+	void Exit() override;
+public:
+	ULONGLONG lastInput;
+	
+	
 };
+
+
+
+
+

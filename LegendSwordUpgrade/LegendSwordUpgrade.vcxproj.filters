@@ -33,9 +33,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Main\소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Sword.cpp">
       <Filter>Main\소스 파일</Filter>
     </ClCompile>
@@ -47,6 +44,18 @@
     </ClCompile>
     <ClCompile Include="UPGRADE.cpp">
       <Filter>Main\PMS</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BATTLE.cpp">
+      <Filter>Main\LRW</Filter>
+    </ClCompile>
+    <ClCompile Include="SHOP.cpp">
+      <Filter>Main\CHG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +87,30 @@
       <Filter>Main\PMS</Filter>
     </ClInclude>
     <ClInclude Include="Defines.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LRWData.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="BATTLE.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="CHGData.h">
+      <Filter>Main\CHG</Filter>
+    </ClInclude>
+    <ClInclude Include="SHOP.h">
+      <Filter>Main\CHG</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractState.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

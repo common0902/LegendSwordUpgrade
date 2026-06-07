@@ -1,13 +1,27 @@
+#include "Console.h"
 #include "SHOP.h"
+#include "CHGAsciiArt.h"
+static AsciiObjs objs;
 
-void InitShop(GameState& state)
+void ShopScene::Enter()
 {
+	cout << "Shop";
 }
 
-void UpdateShop(GameState& state)
+void ShopScene::Update()
 {
+	AsciiInit(objs);
+	//state.ChgData.haveTotem[]
 }
 
-void RenderShop(const GameState& state)
+void ShopScene::Render() const
 {
+	
+}
+
+void ShopScene::Exit()
+{
+	AsciiRender(objs);
+
+
 }

@@ -14,69 +14,27 @@ void Init(GameState& state)
 	SetConsoleSize(WIDTH, HEIGHT);
 	SetConsoleWindowStyle(true);
 	SetCursorVisible(false);
+
 	state = GameState{};
+
+	state.fsm.AddState((int)Scene::TITLE,new TitleScene(state));
+	state.fsm.AddState((int)Scene::UPGRADE, new UpgradeScene(state));
+	state.fsm.AddState((int)Scene::SHOP, new ShopScene(state));
+	state.fsm.AddState((int)Scene::BATTLE, new BattleScene(state));
+	state.fsm.AddState((int)Scene::GAMEOVER, new GameOverScene(state));
+
+
+	state.fsm.ChangeState((int)Scene::TITLE);
 }
 
 void Update(GameState& state)
 {
-	bool sceneChanged =
-		state.curScene != state.prevScene;
-	state.prevScene = state.curScene;
 	UpdateInput();
-
-	switch (state.curScene)
-	{
-	case Scene::TITLE:
-		if (sceneChanged)
-			InitTitle(state);
-		UpdateTitle(state);
-		break;
-	case Scene::SHOP:
-		if (sceneChanged)
-			InitShop(state);
-		UpdateShop(state);
-		break;
-	case Scene::UPGRADE:
-		if (sceneChanged)
-			InitUpgrade(state);
-		UpdateUpgrade(state);
-		break;
-	case Scene::BATTLE:
-		if (sceneChanged)
-			InitBattle(state);
-		UpdateBattle(state);
-		break;
-	case Scene::GAMEOVER:
-		if (sceneChanged)
-			InitGameOver(state);
-		UpdateGameOver(state);
-		break;
-	}
+	state.fsm.Update();
 }
 
 void Renderer(const GameState& state)
 {
-	SetColor();
-	if (state.prevScene != state.curScene)
-		system("cls");
-	GotoXY(0, 0);
+	state.fsm.Render();
 
-	switch (state.curScene)
-	{
-	case Scene::TITLE:
-		RenderTitle(state);
-		break;
-	case Scene::SHOP:
-		RenderShop(state);
-		break;
-	case Scene::UPGRADE:
-		RenderUpgrade(state);
-		break;
-	case Scene::BATTLE:
-		RenderBattle(state);
-		break;
-	case Scene::GAMEOVER:
-		RenderGameOver(state);
-		break;
-	}
 }

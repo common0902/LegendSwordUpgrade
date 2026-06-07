@@ -1,7 +1,13 @@
 #pragma once
 #include "GameState.h"
 
-void InitTitle(GameState& state);
-void UpdateTitle(GameState& state);
-void RenderTitle(const GameState& state);
+class TitleScene : public AbstractState
+{
+public:
+	TitleScene(GameState& gameState) : AbstractState(gameState) {}
+	void Enter() override;
+	void Update() override;
+	void Render() const override;
+	void Exit() override;
+};
 
