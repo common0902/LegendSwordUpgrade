@@ -8,12 +8,15 @@
 #include "CHGData.h"
 #include "LRWData.h"
 #include "PMSData.h"
+#include "FSM.h"
+#include"Console.h"
+
+constexpr int WIDTH = 160;
+constexpr int HEIGHT = 45;
 
 struct GameState
 {
-public:
-	Scene prevScene = Scene::NONE;
-	Scene curScene = Scene::TITLE;
+	FSM fsm;
 	Menu curMenu = Menu::START;
 	bool isRunning = true;
 	Player player;

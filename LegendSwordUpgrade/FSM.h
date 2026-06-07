@@ -1,0 +1,43 @@
+#pragma once
+#include"AbstractState.h"
+#include<map>
+
+class FSM
+{
+private:
+	AbstractState* curScene;
+	std::map<int, AbstractState*> stateMap;
+
+public:
+	FSM() = default;
+	void AddState(int key, AbstractState* state)
+	{
+		stateMap[key] = state;
+	}
+	void SetState(int key)
+	{
+		curScene = stateMap[key];
+		if (curScene != nullptr) curScene->Enter();
+	}
+	void ChangeState(int key)
+	{
+		if (curScene != nullptr)
+		{
+			curScene->Exit();
+			system("cls");
+		}
+		SetState(key);
+	}
+	
+public:
+	void Update()
+	{
+		if (curScene != nullptr) curScene->Update();
+	}
+	void Render() const
+	{
+		if (curScene != nullptr) curScene->Render();
+	}
+
+};
+

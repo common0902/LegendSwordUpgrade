@@ -1,13 +1,21 @@
 #include "BATTLE.h"
 
-void InitBattle(GameState& state)
+void BattleScene::Enter()
 {
+	cout << "Battle";
 }
 
-void UpdateBattle(GameState& state)
+void BattleScene::Update()
 {
+	
 }
 
-void RenderBattle(const GameState& state)
+void BattleScene::Render() const
 {
+
+}
+
+void BattleScene::Exit()
+{
+
 }

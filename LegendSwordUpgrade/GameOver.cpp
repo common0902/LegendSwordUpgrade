@@ -1,13 +1,18 @@
 #include "GameOver.h"
 
-void InitGameOver(GameState& state)
+void GameOverScene::Enter()
+{
+	cout << "GameOver";
+}
+
+void GameOverScene::Update()
 {
 }
 
-void UpdateGameOver(GameState& state)
+void GameOverScene::Render() const
 {
 }
 
-void RenderGameOver(const GameState& state)
+void GameOverScene::Exit()
 {
 }

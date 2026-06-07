@@ -1,6 +1,12 @@
-#pragma once
+﻿#pragma once
 #include "GameState.h"
 
-void InitUpgrade(GameState& state);
-void UpdateUpgrade(GameState& state);
-void RenderUpgrade(const GameState& state);
+class UpgradeScene : public AbstractState
+{
+public:
+	UpgradeScene(GameState& gameState) : AbstractState(gameState) {}
+	void Enter() override;
+	void Update() override;
+	void Render() const override;
+	void Exit() override;
+};
