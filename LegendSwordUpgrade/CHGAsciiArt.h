@@ -1,14 +1,15 @@
 #pragma once
+#include <windows.h>
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <Windows.h>
 using std::vector;
 using std::string;
+using std::wstring;  
 
 struct AsciiObjs
 {
-	vector<string> slotMachine;
+	vector<wstring> slotMachine;
 	vector<vector<string>> slotArt;
 	
 	vector<int> slotNum; 

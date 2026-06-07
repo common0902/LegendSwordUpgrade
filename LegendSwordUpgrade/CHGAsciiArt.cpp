@@ -1,37 +1,38 @@
 ﻿#include "CHGAsciiArt.h"
 #include "Console.h"	
 #include "GameState.h"
+#include <windows.h>
 
 void AsciiInit(AsciiObjs& objs)
 {
 	objs.slotMachine =
 	{
-	"   ╔════════════════════════════════════╗   ",
-    "   ║     *** LUCKY SLOTS*** [100 CR]    ║   ",
-    "   ║ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ║   ",
-    "   ╠═══════════╦════════════╦═══════════╣   ",
-    "   ║           ║            ║           ║   ",
-    "   ║           ║            ║           ║   ",
-    "   ║           ║            ║           ║   ",
-    "   ║           ║            ║           ║   ",
-    "   ║           ║            ║           ║   ",
-    "   ║           ║            ║           ║   ",
-    "   ║           ║            ║           ║   ",
-    "   ║           ║            ║           ║   ",
-    "   ╠═══════════╩════════════╩═══════════╣   ",
-    "   ║  GOLD  :                           ║   ",
-    "   ║  Totem :                           ║   ",
-    "  ╔╩════════════════════════════════════╩╗  ",
-    " ╔╝                                      ╚╗ ",
-    " ║               || SPIN ||               ║ ",
-    "╔╝                                        ╚╗",
-    "╠══════════════════════════════════════════╣",
-    "║                                          ║",
-    "║                                          ║",
-    "║            1 - 1 - 1 => WIN     x 5      ║",
-    "║            $ - $ - $ => BONUS   x 10     ║",
-    "║            7 - 7 - 7 => JACKPOT x 50     ║",
-    "╚══════════════════════════════════════════╝"
+	L"   ╔════════════════════════════════════╗   ",
+    L"   ║     *** LUCKY SLOTS*** [100 CR]    ║   ",
+    L"   ║ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ║   ",
+    L"   ╠═══════════╦════════════╦═══════════╣   ",
+    L"   ║           ║            ║           ║   ",
+    L"   ║           ║            ║           ║   ",
+    L"   ║           ║            ║           ║   ",
+    L"   ║           ║            ║           ║   ",
+    L"   ║           ║            ║           ║   ",
+    L"   ║           ║            ║           ║   ",
+    L"   ║           ║            ║           ║   ",
+    L"   ║           ║            ║           ║   ",
+    L"   ╠═══════════╩════════════╩═══════════╣   ",
+    L"   ║  GOLD  :                           ║   ",
+    L"   ║  Totem :                           ║   ",
+    L"  ╔╩════════════════════════════════════╩╗  ",
+    L" ╔╝                                      ╚╗ ",
+    L" ║               || SPIN ||               ║ ",
+    L"╔╝                                        ╚╗",
+    L"╠══════════════════════════════════════════╣",
+    L"║                                          ║",
+    L"║                                          ║",
+    L"║            1 - 1 - 1 => WIN     x 5      ║",
+    L"║            $ - $ - $ => BONUS   x 10     ║",
+    L"║            7 - 7 - 7 => JACKPOT x 50     ║",
+    L"╚══════════════════════════════════════════╝"
 	};
 	objs.slotArt.push_back(
 	{	
@@ -96,11 +97,14 @@ void AsciiRender(const AsciiObjs& objs)
 {
     int slotMachineLines = (int)objs.slotMachine.size();
     SetColor(Color::LIGHT_YELLOW);
+    _setmode(_fileno(stdout), _O_U16TEXT);
     for (int i = 0; i < slotMachineLines; ++i)
     {
         GotoXY(0, i + 10);
-        cout << objs.slotMachine[i];
+        wcout << objs.slotMachine[i];
     }
+    _setmode(_fileno(stdout), _O_TEXT);
+    SetColor();
 
     for (int i = 0; i < (int)objs.slotNum.size(); ++i)
     {
@@ -124,5 +128,6 @@ void RenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex)
         GotoXY(slotX[slotIndex], slotY + offsetY + i);
         cout << art[i];
     }
+    SetColor();
 }
 
