@@ -1,6 +1,9 @@
 #pragma once
 #include "GameState.h"
 
+Vector2 GetMoveDir();
+void GotoXY(Vector2 pos);
+
 class BattleScene : public AbstractState
 {
 public:
@@ -9,26 +12,13 @@ public:
 	void Update() override;
 	void Render() const override;
 	void Exit() override;
+public:
+	ULONGLONG lastInput;
+	
+	
 };
 
-struct Point
-{
-public:
-	int x;
-	int y;
 
-public:
-	Point operator+ (Point p)
-	{
-		return Point{ x + p.x,y + p.y };
-	}
-	Point operator- (Point p)
-	{
-		return Point{ x - p.x,y - p.y };
-	}
-	Point operator* (Point p)
-	{
-		return Point{ x * p.x,y * p.y };
-	}
 
-};
+
+
