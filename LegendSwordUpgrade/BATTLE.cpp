@@ -1,40 +1,54 @@
 #include "BATTLE.h"
 
 
+
 void BattleScene::Enter()
 {
-	
+	curPlayerHp = state.player.maxHp;
 
+	vector<string> image = { "12345","67890","24680","13579","임리우 천재" };
+	curEnemy = new Enemy(image, 100, 10);
 	 
 
 }
 
 void BattleScene::Update()
 {
-	Vector2 vec2 = GetMoveDir();
+
+
+#pragma region DelayTest
+	static int p = 0;
+	if (Delay(DelayType::EnemyType, 700))
+	{
+		GotoXY(50, p++);
+		cout << "############";
+	}
+	if (Delay(DelayType::PlayerType, 1300))
+	{
+		GotoXY(50, p++);
+		cout << "@@@@@@@@@@@@@@@@";
+	}
+	if (Delay(DelayType::TestType, 750))
+	{
+		GotoXY(50, p++);
+		cout << "*********************";
+	}
+#pragma endregion
+
+	static int a;
+	int ab = GetRandomRange(5, 10);
+	GotoXY(20, 1 + a++);
+	cout << ab;
+
 	
-	if (vec2 == Vector2{ 0,0 }) return;
-
-	lastInput = GetTickCount64();
-
-	state.LrwData.lastPlayerPos = state.LrwData.curPlayerPos;
-	state.LrwData.curPlayerPos += vec2;
-
-
 }
 
 void BattleScene::Render() const
 {
+	GotoXY(2, 2);
+	cout << "플레이어 채력 : " << curPlayerHp << " | 적 체력 : " << curEnemy->hp;
 
-
-	GotoXY(state.LrwData.lastPlayerPos);
-	cout << " ";
-
-
-	GotoXY(state.LrwData.curPlayerPos);
-	cout << "P";
-
-
+	DrawEnemyImage(curEnemy, 2, 4);
 
 
 }
@@ -44,6 +58,38 @@ void BattleScene::Exit()
 
 
 	
+}
+
+void DrawEnemyImage(Enemy* enemy, int x, int y)
+{
+	if (enemy == nullptr) return;
+	vector<string> vec = enemy->image;
+	int size = vec.size();
+	for (int i = 0;i < size;++i)
+	{
+		GotoXY(x, y + i);
+		cout << vec[i];
+	}
+}
+
+
+
+ULONGLONG BattleScene::GetDeltaTime(ULONGLONG lastTime)
+{
+	return GetTickCount64() - lastTime;
+}
+
+bool BattleScene::Delay(int type,ULONGLONG delay)
+{
+	ULONGLONG delta = GetDeltaTime(lastTimeMap[type]);
+	if (delta < delay) return false;
+	lastTimeMap[type] = GetTickCount64();
+	return true;
+}
+
+bool BattleScene::Delay(DelayType type, ULONGLONG time)
+{
+	return Delay((int)type,time);
 }
 
 Vector2 GetMoveDir()
@@ -61,3 +107,15 @@ void GotoXY(Vector2 pos)
 	GotoXY(pos.x, pos.y);
 }
 
+int GetRandomRange(int min, int max)
+{
+	int d = max - min;
+	return rand() % d + min;
+}
+
+bool CoutGoToXY(string str, int x, int y)
+{
+	if (!IsGotoXY(x, y)) return;
+	cout << str;
+	return true;
+}

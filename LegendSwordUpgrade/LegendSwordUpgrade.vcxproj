@@ -42,6 +42,8 @@
     <ClInclude Include="CHGData.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyData.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="Game.h" />
