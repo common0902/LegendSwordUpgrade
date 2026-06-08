@@ -14,19 +14,11 @@ public:
 	{
 		stateMap[key] = state;
 	}
-	void SetState(int key)
-	{
-		curScene = stateMap[key];
-		if (curScene != nullptr) curScene->Enter();
-	}
 	void ChangeState(int key)
 	{
-		if (curScene != nullptr)
-		{
-			curScene->Exit();
-			system("cls");
-		}
-		SetState(key);
+		if (curScene != nullptr) curScene->Exit();
+		curScene = stateMap[key];
+		if (curScene != nullptr) curScene->Enter();
 	}
 	
 public:

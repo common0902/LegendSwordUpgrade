@@ -1,20 +1,27 @@
 ﻿#pragma once
-#include<vector>
-#include<string>
+#include <string>
+#include <vector>
 using std::vector;
 using std::string;
+
+enum class UpgradeResult { SUCCESS, DOWN, BREAK };
+
 class Sword
 {
 public:
-	int damage = 0;
-	vector<string> image;
-	Sword() = default;
-	~Sword() = default;
-	float chance = 100;
-	int tier = 1;
-	int upgradeCost;
-	int sellCost;
+    int damage = 10;
+    int tier = 0;
+    int upgradeCost = 100;
+    int sellCost = 50;
+    vector<string> image;
 
+public:
+    Sword() = default;
+    ~Sword() = default;
 
+    float GetSuccessChance() const;
+    float GetBreakChance()   const;
+    float GetDownChance()    const;
+    UpgradeResult TryUpgrade();
+    bool IsMaxTier() const;
 };
-

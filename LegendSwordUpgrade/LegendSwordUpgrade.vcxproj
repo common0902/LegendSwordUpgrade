@@ -33,10 +33,12 @@
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="UPGRADE.cpp" />
+    <ClCompile Include="UpgradeAsciiArt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractState.h" />
     <ClInclude Include="BATTLE.h" />
+    <ClInclude Include="CHGAsciiArt.h" />
     <ClInclude Include="CHGData.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Defines.h" />
@@ -56,6 +58,7 @@
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="UPGRADE.h" />
+    <ClInclude Include="UpgradeAsciiArt.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

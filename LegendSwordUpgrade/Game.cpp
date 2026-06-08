@@ -23,7 +23,8 @@ void Init(GameState& state)
 	state.fsm.AddState((int)Scene::BATTLE, new BattleScene(state));
 	state.fsm.AddState((int)Scene::GAMEOVER, new GameOverScene(state));
 
-	state.fsm.SetState((int)Scene::TITLE);
+
+	state.fsm.ChangeState((int)Scene::TITLE);
 }
 
 void Update(GameState& state)
