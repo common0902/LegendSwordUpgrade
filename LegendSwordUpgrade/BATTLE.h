@@ -1,6 +1,6 @@
 #pragma once
 #include "GameState.h"
-
+#include "Enemy.h"
 
 enum DelayType
 {
@@ -18,9 +18,10 @@ public:
 	void Exit() override;
 
 public:
-	ULONGLONG lastInput;
+	ULONGLONG lastInput = 0;
 	std::map<int, ULONGLONG> lastTimeMap;
-	int curHp;
+	int curPlayerHp = 0;
+	Enemy* curEnemy;
 
 
 public:
@@ -30,10 +31,11 @@ public:
 	
 };
 
+void DrawEnemyImage(Enemy* enemy, int x, int y);
 Vector2 GetMoveDir();
 void GotoXY(Vector2 pos);
-
-
+int GetRandomRange(int min, int max);
+bool CoutGoToXY(string str, int x, int y);
 
 
 
