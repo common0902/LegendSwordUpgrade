@@ -3,7 +3,7 @@
 #include "GameState.h"
 #include <windows.h>
 
-void AsciiInit(AsciiObjs& objs)
+void CHGAsciiInit(AsciiObjs& objs)
 {
 	objs.slotMachine =
 	{
@@ -69,7 +69,7 @@ void AsciiInit(AsciiObjs& objs)
     objs.changeInterval = 100;
 }
 
-void AsciiUpdate(AsciiObjs& objs)
+void CHGAsciiUpdate(AsciiObjs& objs)
 {
     if (!objs.rolling) return;
 
@@ -93,7 +93,7 @@ void AsciiUpdate(AsciiObjs& objs)
     }
 }
 
-void AsciiRender(const AsciiObjs& objs)
+void CHGAsciiRender(const AsciiObjs& objs)
 {
     int slotMachineLines = (int)objs.slotMachine.size();
     SetColor(Color::LIGHT_YELLOW);
@@ -108,11 +108,11 @@ void AsciiRender(const AsciiObjs& objs)
 
     for (int i = 0; i < (int)objs.slotNum.size(); ++i)
     {
-        RenderSlotArt(objs, i, objs.slotNum[i]);
+        CHGRenderSlotArt(objs, i, objs.slotNum[i]);
     }
 }
 
-void RenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex)
+void CHGRenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex)
 {
     int slotX[] = { 4, 16, 29 };
     int slotY = 14; 

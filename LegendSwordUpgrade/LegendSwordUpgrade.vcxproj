@@ -38,6 +38,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractState.h" />
     <ClInclude Include="BATTLE.h" />
+    <ClInclude Include="CHGAsciiArt.h" />
     <ClInclude Include="CHGData.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Defines.h" />

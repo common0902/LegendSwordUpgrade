@@ -6,7 +6,7 @@ static AsciiObjs objs;
 void ShopScene::Enter()
 {
 	cout << "Shop";
-	AsciiInit(objs);
+	CHGAsciiInit(objs);
 }
 
 void ShopScene::Update()
@@ -17,13 +17,13 @@ void ShopScene::Update()
         objs.rolling = true;
     }
 
-	AsciiUpdate(objs);
+	CHGAsciiUpdate(objs);
 	//state.ChgData.haveTotem[]
 }
 
 void ShopScene::Render() const
 {
-	AsciiRender(objs);
+	CHGAsciiRender(objs);
 	
 }
 

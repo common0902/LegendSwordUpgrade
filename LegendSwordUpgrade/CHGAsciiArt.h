@@ -20,7 +20,7 @@ struct AsciiObjs
 	ULONGLONG changeInterval;
 };
 
-void AsciiInit(AsciiObjs& objs);
-void AsciiUpdate(AsciiObjs& objs);
-void AsciiRender(const AsciiObjs& objs);
-void RenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex);
+void CHGAsciiInit(AsciiObjs& objs);
+void CHGAsciiUpdate(AsciiObjs& objs);
+void CHGAsciiRender(const AsciiObjs& objs);
+void CHGRenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex);
