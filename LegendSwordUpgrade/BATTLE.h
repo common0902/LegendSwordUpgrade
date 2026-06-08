@@ -25,17 +25,15 @@ public:
 
 
 public:
-	ULONGLONG GetDeltaTime(ULONGLONG lastTime);
 	bool Delay(int type, ULONGLONG time);
 	bool Delay(DelayType type, ULONGLONG time);
 	
 };
-
+ULONGLONG GetDeltaTime(ULONGLONG lastTime);
 void DrawEnemyImage(Enemy* enemy, int x, int y);
 Vector2 GetMoveDir();
 void GotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
-bool CoutGoToXY(string str, int x, int y);
-
+bool Random(int probability);
 
 

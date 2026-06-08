@@ -15,40 +15,23 @@ void BattleScene::Enter()
 void BattleScene::Update()
 {
 
-
-#pragma region DelayTest
-	static int p = 0;
-	if (Delay(DelayType::EnemyType, 700))
-	{
-		GotoXY(50, p++);
-		cout << "############";
-	}
-	if (Delay(DelayType::PlayerType, 1300))
-	{
-		GotoXY(50, p++);
-		cout << "@@@@@@@@@@@@@@@@";
-	}
-	if (Delay(DelayType::TestType, 750))
-	{
-		GotoXY(50, p++);
-		cout << "*********************";
-	}
-#pragma endregion
-
-	static int a;
-	int ab = GetRandomRange(5, 10);
-	GotoXY(20, 1 + a++);
-	cout << ab;
-
+	static int s = 0;
+	static int all = 0;
 	
+	if (Random(1)) s += 1;
+	all += 1;
+
+	GotoXY(15, 0);
+	cout << (s / (double)all)*100;
+
 }
 
 void BattleScene::Render() const
 {
-	GotoXY(2, 2);
+	/*GotoXY(2, 2);
 	cout << "플레이어 채력 : " << curPlayerHp << " | 적 체력 : " << curEnemy->hp;
 
-	DrawEnemyImage(curEnemy, 2, 4);
+	DrawEnemyImage(curEnemy, 2, 4);*/
 
 
 }
@@ -73,8 +56,7 @@ void DrawEnemyImage(Enemy* enemy, int x, int y)
 }
 
 
-
-ULONGLONG BattleScene::GetDeltaTime(ULONGLONG lastTime)
+ULONGLONG GetDeltaTime(ULONGLONG lastTime)
 {
 	return GetTickCount64() - lastTime;
 }
@@ -113,9 +95,9 @@ int GetRandomRange(int min, int max)
 	return rand() % d + min;
 }
 
-bool CoutGoToXY(string str, int x, int y)
+bool Random(int probability)
 {
-	if (!IsGotoXY(x, y)) return;
-	cout << str;
-	return true;
+	return GetRandomRange(0, 100) < probability;
 }
+
+
