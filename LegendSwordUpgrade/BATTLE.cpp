@@ -3,7 +3,7 @@
 
 void BattleScene::Enter()
 {
-	
+
 
 	 
 
@@ -11,28 +11,31 @@ void BattleScene::Enter()
 
 void BattleScene::Update()
 {
-	Vector2 vec2 = GetMoveDir();
-	
-	if (vec2 == Vector2{ 0,0 }) return;
 
-	lastInput = GetTickCount64();
-
-	state.LrwData.lastPlayerPos = state.LrwData.curPlayerPos;
-	state.LrwData.curPlayerPos += vec2;
+	static int p = 0;
+	if (Delay(DelayType::EnemyType, 700))
+	{
+		GotoXY(15, p++);
+		cout << "123";
+	}
+	if (Delay(DelayType::PlayerType, 1300))
+	{
+		GotoXY(15, p++);
+		cout << "456";
+	}
+	if (Delay(DelayType::TestType, 750))
+	{
+		GotoXY(15, p++);
+		cout << "789";
+	}
 
 
 }
 
 void BattleScene::Render() const
 {
-
-
-	GotoXY(state.LrwData.lastPlayerPos);
-	cout << " ";
-
-
-	GotoXY(state.LrwData.curPlayerPos);
-	cout << "P";
+	GotoXY(2, 2);
+	cout << "플레이어 채력 : " << 
 
 
 
@@ -44,6 +47,26 @@ void BattleScene::Exit()
 
 
 	
+}
+
+
+
+ULONGLONG BattleScene::GetDeltaTime(ULONGLONG lastTime)
+{
+	return GetTickCount64() - lastTime;
+}
+
+bool BattleScene::Delay(int type,ULONGLONG delay)
+{
+	ULONGLONG delta = GetDeltaTime(lastTimeMap[type]);
+	if (delta < delay) return false;
+	lastTimeMap[type] = GetTickCount64();
+	return true;
+}
+
+bool BattleScene::Delay(DelayType type, ULONGLONG time)
+{
+	return Delay((int)type,time);
 }
 
 Vector2 GetMoveDir()
@@ -60,4 +83,3 @@ void GotoXY(Vector2 pos)
 {
 	GotoXY(pos.x, pos.y);
 }
-

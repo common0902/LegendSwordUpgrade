@@ -41,8 +41,7 @@ public:
 
 #pragma region BattleScene
 public:
-	Vector2 curPlayerPos;
-	Vector2 lastPlayerPos;
+
 
 
 
