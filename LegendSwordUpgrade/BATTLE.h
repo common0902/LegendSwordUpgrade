@@ -8,7 +8,7 @@ enum DelayType
 };
 
 
-class BattleScene : public AbstractState
+class BattleScene : public SceneState
 {
 public:
 	BattleScene(GameState& gameState) : AbstractState(gameState) {}
@@ -21,21 +21,19 @@ public:
 	ULONGLONG lastInput = 0;
 	std::map<int, ULONGLONG> lastTimeMap;
 	int curPlayerHp = 0;
-	Enemy* curEnemy;
+	MoveEnemy* curEnemy;
 
 
 public:
-	ULONGLONG GetDeltaTime(ULONGLONG lastTime);
 	bool Delay(int type, ULONGLONG time);
 	bool Delay(DelayType type, ULONGLONG time);
 	
 };
-
-void DrawEnemyImage(Enemy* enemy, int x, int y);
+ULONGLONG GetDeltaTime(ULONGLONG lastTime);
+void DrawEnemyImage(MoveEnemy* enemy, int x, int y);
 Vector2 GetMoveDir();
 void GotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
-bool CoutGoToXY(string str, int x, int y);
-
+bool Random(int probability);
 
 

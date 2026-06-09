@@ -5,18 +5,21 @@
 using std::string;
 using std::vector;
  
-class AbstractEnemyData
+class EnemyData
 {
 public:
-	AbstractEnemyData() = default;
-	virtual ~AbstractEnemyData() = default;
+	EnemyData() = default;
+	virtual ~EnemyData() = default;
 public:
+	char minImage;
 	vector<string> Image;
 	int hp;
 	int damage;
+	int speed;
+
 };
 
-class TestEnemyData : public AbstractEnemyData
+class TestEnemyData : public EnemyData
 {
 	TestEnemyData()
 	{

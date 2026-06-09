@@ -6,8 +6,8 @@ void BattleScene::Enter()
 {
 	curPlayerHp = state.player.maxHp;
 
-	vector<string> image = { "12345","67890","24680","13579","임리우 천재" };
-	curEnemy = new Enemy(image, 100, 10);
+	vector<string> image = { "12345","67890","24680","13579","12345" };
+	curEnemy = new MoveEnemy(image, 100, 10);
 	 
 
 }
@@ -16,31 +16,7 @@ void BattleScene::Update()
 {
 
 
-#pragma region DelayTest
-	static int p = 0;
-	if (Delay(DelayType::EnemyType, 700))
-	{
-		GotoXY(50, p++);
-		cout << "############";
-	}
-	if (Delay(DelayType::PlayerType, 1300))
-	{
-		GotoXY(50, p++);
-		cout << "@@@@@@@@@@@@@@@@";
-	}
-	if (Delay(DelayType::TestType, 750))
-	{
-		GotoXY(50, p++);
-		cout << "*********************";
-	}
-#pragma endregion
 
-	static int a;
-	int ab = GetRandomRange(5, 10);
-	GotoXY(20, 1 + a++);
-	cout << ab;
-
-	
 }
 
 void BattleScene::Render() const
@@ -60,7 +36,7 @@ void BattleScene::Exit()
 	
 }
 
-void DrawEnemyImage(Enemy* enemy, int x, int y)
+void DrawEnemyImage(MoveEnemy* enemy, int x, int y)
 {
 	if (enemy == nullptr) return;
 	vector<string> vec = enemy->image;
@@ -73,8 +49,7 @@ void DrawEnemyImage(Enemy* enemy, int x, int y)
 }
 
 
-
-ULONGLONG BattleScene::GetDeltaTime(ULONGLONG lastTime)
+ULONGLONG GetDeltaTime(ULONGLONG lastTime)
 {
 	return GetTickCount64() - lastTime;
 }
@@ -113,9 +88,9 @@ int GetRandomRange(int min, int max)
 	return rand() % d + min;
 }
 
-bool CoutGoToXY(string str, int x, int y)
+bool Random(int probability)
 {
-	if (!IsGotoXY(x, y)) return;
-	cout << str;
-	return true;
+	return GetRandomRange(0, 100) < probability;
 }
+
+
