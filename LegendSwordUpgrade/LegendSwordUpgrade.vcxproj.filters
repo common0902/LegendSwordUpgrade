@@ -57,6 +57,12 @@
     <ClCompile Include="SHOP.cpp">
       <Filter>Main\CHG</Filter>
     </ClCompile>
+    <ClCompile Include="CHGAsciiArt.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeAsciiArt.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -111,6 +117,21 @@
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="FSM.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CHGAsciiArt.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyData.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeAsciiArt.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneState.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

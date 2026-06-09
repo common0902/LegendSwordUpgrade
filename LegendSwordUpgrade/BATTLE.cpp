@@ -7,7 +7,7 @@ void BattleScene::Enter()
 	curPlayerHp = state.player.maxHp;
 
 	vector<string> image = { "12345","67890","24680","13579","12345" };
-	curEnemy = new MoveEnemy(image, 100, 10);
+	curEnemy = new MoveEnemy('E', 1, 1000);
 	 
 
 }
@@ -22,9 +22,7 @@ void BattleScene::Update()
 void BattleScene::Render() const
 {
 	GotoXY(2, 2);
-	cout << "플레이어 채력 : " << curPlayerHp << " | 적 체력 : " << curEnemy->hp;
 
-	DrawEnemyImage(curEnemy, 2, 4);
 
 
 }
@@ -34,18 +32,6 @@ void BattleScene::Exit()
 
 
 	
-}
-
-void DrawEnemyImage(MoveEnemy* enemy, int x, int y)
-{
-	if (enemy == nullptr) return;
-	vector<string> vec = enemy->image;
-	int size = vec.size();
-	for (int i = 0;i < size;++i)
-	{
-		GotoXY(x, y + i);
-		cout << vec[i];
-	}
 }
 
 

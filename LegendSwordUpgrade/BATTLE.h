@@ -11,7 +11,7 @@ enum DelayType
 class BattleScene : public SceneState
 {
 public:
-	BattleScene(GameState& gameState) : AbstractState(gameState) {}
+	BattleScene(GameState& gameState) : SceneState(gameState) {}
 	void Enter() override;
 	void Update() override;
 	void Render() const override;
@@ -30,7 +30,6 @@ public:
 	
 };
 ULONGLONG GetDeltaTime(ULONGLONG lastTime);
-void DrawEnemyImage(MoveEnemy* enemy, int x, int y);
 Vector2 GetMoveDir();
 void GotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
