@@ -6,8 +6,8 @@ void BattleScene::Enter()
 {
 	curPlayerHp = state.player.maxHp;
 
-	vector<string> image = { "12345","67890","24680","13579","임리우 천재" };
-	curEnemy = new Enemy(image, 100, 10);
+	vector<string> image = { "12345","67890","24680","13579","12345" };
+	curEnemy = new MoveEnemy(image, 100, 10);
 	 
 
 }
@@ -15,23 +15,16 @@ void BattleScene::Enter()
 void BattleScene::Update()
 {
 
-	static int s = 0;
-	static int all = 0;
-	
-	if (Random(1)) s += 1;
-	all += 1;
 
-	GotoXY(15, 0);
-	cout << (s / (double)all)*100;
 
 }
 
 void BattleScene::Render() const
 {
-	/*GotoXY(2, 2);
+	GotoXY(2, 2);
 	cout << "플레이어 채력 : " << curPlayerHp << " | 적 체력 : " << curEnemy->hp;
 
-	DrawEnemyImage(curEnemy, 2, 4);*/
+	DrawEnemyImage(curEnemy, 2, 4);
 
 
 }
@@ -43,7 +36,7 @@ void BattleScene::Exit()
 	
 }
 
-void DrawEnemyImage(Enemy* enemy, int x, int y)
+void DrawEnemyImage(MoveEnemy* enemy, int x, int y)
 {
 	if (enemy == nullptr) return;
 	vector<string> vec = enemy->image;
