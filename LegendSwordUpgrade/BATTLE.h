@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "Enemy.h"
+#include"TextData.h"
 
 enum DelayType
 {
@@ -34,5 +35,5 @@ Vector2 GetMoveDir();
 void GotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
 bool Random(int probability);
-
+void DrawImage(vector<string> image,int x, int y);
 

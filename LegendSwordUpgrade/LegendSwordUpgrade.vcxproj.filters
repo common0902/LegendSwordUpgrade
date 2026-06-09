@@ -134,5 +134,8 @@
     <ClInclude Include="SceneState.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TextData.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -50,6 +50,7 @@
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="LRWData.h" />
+    <ClInclude Include="TextData.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PMSData.h" />
     <ClInclude Include="SceneState.h" />

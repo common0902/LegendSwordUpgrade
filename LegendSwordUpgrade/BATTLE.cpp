@@ -21,7 +21,7 @@ void BattleScene::Update()
 
 void BattleScene::Render() const
 {
-	GotoXY(2, 2);
+	DrawImage(TestMap1, 2, 2);
 
 
 
@@ -77,6 +77,16 @@ int GetRandomRange(int min, int max)
 bool Random(int probability)
 {
 	return GetRandomRange(0, 100) < probability;
+}
+
+void DrawImage(vector<string> image, int x, int y)
+{
+	int size = image.size();
+	for (int i = 0;i < size;++i)
+	{
+		GotoXY(x, y + i);
+		cout << image[i];
+	}
 }
 
 
