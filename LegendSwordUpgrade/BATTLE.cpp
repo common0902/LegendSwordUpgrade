@@ -1,4 +1,6 @@
 #include "BATTLE.h"
+#include "NormalBattleMapState.h"
+#include "EnemyBattleState.h"
 
 
 

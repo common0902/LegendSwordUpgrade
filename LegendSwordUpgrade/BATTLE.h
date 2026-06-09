@@ -2,8 +2,6 @@
 #include"GameState.h"
 #include"SceneState.h"
 #include "Enemy.h"
-#include"NormalBattleMapState.h"
-#include"EnemyBattleState.h"
 
 enum DelayType
 {

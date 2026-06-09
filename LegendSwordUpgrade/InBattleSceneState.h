@@ -1,7 +1,7 @@
 #pragma once
 #include"AbstractState.h"
 
-struct BattleScene;
+class BattleScene;
 
 class InBattleSceneState : public AbstractState
 {

@@ -1,4 +1,5 @@
 #include"EnemyBattleState.h"
+#include "BATTLE.h"
 
 
 void EnemyBattleState::Enter()

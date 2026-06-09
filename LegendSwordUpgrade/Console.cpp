@@ -193,7 +193,7 @@ void SetConsoleMouseInputDisabled()
 void GotoXY(int x, int y)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD curPos = { x,y };
+	COORD curPos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
 	SetConsoleCursorPosition(handle, curPos);
 }
 
@@ -219,7 +219,7 @@ COORD GetConsoleResolution()
 BOOL IsGotoXY(int x, int y)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD curPos = { x,y };
+	COORD curPos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
 	return SetConsoleCursorPosition(handle, curPos);
 }
 
@@ -252,7 +252,7 @@ void DrawBar(int x, int y, const string& label, int value, int maxValue, int bar
 	for(int i=0;i<barWidth;++i)
 		cout << (i < fillValue ? fillChar : emptyChar);
 	SetColor();
-	int digits = std::to_string(maxValue).length();
+	int digits = static_cast<int>(std::to_string(maxValue).length());
 
 	cout << " " <<
 		std::setw(digits) << value << "/" <<
@@ -299,7 +299,7 @@ void FrameSync(int fps)
 	ULONGLONG targetTick = 1000 / fps;
 	//ULONGLONG targetTick =  / fps;
 	if (elapsed < targetTick)
-		Sleep(targetTick - elapsed);
+		Sleep(static_cast<DWORD>(targetTick - elapsed));
 	prevTick = GetTickCount64();
 }
 

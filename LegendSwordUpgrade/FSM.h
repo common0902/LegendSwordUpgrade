@@ -1,10 +1,11 @@
 #pragma once
+#include "AbstractState.h"
 #include<map>
 
 class FSM
 {
 private:
-	AbstractState* curScene;
+	AbstractState* curScene = nullptr;
 	std::map<int, AbstractState*> stateMap;
 
 public:
