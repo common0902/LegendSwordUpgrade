@@ -21,7 +21,7 @@ void BattleScene::Update()
 
 void BattleScene::Render() const
 {
-	DrawImage(TestMap1, 2, 2);
+	DrawImage(TextDatas::TestMap1, 2, 2);
 
 
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "Enemy.h"
-#include"TextData.h"
+
 
 enum DelayType
 {
