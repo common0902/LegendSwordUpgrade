@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "GameState.h"
 
-class UpgradeScene : public AbstractState
+class UpgradeScene : public SceneState
 {
 public:
-    UpgradeScene(GameState& gameState) : AbstractState(gameState) {}
+    UpgradeScene(GameState& gameState) : SceneState(gameState) {}
     void Enter() override;
     void Update() override;
     void Render() const override;

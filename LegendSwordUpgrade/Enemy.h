@@ -4,11 +4,11 @@
 class MoveEnemy
 {
 public:
-	MoveEnemy(char enemyImage,int type,int speed)
+	MoveEnemy(char enemyImage,int enemyType,int enemySpeed)
 	{
 		image = enemyImage;
-		hp = enemyHp;
-		damage = enemyDamage;
+		type = enemyType;
+		speed = enemySpeed;
 	}
 	~MoveEnemy()
 	{
