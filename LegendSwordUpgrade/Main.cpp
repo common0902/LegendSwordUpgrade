@@ -4,7 +4,7 @@
 
 int main()
 {
-	srand(time(nullptr));
+	srand((unsigned int)time(nullptr));
 
 	GameState state;
 	Init(state);

@@ -1,11 +1,18 @@
 #pragma once
-#include "GameState.h"
+#include"GameState.h"
+#include"SceneState.h"
 #include "Enemy.h"
-
+#include"NormalBattleMapState.h"
+#include"EnemyBattleState.h"
 
 enum DelayType
 {
 	EnemyType,PlayerType,TestType
+};
+
+enum InBattleState
+{
+	NormalBattleMap, EnemyBattle
 };
 
 
@@ -19,10 +26,10 @@ public:
 	void Exit() override;
 
 public:
-	ULONGLONG lastInput = 0;
-	std::map<int, ULONGLONG> lastTimeMap;
+	FSM BattelSceneFsm;
+	std::map<int, ULONGLONG> lastTimeDict;
 	int curPlayerHp = 0;
-	MoveEnemy* curEnemy;
+
 
 
 public:
@@ -36,4 +43,8 @@ void GotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
 bool Random(int probability);
 void DrawImage(vector<string> image,int x, int y);
+
+
+
+
 
