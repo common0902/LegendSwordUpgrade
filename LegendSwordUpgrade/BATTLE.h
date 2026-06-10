@@ -19,7 +19,10 @@ enum InBattleState
 class BattleScene : public SceneState
 {
 public:
-	BattleScene(GameState& gameState) : SceneState(gameState);
+	BattleScene(GameState& gameState) : SceneState(gameState)
+	{
+
+	};
 	void Enter() override;
 	void Update() override;
 	void Render() const override;

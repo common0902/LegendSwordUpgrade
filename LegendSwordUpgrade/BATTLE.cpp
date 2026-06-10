@@ -6,12 +6,6 @@
 Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 
-BattleScene::BattleScene(GameState& gameState) : SceneState(gameState)
-{
-
-
-}
-
 void BattleScene::Enter()
 {
 	system("cls");
