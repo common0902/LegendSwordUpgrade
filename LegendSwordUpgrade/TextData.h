@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 
-extern std::vector<std::string> TestMap1;
+extern std::vector<std::wstring> BaseBattleUI;
+
+const int swordImageWidth = 29;
+extern std::vector<std::wstring> NullSwordImage;
 
 

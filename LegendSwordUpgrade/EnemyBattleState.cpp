@@ -10,6 +10,8 @@ void EnemyBattleState::Enter()
 
 void EnemyBattleState::Update()
 {
+	
+
 
 
 }
