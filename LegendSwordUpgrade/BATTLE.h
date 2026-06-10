@@ -1,7 +1,9 @@
 #pragma once
 #include"GameState.h"
 #include"SceneState.h"
-#include "Enemy.h"
+#include"Enemy.h"
+#include"NormalBattleMapState.h"
+#include"EnemyBattleState.h"
 
 enum DelayType
 {
@@ -17,7 +19,7 @@ enum InBattleState
 class BattleScene : public SceneState
 {
 public:
-	BattleScene(GameState& gameState) : SceneState(gameState) {}
+	BattleScene(GameState& gameState) : SceneState(gameState);
 	void Enter() override;
 	void Update() override;
 	void Render() const override;
@@ -25,24 +27,34 @@ public:
 
 public:
 	FSM BattelSceneFsm;
-	std::map<int, ULONGLONG> lastTimeDict;
 	int curPlayerHp = 0;
-
+	int curDamage = 0;
+	vector<wstring> image;
 
 
 public:
-	bool Delay(int type, ULONGLONG time);
-	bool Delay(DelayType type, ULONGLONG time);
+	void BaseUI() const;
+	void DrawPlayerStat() const;
+	void DrawCurrentSword() const;
+	
+	
 	
 };
+
+
+
 ULONGLONG GetDeltaTime(ULONGLONG lastTime);
-Vector2 GetMoveDir();
+bool Delay(int type, ULONGLONG time);
+bool Delay(DelayType type, ULONGLONG time);
 void GotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
 bool Random(int probability);
-void DrawImage(vector<string> image,int x, int y);
-
-
-
-
-
+void DrawImage(vector<wstring> image, int x, int y, int maxWIDTH, int maxHEIGHT);
+void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size);
+void DrawImage(vector<wstring> image, Vector2 pos);
+Color GetHealthColor(int curHp, int maxHp);
+string GetBarString(int value, int maxValue,
+	int barWidth, const string& fillChar = "бс", const string& emptyChar = "бр");
+string GetIntString(int value);
+string GetEmptyString(int size);
+string CenterText(string text, int size);
