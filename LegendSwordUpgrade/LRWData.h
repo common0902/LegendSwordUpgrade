@@ -1,7 +1,15 @@
 #pragma once
+#include"TextData.h"
 
 struct Vector2
 {
+public:
+	Vector2(int startx, int starty)
+	{
+		x = startx;
+		y = starty;
+	}
+	~Vector2() = default;
 public:
 	int x;
 	int y;
@@ -41,8 +49,8 @@ public:
 
 #pragma region BattleScene
 public:
-	Vector2 curPlayerPos;
-	Vector2 lastPlayerPos;
+
+
 
 
 
