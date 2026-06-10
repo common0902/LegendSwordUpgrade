@@ -4,6 +4,7 @@
 
 
 Vector2 BaseUIPos = { 120,5 };
+Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 
 void BattleScene::Enter()
 {
@@ -28,7 +29,7 @@ void BattleScene::Update()
 
 	BattelSceneFsm.Update();
 
-	if (Delay(TestType, 1000))
+	if (Delay(DelayType::TestType, 1000))
 	{
 		//curPlayerHp -= 1;
 	}
@@ -63,25 +64,23 @@ void BattleScene::BaseUI() const
 
 void BattleScene::DrawPlayerStat() const
 {
-	GotoXY(BaseUIPos + Vector2{ 2,2 });
+	GotoXY(BaseUIPos + Vector2(2,2));
 	cout << "체력 : " << GetIntString(curPlayerHp) << "/" << GetIntString(state.player.maxHp) << "        ";
 	
-	GotoXY(BaseUIPos + Vector2{ 2,3 });
+	GotoXY(BaseUIPos + Vector2(2,3));
 	SetColor(GetHealthColor(curPlayerHp, state.player.maxHp));
 	cout << GetBarString(curPlayerHp, state.player.maxHp, 10);
 	SetColor();
 
-	GotoXY(BaseUIPos + Vector2{ 2,4 });
-	cout << "공격력 : " << "1235";
+	GotoXY(BaseUIPos + Vector2(2,4));
+	cout << "공격력 : " << curDamage;
 }
 
 void BattleScene::DrawCurrentSword() const
 {
 	//currentImage != nullptr ? currentImage->image : NullSwordImage;
 	vector<wstring> image = NullSwordImage;
-	
-	DrawImage(image, BaseUIPos + Vector2{ 2,7 });
-
+	DrawImage(image, BaseUIPos + Vector2{ 2,7 }, swordImageMaxSize);
 	GotoXY(BaseUIPos + Vector2{ 1, 23 });
 	string swordText = "현재 검 : 몰라";
 	cout << CenterText(swordText, swordImageWidth);
@@ -128,20 +127,30 @@ bool Random(int probability)
 	return GetRandomRange(0, 100) < probability;
 }
 
-void DrawImage(vector<wstring> image, int x, int y)
+void DrawImage(vector<wstring> image, int x, int y,int maxWIDTH,int maxHEIGHT)
 {
 	SetUnicodeMode();
 	int size = (unsigned int)image.size();
-	for (int i = 0;i < size;++i)
+	int minHEIGHT = size < maxHEIGHT ? size : maxHEIGHT;
+	size = static_cast<int>(image[0].length());
+	int minWIDTH = size < maxWIDTH ? size : maxWIDTH;;
+	for (int i = 0;i < minHEIGHT;++i)
 	{
 		GotoXY(x, y + i);
-		wcout << image[i];
+		for (int j = 0;j < minWIDTH;++j)
+		{
+			wcout << image[i][j];
+		}
 	}
 	SetDefaultMode();
 }
 
+void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size){
+	DrawImage(image, pos.x, pos.y, size.x, size.y);
+}
+
 void DrawImage(vector<wstring> image, Vector2 pos) {
-	DrawImage(image, pos.x, pos.y);
+	DrawImage(image, pos.x,pos.y, static_cast<int>(image[0].length()), static_cast<int>(image.size()));
 }
 
 Color GetHealthColor(int curHp,int maxHp)

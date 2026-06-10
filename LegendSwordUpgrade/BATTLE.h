@@ -28,7 +28,8 @@ public:
 public:
 	FSM BattelSceneFsm;
 	int curPlayerHp = 0;
-	Sword* currentImage = nullptr;
+	int curDamage = 0;
+	vector<wstring> image;
 
 
 public:
@@ -48,7 +49,8 @@ bool Delay(DelayType type, ULONGLONG time);
 void GotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
 bool Random(int probability);
-void DrawImage(vector<wstring> image,int x, int y);
+void DrawImage(vector<wstring> image, int x, int y, int maxWIDTH, int maxHEIGHT);
+void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size);
 void DrawImage(vector<wstring> image, Vector2 pos);
 Color GetHealthColor(int curHp, int maxHp);
 string GetBarString(int value, int maxValue,

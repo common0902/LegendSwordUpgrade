@@ -4,6 +4,13 @@
 struct Vector2
 {
 public:
+	Vector2(int startx, int starty)
+	{
+		x = startx;
+		y = starty;
+	}
+	~Vector2() = default;
+public:
 	int x;
 	int y;
 
