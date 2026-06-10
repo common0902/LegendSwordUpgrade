@@ -1,9 +1,7 @@
 #pragma once
+
 #include <vector>
 #include <string>
-
-using std::string;
-using std::vector;
  
 class EnemyData
 {
@@ -12,7 +10,7 @@ public:
 	virtual ~EnemyData() = default;
 public:
 	char minImage;
-	vector<string> Image;
+	std::vector<std::string> Image;
 	int hp;
 	int damage;
 	int speed;

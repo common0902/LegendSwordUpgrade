@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "SceneState.h"
 
 class GameOverScene : public SceneState
 {

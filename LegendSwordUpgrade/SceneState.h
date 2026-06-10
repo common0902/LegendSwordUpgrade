@@ -11,7 +11,6 @@ public:
 	SceneState(GameState& gameState) : AbstractState(), state(gameState) {}
 	virtual ~SceneState() = default;
 
-
 };
 
 
