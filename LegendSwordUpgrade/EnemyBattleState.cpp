@@ -4,7 +4,10 @@
 
 void EnemyBattleState::Enter()
 {
-	cout << "EnemyBattleState";
+	ScreenReset();
+	Typing("ÀûÀ» ¸¸³µ´Ù!", 100);
+
+	WaitInput();
 	
 }
 

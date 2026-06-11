@@ -219,7 +219,7 @@ void Typing(string text, int delay,bool endl)
 
 void ScreenReset()
 {
-	DrawImage(ScreenResetText, Vector2{ 0, 0 });
+	DrawImage(ScreenResetText, Vector2{ 0, 1 });
 }
 
 void WaitInput()

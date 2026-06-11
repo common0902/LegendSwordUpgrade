@@ -34,6 +34,7 @@ public:
 	int curDamage = 0;
 	vector<wstring> curSwordImage;
 	string swordName;
+	int attackProbability = 0;
 
 public:
 	int stateLevel = 1;
