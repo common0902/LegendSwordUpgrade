@@ -57,6 +57,21 @@
     <ClCompile Include="SHOP.cpp">
       <Filter>Main\CHG</Filter>
     </ClCompile>
+    <ClCompile Include="CHGAsciiArt.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeAsciiArt.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TextData.cpp">
+      <Filter>Main\LRW</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBattleMapState.cpp">
+      <Filter>Main\LRW</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBattleState.cpp">
+      <Filter>Main\LRW</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -113,5 +128,40 @@
     <ClInclude Include="FSM.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CHGAsciiArt.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyData.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeAsciiArt.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneState.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TextData.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Main\헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="InBattleSceneState.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBattleMapState.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBattleState.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LegendSwordUpgrade.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
