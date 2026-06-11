@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "GameState.h"
 #include "SceneState.h"
+#include "UpgradeAsciiArt.h"
 
 class UpgradeScene : public SceneState
 {
