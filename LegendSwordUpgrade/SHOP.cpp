@@ -16,6 +16,12 @@ void ShopScene::Enter()
 
 void ShopScene::Update()
 {
+	if (GetKeyDown(VK_ESCAPE))
+	{
+		state.fsm.ChangeState((int)Scene::TITLE);
+		return;
+	}
+
     if (GetKeyDown(VK_SPACE) && !objs.rolling)
     {
         objs.startTime = GetTickCount64();

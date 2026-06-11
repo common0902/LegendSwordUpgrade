@@ -16,6 +16,7 @@ private:
     void RenderResult() const;
 
 private:
+    PMSAsciiObjs asciiObjs;
     UpgradeResult lastResult = UpgradeResult::SUCCESS;
     bool          hasResult = false;
     ULONGLONG     resultTime = 0;
