@@ -50,3 +50,8 @@ UpgradeResult Sword::TryUpgrade()
 }
 
 bool Sword::IsMaxTier() const { return tier >= 15; }
+
+int Sword::GetSellCost() const
+{
+    return (int)(50.0f * pow(2.0f, tier));
+}

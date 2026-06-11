@@ -5,13 +5,11 @@
 using std::vector;
 using std::string;
 
-struct AsciiObjs
+struct PMSAsciiObjs
 {
-	vector<string> plane;
-	vector<string> cloud;
-
+	vector<vector<string>> swords;
 };
 
-void AsciiInit(AsciiObjs& objs);
-void AsciiUpdate(AsciiObjs& objs);
-void AsciiRender(const AsciiObjs& objs);
+string GetSwordName(int tier);
+void PMSAsciiInit(PMSAsciiObjs& objs);
+void PMSAsciiRender(const PMSAsciiObjs& objs, int tier);

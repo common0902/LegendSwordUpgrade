@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "GameState.h"
+#include "UpgradeAsciiArt.h"
 
 class UpgradeScene : public AbstractState
 {
@@ -14,6 +15,7 @@ private:
     void RenderResult() const;
 
 private:
+    PMSAsciiObjs  asciiObjs;
     UpgradeResult lastResult = UpgradeResult::SUCCESS;
     bool          hasResult = false;
     ULONGLONG     resultTime = 0;

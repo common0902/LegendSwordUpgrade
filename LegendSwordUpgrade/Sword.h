@@ -20,8 +20,9 @@ public:
     ~Sword() = default;
 
     float GetSuccessChance() const;
-    float GetBreakChance()   const;
-    float GetDownChance()    const;
+    float GetBreakChance() const;
+    float GetDownChance() const;
     UpgradeResult TryUpgrade();
     bool IsMaxTier() const;
+    int GetSellCost() const;
 };
