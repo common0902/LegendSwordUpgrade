@@ -30,6 +30,7 @@ public:
 	{
 		if (curScene != nullptr) curScene->Render();
 	}
+	
 
 };
 

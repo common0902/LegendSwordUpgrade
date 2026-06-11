@@ -12,14 +12,17 @@ enum DelayType
 
 enum InBattleState
 {
-	NormalBattleMap, EnemyBattle
+	Normal, EnemyBattle
 };
 
 
 class BattleScene : public SceneState
 {
 public:
-	BattleScene(GameState& gameState) : SceneState(gameState);
+	BattleScene(GameState& gameState) : SceneState(gameState)
+	{
+
+	};
 	void Enter() override;
 	void Update() override;
 	void Render() const override;
@@ -29,10 +32,17 @@ public:
 	FSM BattelSceneFsm;
 	int curPlayerHp = 0;
 	int curDamage = 0;
-	vector<wstring> image;
-
+	vector<wstring> curSwordImage;
+	string swordName;
 
 public:
+	int stateLevel = 1;
+	Enemy* curBattleEnemy;
+
+
+private:
+	void StatSetting();
+
 	void BaseUI() const;
 	void DrawPlayerStat() const;
 	void DrawCurrentSword() const;
@@ -53,8 +63,12 @@ void DrawImage(vector<wstring> image, int x, int y, int maxWIDTH, int maxHEIGHT)
 void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size);
 void DrawImage(vector<wstring> image, Vector2 pos);
 Color GetHealthColor(int curHp, int maxHp);
-string GetBarString(int value, int maxValue,
-	int barWidth, const string& fillChar = "бс", const string& emptyChar = "бр");
+string GetBarString(int value, int maxValue, int barWidth, const string& fillChar = "бс", const string& emptyChar = "бр");
 string GetIntString(int value);
 string GetEmptyString(int size);
 string CenterText(string text, int size);
+void Typing(string text, int delay,bool endl = true);
+void ScreenReset();
+void WaitInput();
+int GetValidInput(int min, int max);
+

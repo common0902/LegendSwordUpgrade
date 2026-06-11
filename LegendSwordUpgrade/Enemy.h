@@ -1,21 +1,23 @@
 #pragma once
 #include "EnemyData.h"
 
-class MoveEnemy
+class Enemy
 {
 public:
-	MoveEnemy(char enemyImage,int enemyType,int enemySpeed)
+	Enemy(EnemyData data)
 	{
-		image = enemyImage;
-		type = enemyType;
-		speed = enemySpeed;
+		maxHp = data.hp;
+		curHp = maxHp;
+		damage = data.damage;
+		image = data.Image;
 	}
-	~MoveEnemy()
+	virtual ~Enemy()
 	{
 
 	}
 public:
-	char image;
-	int type;
-	int speed;
+	vector<wstring> image;
+	int curHp;
+	int maxHp;
+	int damage;
 };

@@ -4,7 +4,7 @@
 
 void EnemyBattleState::Enter()
 {
-
+	cout << "EnemyBattleState";
 	
 }
 

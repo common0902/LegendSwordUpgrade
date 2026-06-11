@@ -7,12 +7,15 @@ void GameOverScene::Enter()
 
 void GameOverScene::Update()
 {
+
 }
 
 void GameOverScene::Render() const
 {
+
 }
 
 void GameOverScene::Exit()
 {
+
 }

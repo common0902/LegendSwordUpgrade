@@ -6,50 +6,43 @@
 Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 
-BattleScene::BattleScene(GameState& gameState) : SceneState(gameState)
-{
-
-
-}
-
 void BattleScene::Enter()
 {
 	system("cls");
 
-	state.player.maxHp = 1000000;
-
-	curPlayerHp = state.player.maxHp;
-
+	StatSetting();
 	
-	BattelSceneFsm.AddState((int)InBattleState::NormalBattleMap, new NormalBattleMapState(*this));
+	DrawImage(BaseBattleUI, BaseUIPos);
+	BaseUI();
+
+	BattelSceneFsm.AddState((int)InBattleState::Normal, new NormalBattleState(*this));
 	BattelSceneFsm.AddState((int)InBattleState::EnemyBattle, new EnemyBattleState(*this));
 	
-	BattelSceneFsm.ChangeState((int)InBattleState::NormalBattleMap);
+	BattelSceneFsm.ChangeState((int)InBattleState::Normal);
+}
 
-
-	DrawImage(BaseBattleUI, BaseUIPos);
+void BattleScene::StatSetting()
+{
+	curSwordImage = TestSwordImage;
+	state.player.maxHp = 1000000;
+	curPlayerHp = state.player.maxHp;
+	curDamage = 10;
+	swordName = "리우 짱짱 검";
 }
 
 void BattleScene::Update()
 {
-
 	BattelSceneFsm.Update();
-
-	if (Delay(DelayType::TestType, 1000))
+	if (curPlayerHp <= 0)
 	{
-		//curPlayerHp -= 1;
+		state.fsm.ChangeState((int)Scene::GAMEOVER);
 	}
 }
 
 void BattleScene::Render() const
 {
 	BaseUI();
-	
 	BattelSceneFsm.Render();
-
-
-
-
 }
 
 void BattleScene::Exit()
@@ -60,9 +53,10 @@ void BattleScene::Exit()
 }
 
 
+
+
 void BattleScene::BaseUI() const
 {
-	
 	DrawPlayerStat();
 	DrawCurrentSword();
 	
@@ -79,19 +73,17 @@ void BattleScene::DrawPlayerStat() const
 	SetColor();
 
 	GotoXY(BaseUIPos + Vector2(2,4));
-	cout << "공격력 : " << curDamage;
+	cout << "공격력 : " << GetIntString(curDamage) << "    ";
 }
 
 void BattleScene::DrawCurrentSword() const
 {
-	//currentImage != nullptr ? currentImage->image : NullSwordImage;
-	vector<wstring> image = NullSwordImage;
-	DrawImage(image, BaseUIPos + Vector2{ 2,7 }, swordImageMaxSize);
+	DrawImage(curSwordImage, BaseUIPos + Vector2{ 2,7 }, swordImageMaxSize);
+
 	GotoXY(BaseUIPos + Vector2{ 1, 23 });
-	string swordText = "현재 검 : 몰라";
+	string swordText = "현재 검 : " + swordName;
 	cout << CenterText(swordText, swordImageWidth);
-	
-	
+
 }
 
 
@@ -172,8 +164,7 @@ Color GetHealthColor(int curHp,int maxHp)
 	return color;
 }
 
-string GetBarString(int value, int maxValue,
-	int barWidth, const string& fillChar, const string& emptyChar)
+string GetBarString(int value, int maxValue, int barWidth, const string& fillChar, const string& emptyChar)
 {
 	if (maxValue < 1) maxValue = 1;
 	string text = "";
@@ -188,7 +179,7 @@ string GetBarString(int value, int maxValue,
 string GetIntString(int value)
 {
 	int count = 0;
-	while (value >= 10000)
+	while (value >= 1000)
 	{
 		value /= 1000;
 		count += 1;
@@ -215,4 +206,48 @@ string CenterText(string text, int size)
 	return newText;
 }
 
+void Typing(string text, int delay,bool endl)
+{
+	int size = static_cast<int>(text.size());
+	for (int i = 0;i < size;++i)
+	{
+		Sleep(delay);
+		cout << text[i];
+	}
+	if (endl) cout << "\n";
+}
+
+void ScreenReset()
+{
+	DrawImage(ScreenResetText, Vector2{ 0, 0 });
+}
+
+void WaitInput()
+{
+	while (_kbhit())
+	{
+		_getch();
+	}
+	_getch();
+}
+
+int GetValidInput(int min, int max)
+{
+	int input;
+	while (true)
+	{
+		cin >> input;
+		if (cin.fail() || input < min || input > max)
+		{
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cout << "잘못된 입력입니다. " << min << "~"
+				<< max << "사이 숫자를 입력하세요. " << endl;
+			continue;
+		}
+		else
+			return input;
+	}
+}
 #pragma endregion
+

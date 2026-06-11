@@ -71,13 +71,39 @@ std::vector<std::wstring> TestSwordImage = {
 	L"123456789⠀1⠀2⠀3⠀4 5⠀6⠀⠀⠀⠀⠀⠀",
 };
 
-
-
-
-
-
-
-
+std::vector<std::wstring> ScreenResetText = {
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+};
 
 
 
