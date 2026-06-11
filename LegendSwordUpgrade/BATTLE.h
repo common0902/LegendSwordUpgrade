@@ -44,7 +44,7 @@ public:
 	void StatSetting();
 	void StageSetting();
 	void StageChoose();
-	int StageInput() const;
+	int StageInput(Vector2 inputPo) const;
 	void SwordSetting();
 	void EventSetting();
 
@@ -82,5 +82,4 @@ void ScreenReset();
 void WaitInput();
 int GetIntInput(int min, int max);
 bool InputYorN();
-
-
+string ToString(int value);

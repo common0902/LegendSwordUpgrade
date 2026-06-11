@@ -5,6 +5,7 @@
 
 Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
+Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 
 const int maxStage = 5;
 const int eventCount = 5;
@@ -43,7 +44,7 @@ void BattleScene::StageSetting() {
 
 		NextLine
 
-		Typing("게임시작    Y/N", 10);
+		Typing("전투시작    Y/N", 10);
 
 		b = InputYorN();
 
@@ -54,9 +55,8 @@ void BattleScene::StageSetting() {
 
 void BattleScene::StageChoose()
 {
-	GotoXY(0, 0);
 	SkipBreak();
-	Typing("플레이할 스테이지를 입력해 주세요.\n", 25);
+	Typing("플레이할 스테이지를 입력해 주세요.\n", 10);
 
 	string stageText = "";
 	for (int i = 1;i <= maxStage;++i)
@@ -70,21 +70,32 @@ void BattleScene::StageChoose()
 	}
 	SetColor();
 	cout << "\n";
+	SkipBreak();
 
-	curState = StageInput();
+	curState = StageInput(Vector2{0,5});
 	curPhase = 1;
 	curMaxPhase = GetMaxPhase(curState);
 
 	Typing(std::to_string(curState) + "스테이지 선택됨", 10);
 }
 
-int BattleScene::StageInput() const
+int BattleScene::StageInput(Vector2 inputPos) const
 {
 	int stage;
 	while (true)
 	{
-		stage = GetIntInput(1, maxStage);
-		if (stage > curClearStage + 1)
+		cin >> stage;
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cout << "잘못된 입력입니다.\n";
+		}
+		else if (stage < 1 || stage > maxStage)
+		{
+			cout << "존재하지 않는 스테이지 입니다.\n";
+		}
+		else if (stage > curClearStage + 1)
 		{
 			cout << "이전 스테이지가 클리어 되지 않았습니다.\n";
 		}
@@ -110,8 +121,7 @@ void BattleScene::EventSetting()
 void BattleScene::Update()
 {
 	ScreenReset();
-
-	cout << "페이즈 : " << curPhase << "/" << curMaxPhase << "\n";
+	Typing("페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase) + "\n",50);
 
 	BattleEventType battleType = GetRandomEvent();
 	eventControler.Start(battleType);
@@ -130,7 +140,7 @@ void BattleScene::StageClear()
 	GotoXY(60, 20);
 	Typing("스테이지 클리어!", 50);
 
-	CanSkipSleep(5000);
+	CanSkipSleep(3000);
 
 	GotoXY(50, 25);
 	cout << "스테이지를 나가려면 아무 키나 누르세요.";
@@ -302,7 +312,7 @@ string GetIntString(int value)
 
 string GetEmptyString(int size)
 {
-	return string(size, '#');
+	return string(size, ' ');
 }
 
 string CenterText(string text, int size)
@@ -356,6 +366,7 @@ void WaitInput()
 {
 	SkipBreak();
 	_getch();
+	_kbhit();
 }
 
 int GetIntInput(int min, int max)
@@ -400,6 +411,11 @@ bool InputYorN()
 	}
 	SkipBreak();
 	return b;
+}
+
+string ToString(int value)
+{
+	return std::to_string(value);
 }
 
 #pragma endregion
