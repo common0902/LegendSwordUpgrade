@@ -1,12 +1,13 @@
 #include "BATTLE.h"
-#include "NormalBattleMapState.h"
-#include "EnemyBattleState.h"
+#include"BattleSceneEvents.cpp"
 
+#define NextLine cout << "\n";
 
 Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 
 const int maxStage = 5;
+const int eventCount = 5;
 
 void BattleScene::Enter()
 {
@@ -14,18 +15,47 @@ void BattleScene::Enter()
 
 	StatSetting();
 	
-	DrawImage(BaseBattleUI, BaseUIPos);
-	BaseUI();
-
-	BattelSceneFsm.AddState((int)InBattleState::BattleSetting, new BattleSettingScene(*this));
-	BattelSceneFsm.AddState((int)InBattleState::EnemyBattle, new EnemyBattleState(*this));
-	
 	StageSetting();
+
+	SwordSetting();
+
+	EventSetting();
+
+	DrawImage(BaseBattleUI, BaseUIPos);
+	DrawBaseUI();
+}
+
+void BattleScene::StatSetting()
+{
+	curSwordImage = TestSwordImage;
+	state.player.maxHp = 100;
+	curPlayerHp = state.player.maxHp;
+	curDamage = 10;
+	swordName = "리우 짱짱 검";
 }
 
 void BattleScene::StageSetting() {
+	
+	bool b;
+	while (true)
+	{
+		StageChoose();
+
+		NextLine
+
+		Typing("게임시작    Y/N", 10);
+
+		b = InputYorN();
+
+		if (b) break;
+		else ScreenReset();
+	}
+}
+
+void BattleScene::StageChoose()
+{
 	GotoXY(0, 0);
-	RemoveInputStack();
+	SkipBreak();
 	Typing("플레이할 스테이지를 입력해 주세요.\n", 25);
 
 	string stageText = "";
@@ -42,8 +72,10 @@ void BattleScene::StageSetting() {
 	cout << "\n";
 
 	curState = StageInput();
+	curPhase = 1;
+	curMaxPhase = GetMaxPhase(curState);
 
-	ChangeState(InBattleState::EnemyBattle);
+	Typing(std::to_string(curState) + "스테이지 선택됨", 10);
 }
 
 int BattleScene::StageInput() const
@@ -61,51 +93,67 @@ int BattleScene::StageInput() const
 	return stage;
 }
 
-void BattleScene::StatSetting()
+void BattleScene::SwordSetting()
 {
-	curSwordImage = TestSwordImage;
-	state.player.maxHp = 1000000;
-	curPlayerHp = state.player.maxHp;
-	curDamage = 10;
-	swordName = "리우 짱짱 검";
+	
+
 }
+
+void BattleScene::EventSetting()
+{
+	eventControler.AddEvent(BattleEventType::Heal, new HealEvent(*this));
+
+
+}
+
 
 void BattleScene::Update()
 {
-	BattelSceneFsm.Update();
+	ScreenReset();
 
-	if (GetKeyDown(VK_ESCAPE))
-	{
-		state.fsm.ChangeState((int)Scene::TITLE);
-	}
+	cout << "페이즈 : " << curPhase << "/" << curMaxPhase << "\n";
 
+	BattleEventType battleType = GetRandomEvent();
+	eventControler.Start(battleType);
 
+	if (curPhase == curMaxPhase) StageClear();
+	else curPhase += 1;
+	
+	
+}
 
+void BattleScene::StageClear()
+{
+	ScreenReset();
+	SkipBreak();
+
+	GotoXY(60, 20);
+	Typing("스테이지 클리어!", 50);
+
+	CanSkipSleep(5000);
+
+	GotoXY(50, 25);
+	cout << "스테이지를 나가려면 아무 키나 누르세요.";
+
+	WaitInput();
+
+	state.fsm.ChangeState((int)Scene::TITLE);
 }
 
 void BattleScene::Render() const
 {
-	BaseUI();
-	BattelSceneFsm.Render();
+	DrawBaseUI();
 }
 
 void BattleScene::Exit()
 {
 	system("cls");
-
-	
 }
 
-void BattleScene::ChangeState(InBattleState battleState)
-{
-	BattelSceneFsm.ChangeState((int)battleState);
-}
-
-void BattleScene::BaseUI() const
+void BattleScene::DrawBaseUI() const
 {
 	DrawPlayerStat();
 	DrawCurrentSword();
-	
 }
 
 void BattleScene::DrawPlayerStat() const
@@ -130,6 +178,21 @@ void BattleScene::DrawCurrentSword() const
 	string swordText = "현재 검 : " + swordName;
 	cout << CenterText(swordText, swordImageWidth);
 
+}
+
+BattleEventType BattleScene::GetRandomEvent() const
+{
+
+
+
+	return BattleEventType::Heal;
+}
+
+int BattleScene::GetMaxPhase(int stage) const
+{
+
+
+	return stage * 5;
 }
 
 
@@ -239,7 +302,7 @@ string GetIntString(int value)
 
 string GetEmptyString(int size)
 {
-	return string(size, ' ');
+	return string(size, '#');
 }
 
 string CenterText(string text, int size)
@@ -252,11 +315,20 @@ string CenterText(string text, int size)
 	return newText;
 }
 
-void RemoveInputStack()
+void SkipBreak()
 {
 	while (_kbhit())
 	{
 		_getch();
+	}
+}
+
+void CanSkipSleep(int delay)
+{
+	int count = delay / 10;
+	for (int i = 0;i < count;++i) {
+		if (_kbhit()) break;
+		else Sleep(10);
 	}
 }
 
@@ -282,7 +354,7 @@ void ScreenReset()
 
 void WaitInput()
 {
-	RemoveInputStack();
+	SkipBreak();
 	_getch();
 }
 
@@ -303,6 +375,31 @@ int GetIntInput(int min, int max)
 		else
 			return input;
 	}
+}
+
+bool InputYorN()
+{
+	string input;
+	bool b;
+	while (true)
+	{
+		cin >> input;
+		if (input == "Y" || input == "y")
+		{
+			b = true;
+			break;
+		}
+		else if (input == "N" || input == "n")
+		{
+			b = false;
+			break;
+		}
+		else {
+			cout << "잘못된 입력입니다.\n";
+		}
+	}
+	SkipBreak();
+	return b;
 }
 
 #pragma endregion

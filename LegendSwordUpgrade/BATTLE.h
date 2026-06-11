@@ -2,17 +2,16 @@
 #include"GameState.h"
 #include"SceneState.h"
 #include"Enemy.h"
-#include"NormalBattleMapState.h"
-#include"EnemyBattleState.h"
+#include"EventControler.h"
 
 enum DelayType
 {
 	EnemyType,PlayerType,TestType
 };
 
-enum InBattleState
+enum BattleEventType
 {
-	BattleSetting, EnemyBattle
+	Heal, EnemyBattle,Null
 };
 
 
@@ -27,36 +26,37 @@ public:
 	void Update() override;
 	void Render() const override;
 	void Exit() override;
-
-private:
-	FSM BattelSceneFsm;
 	
 public:
 	int curPlayerHp = 0;
 	int curDamage = 0;
+	int attackProbability = 0;
 	vector<wstring> curSwordImage;
 	string swordName;
-	int attackProbability = 0;
 
 public:
+	EventControler eventControler;
 	int curState = 1;
 	int curClearStage = 0;
-	Enemy* curBattleEnemy;
-
-
-private:
+	int curPhase = 1;
+	int curMaxPhase = 1;
+public:
 	void StatSetting();
 	void StageSetting();
+	void StageChoose();
 	int StageInput() const;
+	void SwordSetting();
+	void EventSetting();
 
-	void BaseUI() const;
+	void DrawBaseUI() const;
 	void DrawPlayerStat() const;
 	void DrawCurrentSword() const;
-	
-public:
-	void ChangeState(InBattleState battleState);
 
-	
+	void StageClear();
+
+public:
+	BattleEventType GetRandomEvent() const;
+	int GetMaxPhase(int stage) const;
 };
 
 
@@ -75,10 +75,12 @@ string GetBarString(int value, int maxValue, int barWidth, const string& fillCha
 string GetIntString(int value);
 string GetEmptyString(int size);
 string CenterText(string text, int size);
-void RemoveInputStack();
+void SkipBreak();
+void CanSkipSleep(int delay);
 void Typing(string text, int delay,bool endl = true);
 void ScreenReset();
 void WaitInput();
 int GetIntInput(int min, int max);
+bool InputYorN();
 
 

@@ -72,6 +72,9 @@
     <ClCompile Include="EnemyBattleState.cpp">
       <Filter>Main\LRW</Filter>
     </ClCompile>
+    <ClCompile Include="BattleSceneEvents.cpp">
+      <Filter>Main\LRW</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -156,6 +159,12 @@
       <Filter>Main\LRW</Filter>
     </ClInclude>
     <ClInclude Include="EnemyBattleState.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleEvent.h">
+      <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="EventControler.h">
       <Filter>Main\LRW</Filter>
     </ClInclude>
   </ItemGroup>
