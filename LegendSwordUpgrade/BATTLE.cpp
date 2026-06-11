@@ -6,6 +6,8 @@
 Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 
+const int maxStage = 5;
+
 void BattleScene::Enter()
 {
 	system("cls");
@@ -15,10 +17,48 @@ void BattleScene::Enter()
 	DrawImage(BaseBattleUI, BaseUIPos);
 	BaseUI();
 
-	BattelSceneFsm.AddState((int)InBattleState::Normal, new NormalBattleState(*this));
+	BattelSceneFsm.AddState((int)InBattleState::BattleSetting, new BattleSettingScene(*this));
 	BattelSceneFsm.AddState((int)InBattleState::EnemyBattle, new EnemyBattleState(*this));
 	
-	BattelSceneFsm.ChangeState((int)InBattleState::Normal);
+	StageSetting();
+}
+
+void BattleScene::StageSetting() {
+	GotoXY(0, 0);
+	RemoveInputStack();
+	Typing("플레이할 스테이지를 입력해 주세요.\n", 25);
+
+	string stageText = "";
+	for (int i = 1;i <= maxStage;++i)
+	{
+		if (i <= curClearStage + 1)
+			SetColor();
+		else
+			SetColor(Color::RED);
+
+		Typing(std::to_string(i) + " ", 10, false);
+	}
+	SetColor();
+	cout << "\n";
+
+	curState = StageInput();
+
+	ChangeState(InBattleState::EnemyBattle);
+}
+
+int BattleScene::StageInput() const
+{
+	int stage;
+	while (true)
+	{
+		stage = GetIntInput(1, maxStage);
+		if (stage > curClearStage + 1)
+		{
+			cout << "이전 스테이지가 클리어 되지 않았습니다.\n";
+		}
+		else break;
+	}
+	return stage;
 }
 
 void BattleScene::StatSetting()
@@ -33,10 +73,14 @@ void BattleScene::StatSetting()
 void BattleScene::Update()
 {
 	BattelSceneFsm.Update();
-	if (curPlayerHp <= 0)
+
+	if (GetKeyDown(VK_ESCAPE))
 	{
-		state.fsm.ChangeState((int)Scene::GAMEOVER);
+		state.fsm.ChangeState((int)Scene::TITLE);
 	}
+
+
+
 }
 
 void BattleScene::Render() const
@@ -52,8 +96,10 @@ void BattleScene::Exit()
 	
 }
 
-
-
+void BattleScene::ChangeState(InBattleState battleState)
+{
+	BattelSceneFsm.ChangeState((int)battleState);
+}
 
 void BattleScene::BaseUI() const
 {
@@ -206,32 +252,41 @@ string CenterText(string text, int size)
 	return newText;
 }
 
+void RemoveInputStack()
+{
+	while (_kbhit())
+	{
+		_getch();
+	}
+}
+
 void Typing(string text, int delay,bool endl)
 {
 	int size = static_cast<int>(text.size());
 	for (int i = 0;i < size;++i)
 	{
-		Sleep(delay);
 		cout << text[i];
+		if (_kbhit()) {
+			delay = 0;
+		}
+		Sleep(delay);
 	}
 	if (endl) cout << "\n";
 }
 
 void ScreenReset()
 {
-	DrawImage(ScreenResetText, Vector2{ 0, 1 });
+	DrawImage(ScreenResetText, Vector2{ 0, 0 });
+	GotoXY(0, 0);
 }
 
 void WaitInput()
 {
-	while (_kbhit())
-	{
-		_getch();
-	}
+	RemoveInputStack();
 	_getch();
 }
 
-int GetValidInput(int min, int max)
+int GetIntInput(int min, int max)
 {
 	int input;
 	while (true)
@@ -241,13 +296,14 @@ int GetValidInput(int min, int max)
 		{
 			cin.clear();
 			cin.ignore(1000, '\n');
-			cout << "잘못된 입력입니다. " << min << "~"
-				<< max << "사이 숫자를 입력하세요. " << endl;
+			cout << "잘못된 입력입니다.\n" << min << "~"
+				<< max << "사이 숫자를 입력하세요.\n";
 			continue;
 		}
 		else
 			return input;
 	}
 }
+
 #pragma endregion
 

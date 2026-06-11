@@ -12,7 +12,7 @@ enum DelayType
 
 enum InBattleState
 {
-	Normal, EnemyBattle
+	BattleSetting, EnemyBattle
 };
 
 
@@ -28,8 +28,10 @@ public:
 	void Render() const override;
 	void Exit() override;
 
-public:
+private:
 	FSM BattelSceneFsm;
+	
+public:
 	int curPlayerHp = 0;
 	int curDamage = 0;
 	vector<wstring> curSwordImage;
@@ -37,18 +39,23 @@ public:
 	int attackProbability = 0;
 
 public:
-	int stateLevel = 1;
+	int curState = 1;
+	int curClearStage = 0;
 	Enemy* curBattleEnemy;
 
 
 private:
 	void StatSetting();
+	void StageSetting();
+	int StageInput() const;
 
 	void BaseUI() const;
 	void DrawPlayerStat() const;
 	void DrawCurrentSword() const;
 	
-	
+public:
+	void ChangeState(InBattleState battleState);
+
 	
 };
 
@@ -68,8 +75,10 @@ string GetBarString(int value, int maxValue, int barWidth, const string& fillCha
 string GetIntString(int value);
 string GetEmptyString(int size);
 string CenterText(string text, int size);
+void RemoveInputStack();
 void Typing(string text, int delay,bool endl = true);
 void ScreenReset();
 void WaitInput();
-int GetValidInput(int min, int max);
+int GetIntInput(int min, int max);
+
 

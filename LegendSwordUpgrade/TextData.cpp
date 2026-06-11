@@ -103,6 +103,21 @@ std::vector<std::wstring> ScreenResetText = {
 	L"                                                                   ",
 	L"                                                                   ",
 	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
+	L"                                                                   ",
 };
 
 
