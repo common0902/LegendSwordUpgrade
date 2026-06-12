@@ -58,7 +58,6 @@ void BattleScene::StageChoose()
 	SkipBreak();
 	Typing("플레이할 스테이지를 입력해 주세요.\n", 10);
 
-	string stageText = "";
 	for (int i = 1;i <= maxStage;++i)
 	{
 		if (i <= curClearStage + 1)
@@ -121,10 +120,23 @@ void BattleScene::EventSetting()
 void BattleScene::Update()
 {
 	ScreenReset();
-	Typing("페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase) + "\n",50);
+	SkipBreak();
+
+	GotoXY(60, 20);
+	string text = "페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase);
+	Typing(text, 10);
+	CanSkipSleep(500);
+	GotoXY(60, 20);
+	Typing(string(text.length(), ' '), 10);
+
+	GotoXY(0, 0);
+	Typing("페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase) + "\n",10);
 
 	BattleEventType battleType = GetRandomEvent();
 	eventControler.Start(battleType);
+
+	SkipBreak();
+	CanSkipSleep(2000);
 
 	if (curPhase == curMaxPhase) StageClear();
 	else curPhase += 1;
@@ -140,7 +152,7 @@ void BattleScene::StageClear()
 	GotoXY(60, 20);
 	Typing("스테이지 클리어!", 50);
 
-	CanSkipSleep(3000);
+	CanSkipSleep(1500);
 
 	GotoXY(50, 25);
 	cout << "스테이지를 나가려면 아무 키나 누르세요.";
