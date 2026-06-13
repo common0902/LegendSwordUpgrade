@@ -5,7 +5,8 @@ constexpr int RESULT_DISPLAY_MS = 1500;
 
 void UpgradeScene::Enter()
 {
-    hasResult = false;
+    PMSAsciiInit(asciiObjs);
+    hasResult = false; 
     system("cls");
 }
 
@@ -34,14 +35,28 @@ void UpgradeScene::Update()
         if (lastResult == UpgradeResult::BREAK)
             ShakeConsoleWindow(8, 400, 30);
     }
+
+    if (GetKeyDown('S'))
+    {
+        state.gold += state.curSword.GetSellCost();
+        state.curSword = Sword{};
+        hasResult = false;
+    }
 }
 
 void UpgradeScene::Render() const
 {
     Sword& sw = state.curSword;
 
-    SetColor(Color::LIGHT_YELLOW);
+    PMSAsciiRender(asciiObjs, sw.tier);
+
+    SetColor(Color::LIGHT_VIOLET);
     GotoXY(2, 1);  cout << "[ 강화 ]";
+
+    SetColor(Color::WHITE);
+    string name = "+" + std::to_string(sw.tier) + " " + GetSwordName(sw.tier);
+    GotoXY(2, 17); 
+    cout << name << "     ";
 
     SetColor(Color::YELLOW);
     GotoXY(2, 3);  cout << "골드: " << state.gold << "     ";
@@ -50,22 +65,23 @@ void UpgradeScene::Render() const
     GotoXY(2, 5);  cout << "현재 강화 단계 : +" << sw.tier << "   ";
     GotoXY(2, 6);  cout << "공격력         : " << sw.damage << "   ";
     GotoXY(2, 7);  cout << "강화 비용      : " << sw.upgradeCost << "   ";
+    GotoXY(2, 8); cout << "판매 비용      : " << state.curSword.GetSellCost() << "G   ";
 
     SetColor(Color::LIGHT_GREEN);
-    GotoXY(2, 9);  cout << "성공: " << (int)sw.GetSuccessChance() << "%   ";
+    GotoXY(2, 10);  cout << "성공: " << (int)sw.GetSuccessChance() << "%   ";
     SetColor(Color::LIGHT_YELLOW);
-    GotoXY(2, 10); cout << "하락: " << (int)sw.GetDownChance() << "%   ";
+    GotoXY(2, 11); cout << "하락: " << (int)sw.GetDownChance() << "%   ";
     SetColor(Color::LIGHT_RED);
-    GotoXY(2, 11); cout << "파괴: " << (int)sw.GetBreakChance() << "%   ";
+    GotoXY(2, 12); cout << "파괴: " << (int)sw.GetBreakChance() << "%   ";
 
     SetColor(Color::LIGHT_GRAY);
-    GotoXY(2, 13);
+    GotoXY(2, 14);
     if (sw.IsMaxTier())
         cout << "최대 강화 단계입니다!          ";
     else if (state.gold < sw.upgradeCost)
         cout << "골드가 부족합니다.             ";
     else
-        cout << "[ENTER] 강화   [ESC] 돌아가기 ";
+        cout << "[ENTER] 강화   [S] 판매   [ESC] 돌아가기";
 
     RenderResult();
 }
@@ -79,7 +95,7 @@ void UpgradeScene::RenderResult() const
     GotoXY(2, 15);
     if (!showingResult)
     {
-        cout << "                    ";
+        cout << "                                                          ";
         return;
     }
 
