@@ -24,6 +24,8 @@ void ShopScene::Update()
 
     if (GetKeyDown(VK_SPACE) && !objs.rolling)
     {
+		ShakeConsoleWindow(100, 0.4f, 2);
+
         objs.startTime = GetTickCount64();
         objs.rolling = true;
 
@@ -33,7 +35,7 @@ void ShopScene::Update()
 			objs.success = false;
 			objs.superSuccess = false;
 		}
-		else if (p < state.ChgData.successPercent)
+		else if (p < state.ChgData.successPercent + state.ChgData.failPercent)
 		{
 			objs.success = true;
 			objs.superSuccess = false;
@@ -43,6 +45,8 @@ void ShopScene::Update()
 			objs.success = false;
 			objs.superSuccess = true;
 		}
+		GotoXY(0, 40);
+	    	wcout << p;
     }
 
 	if (!objs.getItem.empty())
@@ -50,9 +54,9 @@ void ShopScene::Update()
 		wstring itemS;
 
 		if (objs.success)
-			state.ChgData.haveTotem[objs.getItem] += 1;
+			state.ChgData.haveTotem[objs.getItem].first += 1;
 		else if (objs.superSuccess)
-			state.ChgData.haveTotem[objs.getItem] += 5;
+			state.ChgData.haveTotem[objs.getItem].first += 5;
 
 		objs.getItem.clear();
 	}

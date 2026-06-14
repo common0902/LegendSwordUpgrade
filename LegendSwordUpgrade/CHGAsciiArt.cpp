@@ -6,7 +6,7 @@ using std::wstring;
 
 void CHGAsciiInit(AsciiObjs& objs)
 {
-	objs.slotMachine =
+	objs.slotMachineArt =
 	{
 	L"   ╔════════════════════════════════════╗   ",
     L"   ║         ***LUCKY SLOTS***          ║   ",
@@ -21,20 +21,46 @@ void CHGAsciiInit(AsciiObjs& objs)
     L"   ║           ║            ║           ║   ",
     L"   ║           ║            ║           ║   ",
     L"   ╠═══════════╩════════════╩═══════════╣   ",
-    L"   ║  GOLD  :                           ║   ",
-    L"   ║  Totem :                           ║   ",
     L"  ╔╩════════════════════════════════════╩╗  ",
     L" ╔╝                                      ╚╗ ",
     L" ║               || SPIN ||               ║ ",
     L"╔╝                                        ╚╗",
     L"╠══════════════════════════════════════════╣",
-    L"║                                          ║",
-    L"║                                          ║",
-    L"║         1 - 1 - 1 => WIN     x 5         ║",
-    L"║         $ - $ - $ => BONUS   x 10        ║",
-    L"║         7 - 7 - 7 => JACKPOT x 50        ║",
+    L"║               WIN     = 75%              ║",
+    L"║               BONUS   = 20%              ║",
+    L"║               JACKPOT = 5%               ║",
     L"╚══════════════════════════════════════════╝"
 	};
+    objs.infoUIArt =
+    {
+     L"⡤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⢤",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⣇⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+     L"⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉"
+    };
+
+
 	objs.slotArt.push_back(
 	{	
     L"╔═════╗",
@@ -72,6 +98,34 @@ void CHGAsciiInit(AsciiObjs& objs)
     objs.resultShowInterval = 700;
     objs.success = false;
     objs.superSuccess = false;
+    objs.resultShow = false;
+
+    CHGAsciiInitRender(objs);
+}
+
+void CHGAsciiInitRender(AsciiObjs& objs)
+{
+    _setmode(_fileno(stdout), _O_U16TEXT);
+
+    int slotMachineLines = (int)objs.slotMachineArt.size();
+    SetColor(Color::LIGHT_YELLOW);
+    for (int i = 0; i < slotMachineLines; ++i)
+    {
+        GotoXY(0, i + 10);
+        wcout << objs.slotMachineArt[i];
+    }
+    SetColor();
+
+    int infoLines = (int)objs.infoUIArt.size();
+    SetColor();
+    for (int i = 0; i < infoLines; ++i)
+    {
+        GotoXY(50, 10 + i);
+        wcout << objs.infoUIArt[i];
+    }
+
+    _setmode(_fileno(stdout), _O_TEXT);
+
 }
 
 void CHGAsciiUpdate(AsciiObjs& objs)
@@ -143,6 +197,13 @@ void CHGAsciiUpdate(AsciiObjs& objs)
 
                 std::random_shuffle(objs.slotNum.begin(), objs.slotNum.end());
             }
+
+            if (objs.success)
+                SetColor(Color::LIGHT_GREEN);
+            else if (objs.superSuccess)
+                SetColor(Color::YELLOW);
+            else
+                SetColor(Color::LIGHT_RED);
         }
 
         objs.rolling = false;
@@ -162,26 +223,10 @@ void CHGAsciiUpdate(AsciiObjs& objs)
 
 void CHGAsciiRender(const AsciiObjs& objs)
 {
-    int slotMachineLines = (int)objs.slotMachine.size();
-    SetColor(Color::LIGHT_YELLOW);
     _setmode(_fileno(stdout), _O_U16TEXT);
-    for (int i = 0; i < slotMachineLines; ++i)
-    {
-        GotoXY(0, i + 10);
-        wcout << objs.slotMachine[i];
-    }
-    SetColor();
+    
 
-    GotoXY(14, 23);
-    wcout << objs.currentGold;
-    GotoXY(14, 24);
-    for (auto item = objs.items->begin(); item != objs.items->end(); ++item)
-    {
-        wcout << item->first + L"X";
-        wcout << item->second << L"/";
-    }
-    //cout << "\r"
-
+    CHGRenderInfoUI(objs, 50, 10);
 
     for (int i = 0; i < (int)objs.slotNum.size(); ++i)
     {
@@ -195,6 +240,16 @@ void CHGRenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex)
 {
     int slotX[] = { 4, 16, 29 };
     int slotY = 14; 
+    int slotW = 11; 
+    int slotH = 8;  
+
+    
+    for (int i = 0; i < slotH; ++i)
+    {
+        GotoXY(slotX[slotIndex], slotY + i);
+        wcout << wstring(slotW, L' ');
+    }
+
 
     const vector<wstring>& art = objs.slotArt[artIndex];
     int artLines = (int)art.size();
@@ -203,15 +258,40 @@ void CHGRenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex)
     int offsetY = (8 - artLines) / 2;
     int offsetX = (12 - art[0].size()) / 2;
 
-    if (objs.superSuccess)
-        SetColor(Color::YELLOW);
-    else
-        SetColor(Color::WHITE);
+   
+
     for (int i = 0; i < artLines; ++i)
     {
         GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
         wcout << art[i];
     }
     SetColor();
+}
+
+void CHGRenderInfoUI(const AsciiObjs& objs, int renderX, int renderY)
+{
+    
+
+    GotoXY(renderX + 2, renderY + 1);
+    wcout << L"보유 골드: " << objs.currentGold;
+    GotoXY(renderX + 2, renderY + 3);
+    wcout << L"보유 토템: ";
+    GotoXY(renderX + 2, renderY + 4);
+    for (auto item = objs.items->begin(); item != objs.items->end(); ++item)
+    {
+        wcout << item->first + L" X ";
+        wcout << item->second.first << L"|";
+    }
+
+    int yOffset = 0;
+    for (auto item = objs.items->begin(); item != objs.items->end(); ++item)
+    {
+        GotoXY(renderX + 2, renderY + 7 + yOffset);
+        wcout << item->first <<L": ";
+        wcout << item->second.second;
+        yOffset++;
+    }
+
+
 }
 
