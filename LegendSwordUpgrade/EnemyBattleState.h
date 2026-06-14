@@ -1,6 +1,7 @@
 #pragma once
 #include"InBattleSceneState.h"
 
+
 class EnemyBattleState : public InBattleSceneState
 {
 public:
@@ -9,4 +10,7 @@ public:
 	void Update() override;
 	void Render() const override;
 	void Exit() override;
+
+private:
+	int curStage = 0;
 };

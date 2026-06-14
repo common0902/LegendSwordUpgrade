@@ -4,11 +4,15 @@
 
 void EnemyBattleState::Enter()
 {
+	curStage = battleScene.curState;
+
 	ScreenReset();
 	Typing("적을 만났다!", 100);
 
+
 	WaitInput();
-	
+
+
 }
 
 void EnemyBattleState::Update()
