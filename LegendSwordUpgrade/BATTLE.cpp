@@ -279,7 +279,7 @@ void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size){
 }
 
 void DrawImage(vector<wstring> image, Vector2 pos) {
-	DrawImage(image, pos.x,pos.y, static_cast<int>(image[0].length()), static_cast<int>(image.size()));
+	DrawImage(image, pos, Vector2(static_cast<int>(image[0].length()), static_cast<int>(image.size())));
 }
 
 Color GetHealthColor(int curHp,int maxHp)
