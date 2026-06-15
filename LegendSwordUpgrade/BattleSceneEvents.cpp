@@ -17,3 +17,22 @@ public:
 	}
 
 };
+
+
+class EnemyBattleEvent : public BattleEvent
+{
+public:
+	EnemyBattleEvent(BattleScene& scene) : BattleEvent(scene) {}
+	virtual ~EnemyBattleEvent() = default;
+	void Start() {
+
+		
+		Typing("적을 만났다!", 10);
+		
+		battleScene.curPlayerHp -= 20;
+
+
+		
+	}
+
+};

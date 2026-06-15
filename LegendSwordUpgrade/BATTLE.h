@@ -40,7 +40,9 @@ public:
 	int curState = 1;
 	int curClearStage = 0;
 	int curPhase = 1;
+	int prevPhase = 1;
 	int curMaxPhase = 1;
+
 public:
 	void StatSetting();
 	void StageSetting();
@@ -87,3 +89,5 @@ string ToString(int value);
 void CLS();
 bool IsNumder(const string text);
 int ToInt(const string text);
+Vector2 GetMousePos();
+bool GetMouseDown();

@@ -135,8 +135,12 @@ void BattleScene::EventSetting()
 
 void BattleScene::Update()
 {
+	
 	ScreenReset();
 	SkipBreak();
+
+	GotoXY(GetMousePos());
+	cout << "L";
 
 	GotoXY(60, 20);
 	string text = "ÆäÀÌÁî : " + ToString(curPhase) + "/" + ToString(curMaxPhase);
@@ -461,6 +465,20 @@ bool IsNumder(const string text)
 int ToInt(const string text)
 {
 	return std::stoi(text);
+}
+
+Vector2 GetMousePos()
+{
+	POINT point = GetMouseCellPos();
+	return Vector2{point.x,point.y};
+}
+
+
+bool GetMouseDown()
+{
+	
+
+	return false;
 }
 
 #pragma endregion
