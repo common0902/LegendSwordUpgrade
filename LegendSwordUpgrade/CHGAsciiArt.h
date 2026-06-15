@@ -15,6 +15,7 @@ struct AsciiObjs
 
 	vector<wstring> slotMachineArt;
 	vector<vector<wstring>> slotArt;
+	vector<vector<wstring>> nullSlot;
 	vector<wstring> infoUIArt;
 	int currentGold;
 	map<wstring, pair<int, wstring>>* items;

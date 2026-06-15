@@ -88,6 +88,26 @@ void CHGAsciiInit(AsciiObjs& objs)
     L"  $$$  ",
     L"   |   ",
     });
+    objs.slotArt.push_back(
+    {
+    L",d88b.d88b,",
+    L"88888888888",
+    L"`Y8888888Y'",
+    L"  `Y888Y'  ",
+    L"    `Y'    "
+    });
+    objs.nullSlot.push_back(
+    {
+    L"           ",
+    L"           ",
+    L"           ",
+    L"           ",
+    L"           ",
+    L"           ",
+    L"           ",
+    L"           "
+
+    });
 
     objs.slotNum = { 0, 1, 2 }; 
     objs.rolling = false;
@@ -95,7 +115,7 @@ void CHGAsciiInit(AsciiObjs& objs)
     objs.rollingTime = 2000;
     objs.lastChangeTime = 0;
     objs.changeInterval = 100;
-    objs.resultShowInterval = 700;
+    objs.resultShowInterval = 400;
     objs.success = false;
     objs.superSuccess = false;
     objs.resultShow = false;
@@ -158,6 +178,8 @@ void CHGAsciiUpdate(AsciiObjs& objs)
             case 2: 
                 getItem = L"$";
                 break;
+            case 3:
+                getItem = L"♥";
             }
 
             objs.getItem = getItem;
@@ -197,15 +219,9 @@ void CHGAsciiUpdate(AsciiObjs& objs)
 
                 std::random_shuffle(objs.slotNum.begin(), objs.slotNum.end());
             }
-
-            if (objs.success)
-                SetColor(Color::LIGHT_GREEN);
-            else if (objs.superSuccess)
-                SetColor(Color::YELLOW);
-            else
-                SetColor(Color::LIGHT_RED);
         }
 
+        objs.resultShow = true;
         objs.rolling = false;
         return;
     }
@@ -223,6 +239,7 @@ void CHGAsciiUpdate(AsciiObjs& objs)
 
 void CHGAsciiRender(const AsciiObjs& objs)
 {
+
     _setmode(_fileno(stdout), _O_U16TEXT);
     
 
@@ -232,6 +249,7 @@ void CHGAsciiRender(const AsciiObjs& objs)
     {
         CHGRenderSlotArt(objs, i, objs.slotNum[i]);
     }
+
 
     _setmode(_fileno(stdout), _O_TEXT);
 }
@@ -258,22 +276,73 @@ void CHGRenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex)
     int offsetY = (8 - artLines) / 2;
     int offsetX = (12 - art[0].size()) / 2;
 
-   
+    //if (objs.resultShow)
+    //{
+    //    for (int i = 0; i < artLines; ++i)
+    //    {
+    //        GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
+    //        wcout << art[i];
+    //    }
 
-    for (int i = 0; i < artLines; ++i)
+    //    /*if (objs.success)
+    //        SetColor(Color::LIGHT_GREEN);
+    //    else if (objs.superSuccess)
+    //        SetColor(Color::YELLOW);
+    //    else
+    //        SetColor(Color::LIGHT_RED);*/
+
+    //    /*for (int i = 0; i < objs.slotNum.size(); i++)
+    //    {*/
+    //        ULONGLONG startTime = GetTickCount64();
+    //        ULONGLONG now;
+    //        while (true)
+    //        {
+    //            now = GetTickCount64();
+
+    //            if (now - startTime >= objs.resultShowInterval)
+    //            {
+    //                for (int i = 0; i < artLines; ++i)
+    //                {
+    //                    GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
+    //                    wcout << art[i];
+    //                }
+    //                break;
+    //            }
+    //        }
+    //    //}
+
+    //    
+    //}
+    //else if (objs.rolling)
+    //{
+    /*if (!objs.rolling)
     {
-        GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
-        wcout << art[i];
-    }
+        if (objs.success)
+        SetColor(Color::LIGHT_GREEN);
+    else if (objs.superSuccess)
+                SetColor(Color::YELLOW);
+    else
+                SetColor(Color::LIGHT_RED);
+
+    }*/
+
+    
+        for (int i = 0; i < artLines; ++i)
+        {
+            GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
+            wcout << art[i];
+        }
+
+    //}
+
     SetColor();
 }
 
 void CHGRenderInfoUI(const AsciiObjs& objs, int renderX, int renderY)
 {
-    
 
     GotoXY(renderX + 2, renderY + 1);
-    wcout << L"보유 골드: " << objs.currentGold;
+    wcout << L"보유 골드: " << std::setw(4) << objs.currentGold;
     GotoXY(renderX + 2, renderY + 3);
     wcout << L"보유 토템: ";
     GotoXY(renderX + 2, renderY + 4);

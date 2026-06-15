@@ -3,6 +3,7 @@
 #include "CHGAsciiArt.h"
 static AsciiObjs objs;
 
+void StatUp(GameState state, int count);
 void ShopScene::Enter()
 {
 	//state.ChgData
@@ -16,15 +17,20 @@ void ShopScene::Enter()
 
 void ShopScene::Update()
 {
+
 	if (GetKeyDown(VK_ESCAPE))
 	{
+		
 		state.fsm.ChangeState((int)Scene::TITLE);
 		return;
 	}
 
+	
     if (GetKeyDown(VK_SPACE) && !objs.rolling)
     {
-		ShakeConsoleWindow(100, 0.4f, 2);
+		if (objs.currentGold >= 10)
+			objs.currentGold -= 10;
+		else return;
 
         objs.startTime = GetTickCount64();
         objs.rolling = true;
@@ -46,17 +52,22 @@ void ShopScene::Update()
 			objs.superSuccess = true;
 		}
 		GotoXY(0, 40);
-	    	wcout << p;
+	    	wcout << std::setw(3) << p;
     }
 
 	if (!objs.getItem.empty())
 	{
-		wstring itemS;
 
 		if (objs.success)
+		{
 			state.ChgData.haveTotem[objs.getItem].first += 1;
+		}
 		else if (objs.superSuccess)
+		{
 			state.ChgData.haveTotem[objs.getItem].first += 5;
+		}
+
+		
 
 		objs.getItem.clear();
 	}
@@ -73,5 +84,22 @@ void ShopScene::Render() const
 
 void ShopScene::Exit()
 {
+	state.gold = objs.currentGold;
+}
 
+
+void StatUp(GameState state, int count)
+{
+	if (objs.getItem == L"1")
+		state.player.str += count * 3;
+	else if (objs.getItem == L"$")
+		state.player.str += count * 15;
+	else if (objs.getItem == L"♥")
+		state.player.maxHp += count * 3;
+	else if (objs.getItem == L"7")
+	{
+		state.player.str += count * 1;
+		state.player.str += count * 1;
+		objs.currentGold += count * 1;
+	}
 }
