@@ -35,7 +35,7 @@ public:
 	string swordName;
 
 public:
-	bool isExit = true;
+	bool isExit = false;
 	EventControler eventControler;
 	int curState = 1;
 	int curClearStage = 0;
