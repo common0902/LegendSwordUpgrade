@@ -129,18 +129,15 @@ void BattleScene::SwordSetting()
 void BattleScene::EventSetting()
 {
 	eventControler.AddEvent(BattleEventType::Heal, new HealEvent(*this));
-
+	eventControler.AddEvent(BattleEventType::EnemyBattle, new EnemyBattleEvent(*this));
 
 }
 
 void BattleScene::Update()
 {
-	
 	ScreenReset();
 	SkipBreak();
-
-	GotoXY(GetMousePos());
-	cout << "L";
+	
 
 	GotoXY(60, 20);
 	string text = "페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase);
@@ -178,6 +175,8 @@ void BattleScene::StageClear()
 	cout << "스테이지를 나가려면 아무 키나 누르세요.";
 
 	WaitInput();
+
+	curClearStage += 1;
 
 	state.fsm.ChangeState((int)Scene::TITLE);
 }
@@ -224,8 +223,8 @@ void BattleScene::DrawCurrentSword() const
 
 BattleEventType BattleScene::GetRandomEvent() const
 {
-
-	return BattleEventType::Heal;
+	int value = GetRandomRange(0, 2);
+	return (BattleEventType)value;
 }
 
 int BattleScene::GetMaxPhase(int stage) const
@@ -473,13 +472,38 @@ Vector2 GetMousePos()
 	return Vector2{point.x,point.y};
 }
 
-
-bool GetMouseDown()
+Vector2 GetSize(vector<wstring> image)
 {
-	
-
-	return false;
+	return Vector2(image[0].length(), image.size()) + Vector2(-1,-1);
 }
+
+bool IsMouseUp(Vector2 leftUpPos, Vector2 rightDownPos)
+{
+	Vector2 pos = GetMousePos();
+
+	if (leftUpPos.x > pos.x || pos.x > rightDownPos.x) return false;
+	if (leftUpPos.y > pos.y || pos.y > rightDownPos.y) return false;
+
+	return true;
+}
+
+bool IsMouseUp(Vector2 leftUpPos, vector<wstring> image)
+{
+	return IsMouseUp(leftUpPos, leftUpPos + GetSize(image));
+}
+
+bool IsButtonClick(Vector2 leftUpPos, Vector2 rightDownPos)
+{
+	if (!GetMouseDown(MouseButton::LEFT)) return false;
+
+	return IsMouseUp(leftUpPos, rightDownPos);
+}
+
+bool IsButtonClick(Vector2 leftUpPos, vector<wstring> image)
+{
+	return IsButtonClick(leftUpPos, leftUpPos + GetSize(image));
+}
+
 
 #pragma endregion
 
