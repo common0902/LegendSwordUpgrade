@@ -53,5 +53,5 @@ bool Sword::IsMaxTier() const { return tier >= 15; }
 
 int Sword::GetSellCost() const
 {
-    return (int)(50.0f * pow(2.0f, tier));
+    return (int)(50.0f * pow(3.0f, tier));
 }

@@ -3,36 +3,21 @@
 
 constexpr int RESULT_DISPLAY_MS = 1500;
 
-// 검 정보 박스 위치/크기
 constexpr int INFO_BOX_X = 2;
 constexpr int INFO_BOX_Y = 10;
 constexpr int INFO_BOX_W = 24;
 constexpr int INFO_BOX_H = 12;
 
-// 조작 박스 위치/크기
 constexpr int CTRL_BOX_X = WIDTH - 28;
 constexpr int CTRL_BOX_Y = 10;
 constexpr int CTRL_BOX_W = 26;
 constexpr int CTRL_BOX_H = 7;
-
-void FillWhiteBackground()
-{
-    SetColor(Color::BLACK, Color::WHITE);
-    COORD res = GetConsoleResolution();
-    for (int y = 0; y < res.Y; ++y)
-    {
-        GotoXY(0, y);
-        for (int x = 0; x < res.X; ++x)
-            cout << " ";
-    }
-}
 
 void UpgradeScene::Enter()
 {
     PMSAsciiInit(asciiObjs);
     hasResult = false;
     system("cls");
-    FillWhiteBackground();
 }
 
 void UpgradeScene::Update()
@@ -66,7 +51,7 @@ void UpgradeScene::Update()
         state.gold += state.curSword.GetSellCost();
         state.curSword = Sword{};
         hasResult = false;
-        FillWhiteBackground();
+        system("cls");
     }
 }
 
@@ -74,7 +59,8 @@ void UpgradeScene::Render() const
 {
     Sword& sw = state.curSword;
 
-    SetColor(Color::BLACK, Color::WHITE);
+    // 타이틀
+    SetColor(Color::WHITE);
     GotoXY(2, 1);
     cout << " _  _  _  _  _  _  _  _  _  _ ";
     GotoXY(2, 2);
@@ -84,15 +70,18 @@ void UpgradeScene::Render() const
     GotoXY(2, 4);
     cout << "|_|\\_\\  \\__||___|  \\__||_||_||_|";
 
+    // 검 이름
     string name = "+" + std::to_string(sw.tier) + "  " + GetSwordName(sw.tier);
     int nameX = WIDTH / 2 - (int)name.size() / 2;
-    SetColor(Color::BLACK, Color::WHITE);
+    SetColor(Color::WHITE);
     GotoXY(nameX, 2);
     cout << name << "     ";
 
+    // 검 이미지
     PMSAsciiRender(asciiObjs, sw.tier);
 
-    SetColor(Color::BLACK, Color::WHITE);
+    // 골드
+    SetColor(Color::YELLOW);
     GotoXY(INFO_BOX_X, INFO_BOX_Y + INFO_BOX_H + 1);
     cout << "골드: " << state.gold << "G     ";
 
@@ -105,7 +94,7 @@ void UpgradeScene::RenderInfo() const
 {
     Sword& sw = state.curSword;
 
-    SetColor(Color::BLACK, Color::WHITE);
+    SetColor(Color::WHITE);
     GotoXY(INFO_BOX_X + 1, INFO_BOX_Y - 1);
     cout << "검 정보";
 
@@ -114,7 +103,7 @@ void UpgradeScene::RenderInfo() const
     int tx = INFO_BOX_X + 2;
     int ty = INFO_BOX_Y + 1;
 
-    SetColor(Color::BLACK, Color::WHITE);
+    SetColor(Color::WHITE);
     GotoXY(tx, ty);
     cout << "공격력  : " << sw.damage << "      ";
 
@@ -123,17 +112,17 @@ void UpgradeScene::RenderInfo() const
     GotoXY(tx, ty + 3);
     cout << "판매비용: " << sw.GetSellCost() << "   ";
 
-    SetColor(Color::LIGHT_GREEN, Color::WHITE);
+    SetColor(Color::LIGHT_GREEN);
     GotoXY(tx, ty + 5);
     cout << "성공확률: " << (int)sw.GetSuccessChance() << "%   ";
-    SetColor(Color::LIGHT_YELLOW, Color::WHITE);
+    SetColor(Color::LIGHT_YELLOW);
     GotoXY(tx, ty + 6);
     cout << "하락확률: " << (int)sw.GetDownChance() << "%   ";
-    SetColor(Color::LIGHT_RED, Color::WHITE);
+    SetColor(Color::LIGHT_RED);
     GotoXY(tx, ty + 7);
     cout << "파괴확률: " << (int)sw.GetBreakChance() << "%   ";
 
-    SetColor(Color::LIGHT_RED, Color::WHITE);
+    SetColor(Color::LIGHT_RED);
     GotoXY(tx, ty + 9);
     if (sw.IsMaxTier())
         cout << "최대 단계입니다!  ";
@@ -145,7 +134,7 @@ void UpgradeScene::RenderInfo() const
 
 void UpgradeScene::RenderControl() const
 {
-    SetColor(Color::BLACK, Color::WHITE);
+    SetColor(Color::WHITE);
     GotoXY(CTRL_BOX_X + 1, CTRL_BOX_Y - 1);
     cout << "조작";
 
@@ -154,7 +143,7 @@ void UpgradeScene::RenderControl() const
     int tx = CTRL_BOX_X + 2;
     int ty = CTRL_BOX_Y + 1;
 
-    SetColor(Color::BLACK, Color::WHITE);
+    SetColor(Color::WHITE);
     GotoXY(tx, ty);     cout << "[ENTER] 강화하기";
     GotoXY(tx, ty + 1); cout << "[S]     판매하기";
     GotoXY(tx, ty + 2); cout << "[ESC]   돌아가기";
@@ -172,7 +161,7 @@ void UpgradeScene::RenderResult() const
     GotoXY(rx, ry);
     if (!showingResult)
     {
-        SetColor(Color::BLACK, Color::WHITE);
+        SetColor(Color::WHITE);
         cout << "                        ";
         return;
     }
@@ -180,23 +169,22 @@ void UpgradeScene::RenderResult() const
     switch (lastResult)
     {
     case UpgradeResult::SUCCESS:
-        SetColor(Color::LIGHT_GREEN, Color::WHITE);
+        SetColor(Color::LIGHT_GREEN);
         cout << "★ 강화 성공! +" << state.curSword.tier << " ★";
         break;
     case UpgradeResult::DOWN:
-        SetColor(Color::LIGHT_YELLOW, Color::WHITE);
+        SetColor(Color::LIGHT_YELLOW);
         cout << "▼ 강화 실패 (단계 하락) ";
         break;
     case UpgradeResult::BREAK:
-        SetColor(Color::LIGHT_RED, Color::WHITE);
+        SetColor(Color::LIGHT_RED);
         cout << "✖ 검이 파괴되었습니다...";
         break;
     }
-    SetColor(Color::BLACK, Color::WHITE);
+    SetColor();
 }
 
 void UpgradeScene::Exit()
 {
-    SetColor(Color::WHITE, Color::BLACK);
     system("cls");
 }
