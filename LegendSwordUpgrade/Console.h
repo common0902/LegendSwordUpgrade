@@ -58,3 +58,7 @@ bool GetKeyDown(int vKey);
 POINT GetMouseCellPos();
 void UpdateInput();
 void FrameSync(int fps);
+
+enum MouseButton { LEFT = 1,RIGHT = 2};
+bool GetMouse(MouseButton btn);
+bool GetMouseDown(MouseButton btn);

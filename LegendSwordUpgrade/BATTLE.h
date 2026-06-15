@@ -40,7 +40,9 @@ public:
 	int curState = 1;
 	int curClearStage = 0;
 	int curPhase = 1;
+	int prevPhase = 1;
 	int curMaxPhase = 1;
+
 public:
 	void StatSetting();
 	void StageSetting();
@@ -87,3 +89,9 @@ string ToString(int value);
 void CLS();
 bool IsNumder(const string text);
 int ToInt(const string text);
+Vector2 GetMousePos();
+Vector2 GetSize(vector<wstring> image);
+bool IsMouseUp(Vector2 leftUpPos, Vector2 rightDownPos);
+bool IsMouseUp(Vector2 leftUpPos, vector<wstring> image);
+bool IsButtonClick(Vector2 leftUpPos,Vector2 rightDownPos);
+bool IsButtonClick(Vector2 leftUpPos, vector<wstring> image);
