@@ -205,8 +205,6 @@ void BattleScene::DrawCurrentSword() const
 BattleEventType BattleScene::GetRandomEvent() const
 {
 
-
-
 	return BattleEventType::Heal;
 }
 
@@ -360,10 +358,7 @@ void Typing(string text, int delay,bool endl)
 	for (int i = 0;i < size;++i)
 	{
 		cout << text[i];
-		if (_kbhit()) {
-			delay = 0;
-		}
-		Sleep(delay);
+		CanSkipSleep(delay);
 	}
 	if (endl) cout << "\n";
 }
