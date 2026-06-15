@@ -131,7 +131,6 @@ void BattleScene::EventSetting()
 
 }
 
-
 void BattleScene::Update()
 {
 	ScreenReset();
@@ -229,7 +228,6 @@ int BattleScene::GetMaxPhase(int stage) const
 
 	return stage * 5;
 }
-
 
 #pragma region Method
 
@@ -447,10 +445,10 @@ void CLS()
 
 bool IsNumder(const string text)
 {
-	if (text.empty()) false;
+	if (text.empty()) return false;
 
 	for (char t : text) {
-		if (t < '0' && t > '9') return false;
+		if (t < '0' || t > '9') return false;
 	}
 
 	return true;
