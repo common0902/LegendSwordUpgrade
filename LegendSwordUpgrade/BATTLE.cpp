@@ -10,6 +10,8 @@ Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 const int maxStage = 20;
 const int eventCount = 5;
 
+#pragma region BattleSceneMethod
+
 void BattleScene::Enter()
 {
 	CLS();
@@ -228,6 +230,8 @@ int BattleScene::GetMaxPhase(int stage) const
 
 	return stage * 5;
 }
+
+#pragma endregion
 
 #pragma region Method
 
@@ -460,4 +464,6 @@ int ToInt(const string text)
 }
 
 #pragma endregion
+
+
 

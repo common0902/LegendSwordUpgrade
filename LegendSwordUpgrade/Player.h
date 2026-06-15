@@ -4,9 +4,8 @@ class Player
 {
 public:
 	int maxHp;
-	int curHp;
-	float str;
-
+	int str;
+	int attackProbability = 0;
 
 
 };
