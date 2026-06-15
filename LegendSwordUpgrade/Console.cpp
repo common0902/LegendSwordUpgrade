@@ -259,6 +259,27 @@ void DrawBar(int x, int y, const string& label, int value, int maxValue, int bar
 		std::setw(digits) << maxValue;
 }
 
+void DrawBox(int x, int y, int width, int height)
+{
+	GotoXY(x, y);
+	cout << "┌";
+	for (int i = 0; i < width - 2; ++i) cout << "─";
+	cout << "┐";
+
+	for (int i = 1; i < height - 1; ++i)
+	{
+		GotoXY(x, y + i);
+		cout << "│";
+		GotoXY(x + width - 1, y + i);
+		cout << "│";
+	}
+
+	GotoXY(x, y + height - 1);
+	cout << "└";
+	for (int i = 0; i < width - 2; ++i) cout << "─";
+	cout << "┘";
+}
+
 bool GetKey(int vKey)
 {
 	// 지금 딱 이 프레임에 눌렸냐

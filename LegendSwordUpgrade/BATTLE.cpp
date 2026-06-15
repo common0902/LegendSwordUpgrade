@@ -7,17 +7,21 @@ Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 
-const int maxStage = 5;
+const int maxStage = 20;
 const int eventCount = 5;
 
 void BattleScene::Enter()
 {
-	system("cls");
+	CLS();
+	isExit = false;
 
 	StatSetting();
 	
 	StageSetting();
-
+	if (isExit) {
+		state.fsm.ChangeState((int)Scene::TITLE);
+		return;
+	}
 	SwordSetting();
 
 	EventSetting();
@@ -41,6 +45,7 @@ void BattleScene::StageSetting() {
 	while (true)
 	{
 		StageChoose();
+		if (isExit) return;
 
 		NextLine
 
@@ -68,29 +73,38 @@ void BattleScene::StageChoose()
 		Typing(std::to_string(i) + " ", 10, false);
 	}
 	SetColor();
-	cout << "\n";
+	cout << "취소\n";
 	SkipBreak();
 
 	curState = StageInput(Vector2{0,5});
+
+	if (isExit) return;
+
 	curPhase = 1;
 	curMaxPhase = GetMaxPhase(curState);
 
 	Typing(std::to_string(curState) + "스테이지 선택됨", 10);
 }
 
-int BattleScene::StageInput(Vector2 inputPos) const
+int BattleScene::StageInput(Vector2 inputPos)
 {
 	int stage;
+	string input;
 	while (true)
 	{
-		cin >> stage;
-		if (cin.fail())
+		cin >> input;
+		if (input == "취소")
 		{
-			cin.clear();
-			cin.ignore(1000, '\n');
-			cout << "잘못된 입력입니다.\n";
+			isExit = true;
+			return -1;
 		}
-		else if (stage < 1 || stage > maxStage)
+		else if (!IsNumder(input))
+		{
+			cout << "잘못된 입력입니다.\n";
+			continue;
+		}
+		stage = ToInt(input);
+		if (stage < 1 || stage > maxStage)
 		{
 			cout << "존재하지 않는 스테이지 입니다.\n";
 		}
@@ -100,6 +114,7 @@ int BattleScene::StageInput(Vector2 inputPos) const
 		}
 		else break;
 	}
+	isExit = false;
 	return stage;
 }
 
@@ -115,7 +130,6 @@ void BattleScene::EventSetting()
 
 
 }
-
 
 void BattleScene::Update()
 {
@@ -169,7 +183,7 @@ void BattleScene::Render() const
 
 void BattleScene::Exit()
 {
-	system("cls");
+	CLS();
 }
 
 void BattleScene::DrawBaseUI() const
@@ -205,8 +219,6 @@ void BattleScene::DrawCurrentSword() const
 BattleEventType BattleScene::GetRandomEvent() const
 {
 
-
-
 	return BattleEventType::Heal;
 }
 
@@ -216,7 +228,6 @@ int BattleScene::GetMaxPhase(int stage) const
 
 	return stage * 5;
 }
-
 
 #pragma region Method
 
@@ -360,10 +371,7 @@ void Typing(string text, int delay,bool endl)
 	for (int i = 0;i < size;++i)
 	{
 		cout << text[i];
-		if (_kbhit()) {
-			delay = 0;
-		}
-		Sleep(delay);
+		CanSkipSleep(delay);
 	}
 	if (endl) cout << "\n";
 }
@@ -428,6 +436,27 @@ bool InputYorN()
 string ToString(int value)
 {
 	return std::to_string(value);
+}
+
+void CLS()
+{
+	system("cls");
+}
+
+bool IsNumder(const string text)
+{
+	if (text.empty()) return false;
+
+	for (char t : text) {
+		if (t < '0' || t > '9') return false;
+	}
+
+	return true;
+}
+
+int ToInt(const string text)
+{
+	return std::stoi(text);
 }
 
 #pragma endregion

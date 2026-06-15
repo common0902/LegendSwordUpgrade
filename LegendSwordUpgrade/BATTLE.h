@@ -35,6 +35,7 @@ public:
 	string swordName;
 
 public:
+	bool isExit = false;
 	EventControler eventControler;
 	int curState = 1;
 	int curClearStage = 0;
@@ -44,7 +45,7 @@ public:
 	void StatSetting();
 	void StageSetting();
 	void StageChoose();
-	int StageInput(Vector2 inputPo) const;
+	int StageInput(Vector2 inputPos);
 	void SwordSetting();
 	void EventSetting();
 
@@ -83,3 +84,6 @@ void WaitInput();
 int GetIntInput(int min, int max);
 bool InputYorN();
 string ToString(int value);
+void CLS();
+bool IsNumder(const string text);
+int ToInt(const string text);
