@@ -35,6 +35,7 @@ public:
 	string swordName;
 
 public:
+	bool isExit = true;
 	EventControler eventControler;
 	int curState = 1;
 	int curClearStage = 0;
@@ -44,7 +45,7 @@ public:
 	void StatSetting();
 	void StageSetting();
 	void StageChoose();
-	int StageInput(Vector2 inputPos, bool& exit);
+	int StageInput(Vector2 inputPos);
 	void SwordSetting();
 	void EventSetting();
 

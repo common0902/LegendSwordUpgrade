@@ -13,11 +13,15 @@ const int eventCount = 5;
 void BattleScene::Enter()
 {
 	CLS();
+	isExit = false;
 
 	StatSetting();
 	
 	StageSetting();
-
+	if (isExit) {
+		state.fsm.ChangeState((int)Scene::TITLE);
+		return;
+	}
 	SwordSetting();
 
 	EventSetting();
@@ -41,6 +45,7 @@ void BattleScene::StageSetting() {
 	while (true)
 	{
 		StageChoose();
+		if (isExit) return;
 
 		NextLine
 
@@ -71,14 +76,9 @@ void BattleScene::StageChoose()
 	cout << "취소\n";
 	SkipBreak();
 
-	bool exit = false;
+	curState = StageInput(Vector2{0,5});
 
-	curState = StageInput(Vector2{0,5}, exit);
-
-	if (exit) {
-
-		return;
-	}
+	if (isExit) return;
 
 	curPhase = 1;
 	curMaxPhase = GetMaxPhase(curState);
@@ -86,7 +86,7 @@ void BattleScene::StageChoose()
 	Typing(std::to_string(curState) + "스테이지 선택됨", 10);
 }
 
-int BattleScene::StageInput(Vector2 inputPos,bool& exit)
+int BattleScene::StageInput(Vector2 inputPos)
 {
 	int stage;
 	string input;
@@ -95,14 +95,16 @@ int BattleScene::StageInput(Vector2 inputPos,bool& exit)
 		cin >> input;
 		if (input == "취소")
 		{
-			exit = true;
+			isExit = true;
 			return -1;
 		}
 		else if (!IsNumder(input))
 		{
 			cout << "잘못된 입력입니다.\n";
+			continue;
 		}
-		else if (stage < 1 || stage > maxStage)
+		stage = ToInt(input);
+		if (stage < 1 || stage > maxStage)
 		{
 			cout << "존재하지 않는 스테이지 입니다.\n";
 		}
@@ -112,7 +114,7 @@ int BattleScene::StageInput(Vector2 inputPos,bool& exit)
 		}
 		else break;
 	}
-	exit = false;
+	isExit = false;
 	return stage;
 }
 
