@@ -1,65 +1,197 @@
 #include "BATTLE.h"
-#include "NormalBattleMapState.h"
-#include "EnemyBattleState.h"
+#include"BattleSceneEvents.cpp"
 
+#define NextLine cout << "\n";
 
 Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
+Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
+
+const int maxStage = 20;
+const int eventCount = 5;
+
+#pragma region BattleSceneMethod
 
 void BattleScene::Enter()
 {
-	system("cls");
+	CLS();
+	isExit = false;
 
 	StatSetting();
 	
-	DrawImage(BaseBattleUI, BaseUIPos);
-	BaseUI();
+	StageSetting();
+	if (isExit) {
+		state.fsm.ChangeState((int)Scene::TITLE);
+		return;
+	}
+	SwordSetting();
 
-	BattelSceneFsm.AddState((int)InBattleState::Normal, new NormalBattleState(*this));
-	BattelSceneFsm.AddState((int)InBattleState::EnemyBattle, new EnemyBattleState(*this));
-	
-	BattelSceneFsm.ChangeState((int)InBattleState::Normal);
+	EventSetting();
+
+	DrawImage(BaseBattleUI, BaseUIPos);
+	DrawBaseUI();
 }
 
 void BattleScene::StatSetting()
 {
 	curSwordImage = TestSwordImage;
-	state.player.maxHp = 1000000;
+	state.player.maxHp = 100;
 	curPlayerHp = state.player.maxHp;
 	curDamage = 10;
 	swordName = "리우 짱짱 검";
 }
 
+void BattleScene::StageSetting() {
+	
+	bool b;
+	while (true)
+	{
+		StageChoose();
+		if (isExit) return;
+
+		NextLine
+
+		Typing("전투시작    Y/N", 10);
+
+		b = InputYorN();
+
+		if (b) break;
+		else ScreenReset();
+	}
+}
+
+void BattleScene::StageChoose()
+{
+	SkipBreak();
+	Typing("플레이할 스테이지를 입력해 주세요.\n", 10);
+
+	for (int i = 1;i <= maxStage;++i)
+	{
+		if (i <= curClearStage + 1)
+			SetColor();
+		else
+			SetColor(Color::RED);
+
+		Typing(std::to_string(i) + " ", 10, false);
+	}
+	SetColor();
+	cout << "취소\n";
+	SkipBreak();
+
+	curState = StageInput(Vector2{0,5});
+
+	if (isExit) return;
+
+	curPhase = 1;
+	curMaxPhase = GetMaxPhase(curState);
+
+	Typing(std::to_string(curState) + "스테이지 선택됨", 10);
+}
+
+int BattleScene::StageInput(Vector2 inputPos)
+{
+	int stage;
+	string input;
+	while (true)
+	{
+		cin >> input;
+		if (input == "취소")
+		{
+			isExit = true;
+			return -1;
+		}
+		else if (!IsNumder(input))
+		{
+			cout << "잘못된 입력입니다.\n";
+			continue;
+		}
+		stage = ToInt(input);
+		if (stage < 1 || stage > maxStage)
+		{
+			cout << "존재하지 않는 스테이지 입니다.\n";
+		}
+		else if (stage > curClearStage + 1)
+		{
+			cout << "이전 스테이지가 클리어 되지 않았습니다.\n";
+		}
+		else break;
+	}
+	isExit = false;
+	return stage;
+}
+
+void BattleScene::SwordSetting()
+{
+	
+
+}
+
+void BattleScene::EventSetting()
+{
+	eventControler.AddEvent(BattleEventType::Heal, new HealEvent(*this));
+
+
+}
+
 void BattleScene::Update()
 {
-	BattelSceneFsm.Update();
-	if (curPlayerHp <= 0)
-	{
-		state.fsm.ChangeState((int)Scene::GAMEOVER);
-	}
+	ScreenReset();
+	SkipBreak();
+
+	GotoXY(60, 20);
+	string text = "페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase);
+	Typing(text, 10);
+	CanSkipSleep(500);
+	GotoXY(60, 20);
+	Typing(string(text.length(), ' '), 10);
+
+	GotoXY(0, 0);
+	Typing("페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase) + "\n",10);
+
+	BattleEventType battleType = GetRandomEvent();
+	eventControler.Start(battleType);
+
+	SkipBreak();
+	CanSkipSleep(2000);
+
+	if (curPhase == curMaxPhase) StageClear();
+	else curPhase += 1;
+	
+	
+}
+
+void BattleScene::StageClear()
+{
+	ScreenReset();
+	SkipBreak();
+
+	GotoXY(60, 20);
+	Typing("스테이지 클리어!", 50);
+
+	CanSkipSleep(1500);
+
+	GotoXY(50, 25);
+	cout << "스테이지를 나가려면 아무 키나 누르세요.";
+
+	WaitInput();
+
+	state.fsm.ChangeState((int)Scene::TITLE);
 }
 
 void BattleScene::Render() const
 {
-	BaseUI();
-	BattelSceneFsm.Render();
+	DrawBaseUI();
 }
 
 void BattleScene::Exit()
 {
-	system("cls");
-
-	
+	CLS();
 }
 
-
-
-
-void BattleScene::BaseUI() const
+void BattleScene::DrawBaseUI() const
 {
 	DrawPlayerStat();
 	DrawCurrentSword();
-	
 }
 
 void BattleScene::DrawPlayerStat() const
@@ -86,6 +218,20 @@ void BattleScene::DrawCurrentSword() const
 
 }
 
+BattleEventType BattleScene::GetRandomEvent() const
+{
+
+	return BattleEventType::Heal;
+}
+
+int BattleScene::GetMaxPhase(int stage) const
+{
+
+
+	return stage * 5;
+}
+
+#pragma endregion
 
 #pragma region Method
 
@@ -148,7 +294,7 @@ void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size){
 }
 
 void DrawImage(vector<wstring> image, Vector2 pos) {
-	DrawImage(image, pos.x,pos.y, static_cast<int>(image[0].length()), static_cast<int>(image.size()));
+	DrawImage(image, pos, Vector2(static_cast<int>(image[0].length()), static_cast<int>(image.size())));
 }
 
 Color GetHealthColor(int curHp,int maxHp)
@@ -206,32 +352,48 @@ string CenterText(string text, int size)
 	return newText;
 }
 
+void SkipBreak()
+{
+	while (_kbhit())
+	{
+		_getch();
+	}
+}
+
+void CanSkipSleep(int delay)
+{
+	int count = delay / 10;
+	for (int i = 0;i < count;++i) {
+		if (_kbhit()) break;
+		else Sleep(10);
+	}
+}
+
 void Typing(string text, int delay,bool endl)
 {
 	int size = static_cast<int>(text.size());
 	for (int i = 0;i < size;++i)
 	{
-		Sleep(delay);
 		cout << text[i];
+		CanSkipSleep(delay);
 	}
 	if (endl) cout << "\n";
 }
 
 void ScreenReset()
 {
-	DrawImage(ScreenResetText, Vector2{ 0, 1 });
+	DrawImage(ScreenResetText, Vector2{ 0, 0 });
+	GotoXY(0, 0);
 }
 
 void WaitInput()
 {
-	while (_kbhit())
-	{
-		_getch();
-	}
+	SkipBreak();
 	_getch();
+	_kbhit();
 }
 
-int GetValidInput(int min, int max)
+int GetIntInput(int min, int max)
 {
 	int input;
 	while (true)
@@ -241,13 +403,67 @@ int GetValidInput(int min, int max)
 		{
 			cin.clear();
 			cin.ignore(1000, '\n');
-			cout << "잘못된 입력입니다. " << min << "~"
-				<< max << "사이 숫자를 입력하세요. " << endl;
+			cout << "잘못된 입력입니다.\n" << min << "~"
+				<< max << "사이 숫자를 입력하세요.\n";
 			continue;
 		}
 		else
 			return input;
 	}
 }
+
+bool InputYorN()
+{
+	string input;
+	bool b;
+	while (true)
+	{
+		cin >> input;
+		if (input == "Y" || input == "y")
+		{
+			b = true;
+			break;
+		}
+		else if (input == "N" || input == "n")
+		{
+			b = false;
+			break;
+		}
+		else {
+			cout << "잘못된 입력입니다.\n";
+		}
+	}
+	SkipBreak();
+	return b;
+}
+
+string ToString(int value)
+{
+	return std::to_string(value);
+}
+
+void CLS()
+{
+	system("cls");
+}
+
+bool IsNumder(const string text)
+{
+	if (text.empty()) return false;
+
+	for (char t : text) {
+		if (t < '0' || t > '9') return false;
+	}
+
+	return true;
+}
+
+int ToInt(const string text)
+{
+	return std::stoi(text);
+}
+
 #pragma endregion
+
+
 

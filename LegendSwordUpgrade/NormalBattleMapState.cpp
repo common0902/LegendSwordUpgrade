@@ -1,33 +1,30 @@
 #include"NormalBattleMapState.h"
 #include "BATTLE.h"
 
-void NormalBattleState::Enter()
+
+void BattleSettingScene::Enter()
 {
 	
+}
 
+void BattleSettingScene::Update()
+{
 
-	
-	battleScene.BattelSceneFsm.ChangeState((int)InBattleState::EnemyBattle);
 
 
 }
 
-void NormalBattleState::Update()
-{
-	
-
-	
-}
-
-void NormalBattleState::Render() const
+void BattleSettingScene::Render() const
 {
 
 
 }
 
-void NormalBattleState::Exit()
+void BattleSettingScene::Exit()
 {
 
 
 }
+
+
 

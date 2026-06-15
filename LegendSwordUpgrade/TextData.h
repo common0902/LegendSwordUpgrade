@@ -5,7 +5,7 @@
 
 extern std::vector<std::wstring> BaseBattleUI;
 
-const int swordImageWidth = 28;
+const int swordImageWidth = 29;
 const int swordImageHeigth = 15;
 
 extern std::vector<std::wstring> NullSwordImage;
