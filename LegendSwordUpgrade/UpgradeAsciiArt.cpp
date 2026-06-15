@@ -700,20 +700,21 @@ void PMSAsciiRender(const PMSAsciiObjs& objs, int tier)
     int lines = (int)sword.size();
     int startY = 3;
     int swordWidth = (int)sword[0].size();
-    int startX = WIDTH / 2 - swordWidth / 2;
+    int startX = std::max(0, WIDTH / 2 - swordWidth / 2);
 
     Color color;
-    if (tier < 5)  color = Color::LIGHT_GRAY;
+    if (tier < 5)  color = Color::BLACK; 
     else if (tier < 10) color = Color::LIGHT_GREEN;
     else if (tier < 13) color = Color::CYAN;
     else if (tier < 15) color = Color::LIGHT_VIOLET;
     else                color = Color::LIGHT_YELLOW;
 
-    SetColor(color);
+    SetColor(color, Color::WHITE);
+
     for (int i = 0; i < lines; ++i)
     {
         GotoXY(startX, startY + i);
         cout << sword[i];
     }
-    SetColor();
+    SetColor(Color::BLACK, Color::WHITE);
 }

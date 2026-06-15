@@ -50,6 +50,7 @@ void SetColor(Color textColor=Color::WHITE, Color bgColor=Color::BLACK);
 void DrawBar(int x, int y, const string& label,
 	int value, int maxValue, int barWidth, 
 	const string& fillChar="■", const string& emptyChar="□");
+void DrawBox(int x, int y, int width, int height);
 
 // 키 입력 함수
 bool GetKey(int vKey);
