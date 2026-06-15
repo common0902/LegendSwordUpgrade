@@ -7,12 +7,12 @@ Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 
-const int maxStage = 5;
+const int maxStage = 20;
 const int eventCount = 5;
 
 void BattleScene::Enter()
 {
-	system("cls");
+	CLS();
 
 	StatSetting();
 	
@@ -68,26 +68,38 @@ void BattleScene::StageChoose()
 		Typing(std::to_string(i) + " ", 10, false);
 	}
 	SetColor();
-	cout << "\n";
+	cout << "취소\n";
 	SkipBreak();
 
-	curState = StageInput(Vector2{0,5});
+	bool exit = false;
+
+	curState = StageInput(Vector2{0,5}, exit);
+
+	if (exit) {
+
+		return;
+	}
+
 	curPhase = 1;
 	curMaxPhase = GetMaxPhase(curState);
 
 	Typing(std::to_string(curState) + "스테이지 선택됨", 10);
 }
 
-int BattleScene::StageInput(Vector2 inputPos) const
+int BattleScene::StageInput(Vector2 inputPos,bool& exit)
 {
 	int stage;
+	string input;
 	while (true)
 	{
-		cin >> stage;
-		if (cin.fail())
+		cin >> input;
+		if (input == "취소")
 		{
-			cin.clear();
-			cin.ignore(1000, '\n');
+			exit = true;
+			return -1;
+		}
+		else if (!IsNumder(input))
+		{
 			cout << "잘못된 입력입니다.\n";
 		}
 		else if (stage < 1 || stage > maxStage)
@@ -100,6 +112,7 @@ int BattleScene::StageInput(Vector2 inputPos) const
 		}
 		else break;
 	}
+	exit = false;
 	return stage;
 }
 
@@ -169,7 +182,7 @@ void BattleScene::Render() const
 
 void BattleScene::Exit()
 {
-	system("cls");
+	CLS();
 }
 
 void BattleScene::DrawBaseUI() const
@@ -423,6 +436,27 @@ bool InputYorN()
 string ToString(int value)
 {
 	return std::to_string(value);
+}
+
+void CLS()
+{
+	system("cls");
+}
+
+bool IsNumder(const string text)
+{
+	if (text.empty()) false;
+
+	for (char t : text) {
+		if (t < '0' && t > '9') return false;
+	}
+
+	return true;
+}
+
+int ToInt(const string text)
+{
+	return std::stoi(text);
 }
 
 #pragma endregion
