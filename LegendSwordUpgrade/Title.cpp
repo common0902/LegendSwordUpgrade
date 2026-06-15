@@ -5,6 +5,7 @@ Scene GetScene(int curMenu);
 
 void TitleScene::Enter()
 {
+	system("cls");
 	state.LrwData.curMenu = 1;
 }
 
