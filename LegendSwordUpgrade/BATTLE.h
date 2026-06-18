@@ -39,6 +39,7 @@ public:
 	string swordName;
 
 public:
+	const int maxStage = 10;
 	bool isExit = false;
 	int curState = 1;
 	int curClearStage = 0;
