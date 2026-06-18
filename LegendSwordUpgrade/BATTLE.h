@@ -2,16 +2,16 @@
 #include"GameState.h"
 #include"SceneState.h"
 #include"Enemy.h"
-#include"EventControler.h"
+#include"BattleSceneStates.h"
 
 enum DelayType
 {
-	EnemyType,PlayerType,TestType
+	EnemyType,PlayerType,PlayerAttackType
 };
 
-enum BattleEventType
+enum BattleSceneEnum
 {
-	Heal, EnemyBattle,Null
+	Stage,Battle
 };
 
 
@@ -20,13 +20,17 @@ class BattleScene : public SceneState
 public:
 	BattleScene(GameState& gameState) : SceneState(gameState)
 	{
-
-	};
+		Init();
+	}
+	void Init();
 	void Enter() override;
 	void Update() override;
 	void Render() const override;
 	void Exit() override;
 	
+public:
+	FSM fsm;
+
 public:
 	int curPlayerHp = 0;
 	int curDamage = 0;
@@ -36,7 +40,6 @@ public:
 
 public:
 	bool isExit = false;
-	EventControler eventControler;
 	int curState = 1;
 	int curClearStage = 0;
 	int curPhase = 1;
@@ -58,7 +61,6 @@ public:
 	void StageClear();
 
 public:
-	BattleEventType GetRandomEvent() const;
 	int GetMaxPhase(int stage) const;
 };
 
@@ -95,3 +97,5 @@ bool IsMouseUp(Vector2 leftUpPos, Vector2 rightDownPos);
 bool IsMouseUp(Vector2 leftUpPos, vector<wstring> image);
 bool IsButtonClick(Vector2 leftUpPos,Vector2 rightDownPos);
 bool IsButtonClick(Vector2 leftUpPos, vector<wstring> image);
+bool DelayButton(Vector2 leftPos, vector<wstring> image,
+	int type, ULONGLONG delay);

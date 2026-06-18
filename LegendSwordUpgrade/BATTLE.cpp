@@ -1,5 +1,4 @@
 #include "BATTLE.h"
-#include"BattleSceneEvents.cpp"
 
 #define NextLine cout << "\n";
 
@@ -7,29 +6,22 @@ Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 
-const int maxStage = 20;
+const int maxStage = 10;
 const int eventCount = 5;
 
 #pragma region BattleSceneMethod
 
+void BattleScene::Init()
+{
+	fsm.AddState(BattleSceneEnum::Stage, new BattleSceneStageState(*this));
+	fsm.AddState(BattleSceneEnum::Stage, new BattleSceneBattleState(*this));
+}
+
 void BattleScene::Enter()
 {
 	CLS();
-	isExit = false;
-
-	StatSetting();
 	
-	StageSetting();
-	if (isExit) {
-		state.fsm.ChangeState((int)Scene::TITLE);
-		return;
-	}
-	SwordSetting();
-
-	EventSetting();
-
-	DrawImage(BaseBattleUI, BaseUIPos);
-	DrawBaseUI();
+	
 }
 
 void BattleScene::StatSetting()
@@ -128,35 +120,14 @@ void BattleScene::SwordSetting()
 
 void BattleScene::EventSetting()
 {
-	eventControler.AddEvent(BattleEventType::Heal, new HealEvent(*this));
-	eventControler.AddEvent(BattleEventType::EnemyBattle, new EnemyBattleEvent(*this));
+	
+
 
 }
 
 void BattleScene::Update()
 {
-	ScreenReset();
-	SkipBreak();
 	
-
-	GotoXY(60, 20);
-	string text = "페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase);
-	Typing(text, 10);
-	CanSkipSleep(500);
-	GotoXY(60, 20);
-	Typing(string(text.length(), ' '), 10);
-
-	GotoXY(0, 0);
-	Typing("페이즈 : " + ToString(curPhase) + "/" + ToString(curMaxPhase) + "\n",10);
-
-	BattleEventType battleType = GetRandomEvent();
-	eventControler.Start(battleType);
-
-	SkipBreak();
-	CanSkipSleep(2000);
-
-	if (curPhase == curMaxPhase) StageClear();
-	else curPhase += 1;
 	
 	
 }
@@ -219,12 +190,6 @@ void BattleScene::DrawCurrentSword() const
 	string swordText = "현재 검 : " + swordName;
 	cout << CenterText(swordText, swordImageWidth);
 
-}
-
-BattleEventType BattleScene::GetRandomEvent() const
-{
-	int value = GetRandomRange(0, 2);
-	return (BattleEventType)value;
 }
 
 int BattleScene::GetMaxPhase(int stage) const
@@ -474,7 +439,7 @@ Vector2 GetMousePos()
 
 Vector2 GetSize(vector<wstring> image)
 {
-	return Vector2(image[0].length(), image.size()) + Vector2(-1,-1);
+	return Vector2(static_cast<int>(image[0].length()), static_cast<int>(image.size())) + Vector2(-1,-1);
 }
 
 bool IsMouseUp(Vector2 leftUpPos, Vector2 rightDownPos)
@@ -502,6 +467,12 @@ bool IsButtonClick(Vector2 leftUpPos, Vector2 rightDownPos)
 bool IsButtonClick(Vector2 leftUpPos, vector<wstring> image)
 {
 	return IsButtonClick(leftUpPos, leftUpPos + GetSize(image));
+}
+
+bool DelayButton(Vector2 leftPos, vector<wstring> image,
+	int type , ULONGLONG delay)
+{
+	return IsButtonClick(leftPos,image) && Delay(type,delay);
 }
 
 
