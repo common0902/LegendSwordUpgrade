@@ -11,18 +11,41 @@ const int eventCount = 5;
 
 #pragma region BattleSceneMethod
 
+#pragma region BattleSceneFsm
+
 void BattleScene::Init()
 {
 	fsm.AddState(BattleSceneEnum::Stage, new BattleSceneStageState(*this));
-	fsm.AddState(BattleSceneEnum::Stage, new BattleSceneBattleState(*this));
+	fsm.AddState(BattleSceneEnum::Battle, new BattleSceneBattleState(*this));
 }
 
 void BattleScene::Enter()
 {
 	CLS();
-	
-	
+	fsm.ChangeState(BattleSceneEnum::Stage);
+
 }
+
+void BattleScene::Update()
+{
+	fsm.Update();
+
+}
+
+void BattleScene::Render() const
+{
+	fsm.Render();
+
+}
+
+void BattleScene::Exit()
+{
+	CLS();
+}
+
+#pragma endregion
+
+#pragma region Setting
 
 void BattleScene::StatSetting()
 {
@@ -33,134 +56,9 @@ void BattleScene::StatSetting()
 	swordName = "리우 짱짱 검";
 }
 
-void BattleScene::StageSetting() {
-	
-	bool b;
-	while (true)
-	{
-		StageChoose();
-		if (isExit) return;
+#pragma endregion
 
-		NextLine
-
-		Typing("전투시작    Y/N", 10);
-
-		b = InputYorN();
-
-		if (b) break;
-		else ScreenReset();
-	}
-}
-
-void BattleScene::StageChoose()
-{
-	SkipBreak();
-	Typing("플레이할 스테이지를 입력해 주세요.\n", 10);
-
-	for (int i = 1;i <= maxStage;++i)
-	{
-		if (i <= curClearStage + 1)
-			SetColor();
-		else
-			SetColor(Color::RED);
-
-		Typing(std::to_string(i) + " ", 10, false);
-	}
-	SetColor();
-	cout << "취소\n";
-	SkipBreak();
-
-	curState = StageInput(Vector2{0,5});
-
-	if (isExit) return;
-
-	curPhase = 1;
-	curMaxPhase = GetMaxPhase(curState);
-
-	Typing(std::to_string(curState) + "스테이지 선택됨", 10);
-}
-
-int BattleScene::StageInput(Vector2 inputPos)
-{
-	int stage;
-	string input;
-	while (true)
-	{
-		cin >> input;
-		if (input == "취소")
-		{
-			isExit = true;
-			return -1;
-		}
-		else if (!IsNumder(input))
-		{
-			cout << "잘못된 입력입니다.\n";
-			continue;
-		}
-		stage = ToInt(input);
-		if (stage < 1 || stage > maxStage)
-		{
-			cout << "존재하지 않는 스테이지 입니다.\n";
-		}
-		else if (stage > curClearStage + 1)
-		{
-			cout << "이전 스테이지가 클리어 되지 않았습니다.\n";
-		}
-		else break;
-	}
-	isExit = false;
-	return stage;
-}
-
-void BattleScene::SwordSetting()
-{
-	
-
-}
-
-void BattleScene::EventSetting()
-{
-	
-
-
-}
-
-void BattleScene::Update()
-{
-	
-	
-	
-}
-
-void BattleScene::StageClear()
-{
-	ScreenReset();
-	SkipBreak();
-
-	GotoXY(60, 20);
-	Typing("스테이지 클리어!", 50);
-
-	CanSkipSleep(1500);
-
-	GotoXY(50, 25);
-	cout << "스테이지를 나가려면 아무 키나 누르세요.";
-
-	WaitInput();
-
-	curClearStage += 1;
-
-	state.fsm.ChangeState((int)Scene::TITLE);
-}
-
-void BattleScene::Render() const
-{
-	DrawBaseUI();
-}
-
-void BattleScene::Exit()
-{
-	CLS();
-}
+#pragma region Draw
 
 void BattleScene::DrawBaseUI() const
 {
@@ -192,12 +90,18 @@ void BattleScene::DrawCurrentSword() const
 
 }
 
+#pragma endregion
+
+#pragma region Phase
+
 int BattleScene::GetMaxPhase(int stage) const
 {
 
 
 	return stage * 5;
 }
+
+#pragma endregion
 
 #pragma endregion
 

@@ -48,17 +48,10 @@ public:
 
 public:
 	void StatSetting();
-	void StageSetting();
-	void StageChoose();
-	int StageInput(Vector2 inputPos);
-	void SwordSetting();
-	void EventSetting();
 
 	void DrawBaseUI() const;
 	void DrawPlayerStat() const;
 	void DrawCurrentSword() const;
-
-	void StageClear();
 
 public:
 	int GetMaxPhase(int stage) const;
