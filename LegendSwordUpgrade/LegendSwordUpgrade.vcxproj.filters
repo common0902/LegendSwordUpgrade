@@ -66,13 +66,7 @@
     <ClCompile Include="TextData.cpp">
       <Filter>Main\LRW</Filter>
     </ClCompile>
-    <ClCompile Include="NormalBattleMapState.cpp">
-      <Filter>Main\LRW</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBattleState.cpp">
-      <Filter>Main\LRW</Filter>
-    </ClCompile>
-    <ClCompile Include="BattleSceneEvents.cpp">
+    <ClCompile Include="BattleSceneStates.cpp">
       <Filter>Main\LRW</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,19 +146,10 @@
     <ClInclude Include="resource.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="InBattleSceneState.h">
+    <ClInclude Include="BattleSceneState.h">
       <Filter>Main\LRW</Filter>
     </ClInclude>
-    <ClInclude Include="NormalBattleMapState.h">
-      <Filter>Main\LRW</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBattleState.h">
-      <Filter>Main\LRW</Filter>
-    </ClInclude>
-    <ClInclude Include="BattleEvent.h">
-      <Filter>Main\LRW</Filter>
-    </ClInclude>
-    <ClInclude Include="EventControler.h">
+    <ClInclude Include="BattleSceneStates.h">
       <Filter>Main\LRW</Filter>
     </ClInclude>
   </ItemGroup>
