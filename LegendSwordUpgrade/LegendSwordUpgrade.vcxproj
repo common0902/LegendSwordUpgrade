@@ -19,21 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BattleSceneEvents.cpp" />
+    <ClCompile Include="BattleSceneStates.cpp" />
     <ClCompile Include="CHGAsciiArt.cpp" />
     <ClCompile Include="BATTLE.cpp" />
     <ClCompile Include="Console.cpp" />
-    <ClCompile Include="EnemyBattleState.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="NormalBattleMapState.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="SHOP.cpp" />
     <ClCompile Include="SoundManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -46,34 +38,22 @@
     <ClCompile Include="UpgradeAsciiArt.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BattleEvent.h" />
     <ClInclude Include="AbstractState.h" />
     <ClInclude Include="BATTLE.h" />
+    <ClInclude Include="BattleSceneState.h" />
+    <ClInclude Include="BattleSceneStates.h" />
     <ClInclude Include="CHGAsciiArt.h" />
     <ClInclude Include="CHGData.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="EnemyBattleState.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="EnemyData.h" />
     <ClInclude Include="Enums.h" />
-    <ClInclude Include="EventControler.h" />
     <ClInclude Include="FSM.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="GameState.h" />
-    <ClInclude Include="InBattleSceneState.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="LRWData.h" />
-    <ClInclude Include="NormalBattleMapState.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="TextData.h" />
     <ClInclude Include="Player.h" />
