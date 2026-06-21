@@ -6,9 +6,6 @@ Vector2 BaseUIPos = { 120,5 };
 Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 
-const int maxStage = 10;
-const int eventCount = 5;
-
 #pragma region BattleSceneMethod
 
 #pragma region BattleSceneFsm
@@ -28,6 +25,7 @@ void BattleScene::Enter()
 
 void BattleScene::Update()
 {
+	SkipBreak();
 	fsm.Update();
 
 }
