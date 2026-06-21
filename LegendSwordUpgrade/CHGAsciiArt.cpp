@@ -96,18 +96,6 @@ void CHGAsciiInit(AsciiObjs& objs)
     L"  `Y888Y'  ",
     L"    `Y'    "
     });
-    objs.nullSlot.push_back(
-    {
-    L"           ",
-    L"           ",
-    L"           ",
-    L"           ",
-    L"           ",
-    L"           ",
-    L"           ",
-    L"           "
-
-    });
 
     objs.slotNum = { 0, 1, 2 }; 
     objs.rolling = false;
@@ -150,6 +138,27 @@ void CHGAsciiInitRender(AsciiObjs& objs)
 
 void CHGAsciiUpdate(AsciiObjs& objs)
 {
+
+    if (objs.resultShow)
+    {
+        ULONGLONG now = GetTickCount64();
+        if (now - objs.resultShowStartTime >= objs.resultShowInterval)
+        {
+            if (objs.resultShowIndex < (int)objs.slotNum.size())
+            {
+                ShakeConsoleWindow(8, 100, 15);
+
+                objs.resultShowIndex++;
+                objs.resultShowStartTime = now;
+            }
+            else
+            {
+                objs.resultShow = false;
+            }
+        }
+        return;
+    }
+
     if (!objs.rolling) return;
 
     ULONGLONG now = GetTickCount64();
@@ -222,6 +231,8 @@ void CHGAsciiUpdate(AsciiObjs& objs)
         }
 
         objs.resultShow = true;
+        objs.resultShowIndex = 0;
+        objs.resultShowStartTime = GetTickCount64();
         objs.rolling = false;
         return;
     }
@@ -239,17 +250,37 @@ void CHGAsciiUpdate(AsciiObjs& objs)
 
 void CHGAsciiRender(const AsciiObjs& objs)
 {
-
     _setmode(_fileno(stdout), _O_U16TEXT);
-    
 
     CHGRenderInfoUI(objs, 50, 10);
 
-    for (int i = 0; i < (int)objs.slotNum.size(); ++i)
+    if (objs.resultShow)
     {
-        CHGRenderSlotArt(objs, i, objs.slotNum[i]);
-    }
+        for (int i = 0; i < (int)objs.slotNum.size(); ++i)
+        {
+            if (i < objs.resultShowIndex)
+            {
+                if (objs.superSuccess)
+                    SetColor(Color::YELLOW);
+                else if (objs.success)
+                    SetColor(Color::LIGHT_GREEN);
+                else
+                    SetColor(Color::LIGHT_RED);
 
+                CHGRenderSlotArt(objs, i, objs.slotNum[i]);
+                SetColor();
+            }
+            else if (objs.resultShow) 
+            {
+                CHGRenderNullSlotArt(objs, i);
+            }
+        }
+    }
+    else if (objs.rolling)
+    {
+        for (int i = 0; i < (int)objs.slotNum.size(); ++i)
+            CHGRenderSlotArt(objs, i, objs.slotNum[i]);
+    }
 
     _setmode(_fileno(stdout), _O_TEXT);
 }
@@ -275,67 +306,26 @@ void CHGRenderSlotArt(const AsciiObjs& objs, int slotIndex, int artIndex)
 
     int offsetY = (8 - artLines) / 2;
     int offsetX = (12 - art[0].size()) / 2;
-
-    //if (objs.resultShow)
-    //{
-    //    for (int i = 0; i < artLines; ++i)
-    //    {
-    //        GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
-    //        wcout << art[i];
-    //    }
-
-    //    /*if (objs.success)
-    //        SetColor(Color::LIGHT_GREEN);
-    //    else if (objs.superSuccess)
-    //        SetColor(Color::YELLOW);
-    //    else
-    //        SetColor(Color::LIGHT_RED);*/
-
-    //    /*for (int i = 0; i < objs.slotNum.size(); i++)
-    //    {*/
-    //        ULONGLONG startTime = GetTickCount64();
-    //        ULONGLONG now;
-    //        while (true)
-    //        {
-    //            now = GetTickCount64();
-
-    //            if (now - startTime >= objs.resultShowInterval)
-    //            {
-    //                for (int i = 0; i < artLines; ++i)
-    //                {
-    //                    GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
-    //                    wcout << art[i];
-    //                }
-    //                break;
-    //            }
-    //        }
-    //    //}
-
-    //    
-    //}
-    //else if (objs.rolling)
-    //{
-    /*if (!objs.rolling)
-    {
-        if (objs.success)
-        SetColor(Color::LIGHT_GREEN);
-    else if (objs.superSuccess)
-                SetColor(Color::YELLOW);
-    else
-                SetColor(Color::LIGHT_RED);
-
-    }*/
-
     
-        for (int i = 0; i < artLines; ++i)
-        {
-            GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
-            wcout << art[i];
-        }
+    for (int i = 0; i < artLines; ++i)
+    {
+        GotoXY(slotX[slotIndex] + offsetX, slotY + offsetY + i);
+        wcout << art[i];
+    }
+}
 
-    //}
+void CHGRenderNullSlotArt(const AsciiObjs& objs, int slotIndex)
+{
+    int slotX[] = { 4, 16, 29 };
+    int slotY = 14;
+    int slotW = 11;
+    int slotH = 8;
 
-    SetColor();
+    for (int i = 0; i < slotH; ++i)
+    {
+        GotoXY(slotX[slotIndex], slotY + i);
+        wcout << wstring(slotW, L' ');
+    }
 }
 
 void CHGRenderInfoUI(const AsciiObjs& objs, int renderX, int renderY)

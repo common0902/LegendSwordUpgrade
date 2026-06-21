@@ -11,7 +11,8 @@ void ShopScene::Enter()
 	objs.currentGold = state.gold;
 	objs.items = &state.ChgData.haveTotem;
 	srand((unsigned int)time(nullptr));
-
+	SetConsoleGameTitle(L"SHOP");
+	//SetConsoleSize(85, 40);
 	CHGAsciiInit(objs);
 }
 
@@ -23,14 +24,16 @@ void ShopScene::Update()
 		
 		state.fsm.ChangeState((int)Scene::TITLE);
 		return;
-	}
+	}	
 
 	
-    if (GetKeyDown(VK_SPACE) && !objs.rolling)
+    if (GetKeyDown(VK_SPACE) && !objs.rolling && !objs.resultShow)
     {
 		if (objs.currentGold >= 10)
 			objs.currentGold -= 10;
 		else return;
+
+		ShakeConsoleWindow(8, 200, 30);
 
         objs.startTime = GetTickCount64();
         objs.rolling = true;
@@ -57,6 +60,10 @@ void ShopScene::Update()
 
 	if (!objs.getItem.empty())
 	{
+		if (objs.getItem == L"♥")
+		{
+			state.player.maxHp += 
+		}
 
 		if (objs.success)
 		{
