@@ -16,10 +16,6 @@ void BattleSceneStageState::Enter()
 	}
 	SkipBreak();
 
-
-	cout << _getch();
-
-
 }
 
 void BattleSceneStageState::Update()

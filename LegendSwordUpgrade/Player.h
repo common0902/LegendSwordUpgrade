@@ -6,6 +6,5 @@ public:
 	float attackSpeed;
 	float str;
 	float MaxHp;
-
 };
 

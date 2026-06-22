@@ -32,9 +32,8 @@ public:
 	FSM fsm;
 
 public:
-	int curPlayerHp = 0;
+	float curPlayerHp = 0;
 	int curDamage = 0;
-	int attackProbability = 0;
 	vector<wstring> curSwordImage;
 	string swordName;
 
