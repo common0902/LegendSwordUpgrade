@@ -16,10 +16,6 @@ void BattleSceneStageState::Enter()
 	}
 	SkipBreak();
 
-
-	cout << _getch();
-
-
 }
 
 void BattleSceneStageState::Update()
@@ -31,7 +27,7 @@ void BattleSceneStageState::Render() const
 {
 
 
-}
+}                               
 
 void BattleSceneStageState::Exit()
 {

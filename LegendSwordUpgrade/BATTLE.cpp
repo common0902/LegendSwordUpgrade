@@ -20,20 +20,17 @@ void BattleScene::Enter()
 {
 	CLS();
 	fsm.ChangeState(BattleSceneEnum::Stage);
-
 }
 
 void BattleScene::Update()
 {
 	SkipBreak();
 	fsm.Update();
-
 }
 
 void BattleScene::Render() const
 {
 	fsm.Render();
-
 }
 
 void BattleScene::Exit()
@@ -48,8 +45,8 @@ void BattleScene::Exit()
 void BattleScene::StatSetting()
 {
 	curSwordImage = TestSwordImage;
-	state.player.maxHp = 100;
-	curPlayerHp = state.player.maxHp;
+	state.player.MaxHp = 10;
+	curPlayerHp = state.player.MaxHp;
 	curDamage = 10;
 	swordName = "¸®¿ì Â¯Â¯ °Ë";
 }
@@ -67,11 +64,11 @@ void BattleScene::DrawBaseUI() const
 void BattleScene::DrawPlayerStat() const
 {
 	GotoXY(BaseUIPos + Vector2(2,2));
-	cout << "Ã¼·Â : " << GetIntString(curPlayerHp) << "/" << GetIntString(state.player.maxHp) << "        ";
+	cout << "Ã¼·Â : " << GetIntString(curPlayerHp) << "/" << GetIntString(state.player.MaxHp) << "        ";
 	
 	GotoXY(BaseUIPos + Vector2(2,3));
-	SetColor(GetHealthColor(curPlayerHp, state.player.maxHp));
-	cout << GetBarString(curPlayerHp, state.player.maxHp, 10);
+	SetColor(GetHealthColor(curPlayerHp, state.player.MaxHp));
+	cout << GetBarString(curPlayerHp, state.player.MaxHp, 10);
 	SetColor();
 
 	GotoXY(BaseUIPos + Vector2(2,4));
