@@ -1,4 +1,4 @@
-﻿#include "Console.h"
+#include "Console.h"
 #include "SHOP.h"
 #include "CHGAsciiArt.h"
 static AsciiObjs objs;

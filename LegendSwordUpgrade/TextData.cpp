@@ -1,4 +1,4 @@
-﻿#include "TextData.h"
+#include "TextData.h"
 
 std::vector<std::wstring> BaseBattleUI = {
 	 L"⡤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⠤⢤",

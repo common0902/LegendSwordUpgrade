@@ -1,10 +1,10 @@
-﻿#pragma once
+#pragma once
 #include "Sword.h"
 class Player
 {
 public:
-	float attackSpeed;
-	float str;
-	float MaxHp;
+	int attackSpeed;
+	int str;
+	int MaxHp;
 };
 

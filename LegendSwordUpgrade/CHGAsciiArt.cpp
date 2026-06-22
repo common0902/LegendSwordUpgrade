@@ -1,4 +1,4 @@
-﻿#include "CHGAsciiArt.h"
+#include "CHGAsciiArt.h"
 #include "Console.h"	
 #include "GameState.h"
 #include <windows.h>
@@ -351,8 +351,8 @@ void CHGRenderInfoUI(const AsciiObjs& objs, int renderX, int renderY)
     }
     
     GotoXY(renderX + 1, renderY + 7 + yOffset + 2);
-    wcout << "공격속도: " << (*objs.items)[L"1"].first * 2;
+    wcout << L"공격속도: " << (*objs.items)[L"1"].first * 2;
     GotoXY(renderX + 1, renderY + 7 + yOffset + 3);
-    wcout << 
+    //wcout << 
 }
 

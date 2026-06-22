@@ -1,4 +1,4 @@
-﻿#include "UPGRADE.h"
+#include "UPGRADE.h"
 #include "Console.h"
 
 constexpr int RESULT_DISPLAY_MS = 1500;

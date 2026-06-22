@@ -1,10 +1,11 @@
-﻿#include "Game.h"
+#include "Game.h"
 
 
 void Init(GameState& state)
 {
 	srand((unsigned int)time(nullptr));
 
+	ConfigureConsoleEncoding();
 	SetConsoleSize(WIDTH, HEIGHT);
 	SetConsoleWindowStyle(true);
 	SetCursorVisible(false);

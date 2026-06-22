@@ -48,7 +48,7 @@ void BattleScene::StatSetting()
 	state.player.MaxHp = 10;
 	curPlayerHp = state.player.MaxHp;
 	curDamage = 10;
-	swordName = "¸®¿ì Â¯Â¯ °Ë";
+	swordName = "ë¦¬ìš° ì§±ì§± ê²€";
 }
 
 #pragma endregion
@@ -64,7 +64,7 @@ void BattleScene::DrawBaseUI() const
 void BattleScene::DrawPlayerStat() const
 {
 	GotoXY(BaseUIPos + Vector2(2,2));
-	cout << "Ã¼·Â : " << GetIntString(curPlayerHp) << "/" << GetIntString(state.player.MaxHp) << "        ";
+	cout << "ì²´ë ¥ : " << GetIntString(curPlayerHp) << "/" << GetIntString(state.player.MaxHp) << "        ";
 	
 	GotoXY(BaseUIPos + Vector2(2,3));
 	SetColor(GetHealthColor(curPlayerHp, state.player.MaxHp));
@@ -72,7 +72,7 @@ void BattleScene::DrawPlayerStat() const
 	SetColor();
 
 	GotoXY(BaseUIPos + Vector2(2,4));
-	cout << "°ø°Ý·Â : " << GetIntString(curDamage) << "    ";
+	cout << "ê³µê²©ë ¥ : " << GetIntString(curDamage) << "    ";
 }
 
 void BattleScene::DrawCurrentSword() const
@@ -80,7 +80,7 @@ void BattleScene::DrawCurrentSword() const
 	DrawImage(curSwordImage, BaseUIPos + Vector2{ 2,7 }, swordImageMaxSize);
 
 	GotoXY(BaseUIPos + Vector2{ 1, 23 });
-	string swordText = "ÇöÀç °Ë : " + swordName;
+	string swordText = "í˜„ìž¬ ê²€ : " + swordName;
 	cout << CenterText(swordText, swordImageWidth);
 }
 
@@ -285,8 +285,8 @@ int GetIntInput(int min, int max)
 		{
 			cin.clear();
 			cin.ignore(1000, '\n');
-			cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n" << min << "~"
-				<< max << "»çÀÌ ¼ýÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\n";
+			cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤.\n" << min << "~"
+				<< max << "ì‚¬ì´ ìˆ«ìžë¥¼ ìž…ë ¥í•˜ì„¸ìš”.\n";
 			continue;
 		}
 		else
@@ -312,7 +312,7 @@ bool InputYorN()
 			break;
 		}
 		else {
-			cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n";
+			cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤.\n";
 		}
 	}
 	SkipBreak();

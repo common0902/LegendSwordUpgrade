@@ -68,7 +68,7 @@ void DrawImage(vector<wstring> image, int x, int y, int maxWIDTH, int maxHEIGHT)
 void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size);
 void DrawImage(vector<wstring> image, Vector2 pos);
 Color GetHealthColor(int curHp, int maxHp);
-string GetBarString(int value, int maxValue, int barWidth, const string& fillChar = "¡á", const string& emptyChar = "¡à");
+string GetBarString(int value, int maxValue, int barWidth, const string& fillChar = "â– ", const string& emptyChar = "â–¡");
 string GetIntString(int value);
 string GetEmptyString(int size);
 string CenterText(string text, int size);
