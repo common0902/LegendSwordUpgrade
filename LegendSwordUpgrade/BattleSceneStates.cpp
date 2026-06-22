@@ -1,5 +1,5 @@
-#include"BattleSceneStates.h"
-#include"BATTLE.h"
+#include "BattleSceneStates.h"
+#include "BATTLE.h"
 
 #pragma region Const
 
@@ -8,11 +8,10 @@ constexpr int NumderSpaing = 30;
 
 Vector2 CancelImagePos = Vector2{ 125, 35 };
 
-constexpr int FadeDurationTime = 2000;
+constexpr int FadeDurationTime = 0;
 constexpr int FadeDelayTime = 1000;
 
 #pragma endregion
-
 
 #pragma region BattleSceneStageState
 void BattleSceneStageState::Init()
@@ -21,11 +20,9 @@ void BattleSceneStageState::Init()
 }
 void BattleSceneStageState::Enter()
 {
-
-
 	SkipBreak();
 	GotoXY(70, 10);
-	cout << "���������� ������ �ּ���.";
+	cout << "스테이지를 선택해 주세요.";
 }
 
 void BattleSceneStageState::Update()
@@ -77,23 +74,46 @@ void BattleSceneStageState::StageChange(int stage)
 
 void BattleSceneStageState::CircleFade(int duration, int delay)
 {
-	Vector2 center = Vector2{ WIDTH, HEIGHT } / 2;
-
-	int size = WIDTH / 2;
-
-	if (size < HEIGHT / 2) size = HEIGHT / 2;
-
-	int FadeFrameDelay = duration / size;
-
 	Vector2 pos;
 	string text = "&";
 
+	int fadeFrameDelay = duration / WIDTH;
 
+	bool left;
+
+	for (int i = 0;i < WIDTH;++i)
+	{
+		left = true;
+		for (int j = 0;j < HEIGHT;++j)
+		{
+			if (left) pos = Vector2(i, j);
+			else pos = Vector2(WIDTH - i - 1, j);
+			BoolReverse(left);
+			GotoXY(pos);
+			cout << text;
+		}
+		Sleep(fadeFrameDelay);
+	}
 
 	Sleep(delay);
 
+	text = " ";
+	for (int i = 0;i < WIDTH;++i)
+	{
+		left = true;
+		for (int j = 0;j < HEIGHT;++j)
+		{
+			if (left) pos = Vector2(i, j);
+			else pos = Vector2(WIDTH - i - 1, j);
+			BoolReverse(left);
+			GotoXY(pos);
+			cout << text;
+		}
+		Sleep(fadeFrameDelay);
+	}
 
 }
+
 
 #pragma endregion
 
@@ -108,7 +128,6 @@ void BattleSceneBattleState::Enter()
 void BattleSceneBattleState::Update()
 {
 
-	cout << "123";
 }
 
 void BattleSceneBattleState::Render() const

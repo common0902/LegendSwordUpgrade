@@ -389,6 +389,11 @@ bool DelayButton(Vector2 leftPos, vector<wstring> image,
 	return IsButtonClick(leftPos,image) && Delay(type,delay);
 }
 
+void BoolReverse(bool& value)
+{
+	value = !value;
+}
+
 
 #pragma endregion
 
