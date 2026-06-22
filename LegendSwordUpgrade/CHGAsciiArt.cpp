@@ -330,7 +330,6 @@ void CHGRenderNullSlotArt(const AsciiObjs& objs, int slotIndex)
 
 void CHGRenderInfoUI(const AsciiObjs& objs, int renderX, int renderY)
 {
-
     GotoXY(renderX + 2, renderY + 1);
     wcout << L"보유 골드: " << std::setw(4) << objs.currentGold;
     GotoXY(renderX + 2, renderY + 3);
@@ -350,7 +349,10 @@ void CHGRenderInfoUI(const AsciiObjs& objs, int renderX, int renderY)
         wcout << item->second.second;
         yOffset++;
     }
-
-
+    
+    GotoXY(renderX + 1, renderY + 7 + yOffset + 2);
+    wcout << "공격속도: " << (*objs.items)[L"1"].first * 2;
+    GotoXY(renderX + 1, renderY + 7 + yOffset + 3);
+    wcout << 
 }
 

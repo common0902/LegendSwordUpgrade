@@ -60,10 +60,8 @@ void ShopScene::Update()
 
 	if (!objs.getItem.empty())
 	{
-		if (objs.getItem == L"♥")
-		{
-			state.player.maxHp += 
-		}
+
+		
 
 		if (objs.success)
 		{
@@ -92,21 +90,23 @@ void ShopScene::Render() const
 void ShopScene::Exit()
 {
 	state.gold = objs.currentGold;
+	state.player.MaxHp = state.ChgData.haveTotem[L"♥"].first * 2;
+	state.player.attackSpeed = state.ChgData.haveTotem[L"1"].first * 2;
 }
 
 
 void StatUp(GameState state, int count)
 {
-	if (objs.getItem == L"1")
+	/*if (objs.getItem == L"1")
 		state.player.str += count * 3;
 	else if (objs.getItem == L"$")
 		state.player.str += count * 15;
 	else if (objs.getItem == L"♥")
-		state.player.maxHp += count * 3;
+		state.player.MaxHp += count * 3;
 	else if (objs.getItem == L"7")
 	{
 		state.player.str += count * 1;
 		state.player.str += count * 1;
 		objs.currentGold += count * 1;
-	}
+	}*/
 }
