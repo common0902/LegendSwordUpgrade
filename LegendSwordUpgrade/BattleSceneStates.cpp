@@ -1,7 +1,10 @@
 #include "BattleSceneStates.h"
 #include "BATTLE.h"
+#include <Map>
 
 #pragma region Const
+
+#pragma region Stage
 
 Vector2 NumderStartPos = Vector2{ 10,20 };
 constexpr int NumderSpaing = 30;
@@ -12,13 +15,35 @@ constexpr int FadeDelayTime = 1000;
 
 #pragma endregion
 
+#pragma region Battle
+
+Vector2 NumderCountDownPos = Vector2(60, 15);
+
+constexpr int StartBattleDelay = 1000;
+constexpr int OneSecond = 1000;
+
+#pragma endregion
+
+#pragma endregion
+
 #pragma region BattleSceneStageState
+
 void BattleSceneStageState::Init()
 {
-	OnMouseStaageButton = new bool[scene.maxStage];
+	prevOnMouseStageButton = new bool[scene.maxStage];
+	OnMouseStageButton = new bool[scene.maxStage];
+	
 }
+
 void BattleSceneStageState::Enter()
 {
+	for (int i = 0;i < scene.maxStage;++i) {
+		prevOnMouseStageButton[i] = true;
+		OnMouseStageButton[i] = false;
+	}
+	prevIsMouseCancelButton = true;
+	isMouseCancelButton = false;
+
 	SkipBreak();
 	GotoXY(70, 10);
 	cout << "스테이지를 선택해 주세요.";
@@ -29,11 +54,13 @@ void BattleSceneStageState::Update()
 	Vector2 pos = NumderStartPos;
 	for (int i = 0;i < scene.maxStage;++i)
 	{
-		OnMouseStaageButton[i] = IsMouseUp(pos, NumderImage[i]);
-		if (OnMouseStaageButton[i] && GetMouseDown(MouseButton::LEFT)) StageChange(i + 1);
+		prevOnMouseStageButton[i] = OnMouseStageButton[i];
+		OnMouseStageButton[i] = IsMouseUp(pos, NumderImage[i]);
+		if (OnMouseStageButton[i] && GetMouseDown(MouseButton::LEFT)) StageChange(i + 1);
 		pos.x += NumderSpaing;
 	}
 
+	prevIsMouseCancelButton = isMouseCancelButton;
 	isMouseCancelButton = IsMouseUp(CancelImagePos, CancelImage);
 	if (isMouseCancelButton && GetMouseDown(MouseButton::LEFT))
 	{
@@ -48,13 +75,21 @@ void BattleSceneStageState::Render() const
 	Vector2 pos = NumderStartPos;
 	for (int i = 0;i < scene.maxStage;++i)
 	{
-		SetColor(OnMouseStaageButton[i] ? Color::GRAY : Color::WHITE);
+		if (prevOnMouseStageButton[i] == OnMouseStageButton[i])
+		{
+			pos.x += NumderSpaing;
+			continue;
+		}
+		SetColor(OnMouseStageButton[i] ? Color::GRAY : Color::WHITE);
 		DrawImage(NumderImage[i], pos);
 		pos.x += NumderSpaing;
 	}
-
-	SetColor(isMouseCancelButton ? Color::RED : Color::WHITE);
-	DrawImage(CancelImage, CancelImagePos);
+	
+	if (prevIsMouseCancelButton != isMouseCancelButton)
+	{
+		SetColor(isMouseCancelButton ? Color::RED : Color::WHITE);
+		DrawImage(CancelImage, CancelImagePos);
+	}
 
 }                               
 
@@ -77,18 +112,29 @@ void BattleSceneStageState::StageChange(int stage)
 
 void BattleSceneBattleState::Enter()
 {
-	GotoXY(75, 40);
-	cout << scene.curStage;
+	curStage = scene.curStage;
+
+	Sleep(StartBattleDelay);
+
+	for (int i = 2;i >= 0;--i)
+	{
+		DrawImage(NumderImage[i], NumderCountDownPos);
+		Sleep(OneSecond);
+	}
+	CLS();
 }
 
 void BattleSceneBattleState::Update()
 {
+	
+
 
 }
 
 void BattleSceneBattleState::Render() const
-
 {
+
+
 
 
 }
@@ -101,14 +147,13 @@ void BattleSceneBattleState::Exit()
 
 #pragma endregion
 
+#pragma region Method
 
 void CircleFade(int delay)
 {
 	Vector2 pos;
 	string text = " ";
-
-	int fadeFrameDelay = duration / WIDTH;
-
+	
 	bool left;
 	SetColor(Color::WHITE, Color::WHITE);
 	for (int i = 0;i < WIDTH;++i)
@@ -122,9 +167,8 @@ void CircleFade(int delay)
 			GotoXY(pos);
 			cout << text;
 		}
-		Sleep(fadeFrameDelay);
 	}
-
+	
 	Sleep(delay);
 
 	SetColor();
@@ -139,7 +183,8 @@ void CircleFade(int delay)
 			GotoXY(pos);
 			cout << text;
 		}
-		Sleep(fadeFrameDelay);
 	}
 
 }
+
+#pragma endregion

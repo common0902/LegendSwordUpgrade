@@ -24,9 +24,10 @@ public:
 
 
 public:
-	int curStage;
+	bool prevIsMouseCancelButton = true;
 	bool isMouseCancelButton = false;
-	bool* OnMouseStaageButton;
+	bool* prevOnMouseStageButton;
+	bool* OnMouseStageButton;
 };
 
 
@@ -42,14 +43,12 @@ public:
 	void Render() const override;
 	void Exit() override;
 
+public:
+	int curStage;
+
 };
 
-
 void CircleFade(int delay);
-
-
-
-
 
 
 

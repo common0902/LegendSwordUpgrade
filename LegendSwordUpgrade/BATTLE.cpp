@@ -395,7 +395,6 @@ void BoolReverse(bool& value)
 	value = !value;
 }
 
-
 #pragma endregion
 
 
