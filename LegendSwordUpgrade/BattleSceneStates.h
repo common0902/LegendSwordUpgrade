@@ -30,11 +30,12 @@ public:
 	bool* OnMouseStageButton;
 };
 
+class Enemy;
 
 class BattleSceneBattleState : public BattleSceneState
 {
 public:
-	BattleSceneBattleState(BattleScene& scene) : BattleSceneState(scene) {}
+	BattleSceneBattleState(BattleScene& scene) : BattleSceneState(scene) { }
 	virtual ~BattleSceneBattleState() = default;
 
 public:
@@ -44,7 +45,16 @@ public:
 	void Exit() override;
 
 public:
+ 	void SetEnemyData();
+
+public:
 	int curStage;
+	Enemy* enemy;
+
+public:
+	int playerCurHp = 0;
+	int playerMaxHp = 0;
+	int playerDamage = 0;
 
 };
 

@@ -32,25 +32,11 @@ public:
 	FSM fsm;
 
 public:
-	int curPlayerHp = 0;
-	int curDamage = 0;
-	vector<wstring> curSwordImage;
-	string swordName;
-
-public:
 	const int maxStage = 5;
 	int curStage = 1;
 	int curClearStage = 0;
 
 public:
-	void StatSetting();
-
-	void DrawBaseUI() const;
-	void DrawPlayerStat() const;
-	void DrawCurrentSword() const;
-
-public:
-	int GetMaxPhase(int stage) const;
 	void ChangeScene(int scene);
 	void ChangeState(BattleSceneEnum state);
 };

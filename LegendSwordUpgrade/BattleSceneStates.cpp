@@ -17,10 +17,13 @@ constexpr int FadeDelayTime = 1000;
 
 #pragma region Battle
 
-Vector2 NumderCountDownPos = Vector2(60, 15);
+Vector2 NumderCountDownPos = Vector2(65, 15);
 
 constexpr int StartBattleDelay = 1000;
 constexpr int OneSecond = 1000;
+
+Vector2 HealthBarPos = Vector2(30,5);
+constexpr int PlayerHelathBarSize = 50;
 
 #pragma endregion
 
@@ -32,7 +35,6 @@ void BattleSceneStageState::Init()
 {
 	prevOnMouseStageButton = new bool[scene.maxStage];
 	OnMouseStageButton = new bool[scene.maxStage];
-	
 }
 
 void BattleSceneStageState::Enter()
@@ -114,6 +116,8 @@ void BattleSceneBattleState::Enter()
 {
 	curStage = scene.curStage;
 
+	SetEnemyData();
+
 	Sleep(StartBattleDelay);
 
 	for (int i = 2;i >= 0;--i)
@@ -122,18 +126,24 @@ void BattleSceneBattleState::Enter()
 		Sleep(OneSecond);
 	}
 	CLS();
+
+	playerCurHp = 20;
+	playerMaxHp = 20;
 }
 
 void BattleSceneBattleState::Update()
 {
-	
-
 
 }
 
 void BattleSceneBattleState::Render() const
 {
+	string batText = GetBarString(playerCurHp, playerMaxHp, PlayerHelathBarSize);
+	Color barColor = GetHealthColor(playerCurHp, playerMaxHp);
 
+	GotoXY(HealthBarPos);
+	SetColor(barColor);
+	cout << batText;
 
 
 
@@ -141,8 +151,41 @@ void BattleSceneBattleState::Render() const
 
 void BattleSceneBattleState::Exit()
 {
+	CLS();
 
+}
 
+void BattleSceneBattleState::SetEnemyData()
+{
+	Enemy* a;
+
+	vector<wstring> image = { L"123",L"13" };
+
+	if (curStage == 1)
+	{
+		a = new Enemy(image, 100, 10);
+	}
+	else if (curStage == 2)
+	{
+		a = new Enemy(image, 200, 50);
+	}
+	else if (curStage == 3)
+	{
+		a = new Enemy(image, 300, 100);
+	}
+	else if (curStage == 4)
+	{
+		a = new Enemy(image, 500, 75);
+	}
+	else if (curStage == 5)
+	{
+		a = new Enemy(image, 1000, 200);
+	}
+	else a = new Enemy(image, 1, 1);
+	
+	delete enemy;
+
+	enemy = a;
 }
 
 #pragma endregion

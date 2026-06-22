@@ -40,60 +40,7 @@ void BattleScene::Exit()
 
 #pragma endregion
 
-#pragma region Setting
-
-void BattleScene::StatSetting()
-{
-	curSwordImage = TestSwordImage;
-	state.player.MaxHp = 10;
-	curPlayerHp = state.player.MaxHp;
-	curDamage = 10;
-	swordName = "리우 짱짱 검";
-}
-
-#pragma endregion
-
-#pragma region Draw
-
-void BattleScene::DrawBaseUI() const
-{
-	DrawPlayerStat();
-	DrawCurrentSword();
-}
-
-void BattleScene::DrawPlayerStat() const
-{
-	GotoXY(BaseUIPos + Vector2(2,2));
-	cout << "체력 : " << GetIntString(curPlayerHp) << "/" << GetIntString(state.player.MaxHp) << "        ";
-	
-	GotoXY(BaseUIPos + Vector2(2,3));
-	SetColor(GetHealthColor(curPlayerHp, state.player.MaxHp));
-	cout << GetBarString(curPlayerHp, state.player.MaxHp, 10);
-	SetColor();
-
-	GotoXY(BaseUIPos + Vector2(2,4));
-	cout << "공격력 : " << GetIntString(curDamage) << "    ";
-}
-
-void BattleScene::DrawCurrentSword() const
-{
-	DrawImage(curSwordImage, BaseUIPos + Vector2{ 2,7 }, swordImageMaxSize);
-
-	GotoXY(BaseUIPos + Vector2{ 1, 23 });
-	string swordText = "현재 검 : " + swordName;
-	cout << CenterText(swordText, swordImageWidth);
-}
-
-#pragma endregion
-
 #pragma region Phase
-
-int BattleScene::GetMaxPhase(int stage) const
-{
-
-
-	return stage * 5;
-}
 
 void BattleScene::ChangeScene(int scene)
 {
