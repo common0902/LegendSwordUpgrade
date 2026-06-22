@@ -27,7 +27,7 @@ void BattleSceneStageState::Render() const
 {
 
 
-}
+}                               
 
 void BattleSceneStageState::Exit()
 {
