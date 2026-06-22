@@ -25,7 +25,7 @@ void BattleSceneStageState::Update()
 
 void BattleSceneStageState::Render() const
 {
-
+	DrawImage(NumderImage, Vector2{0,0});
 
 }                               
 
