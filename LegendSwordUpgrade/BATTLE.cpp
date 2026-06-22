@@ -326,6 +326,7 @@ string ToString(int value)
 
 void CLS()
 {
+	SetColor();
 	system("cls");
 }
 

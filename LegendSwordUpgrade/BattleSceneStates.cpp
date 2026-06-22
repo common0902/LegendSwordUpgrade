@@ -8,7 +8,6 @@ constexpr int NumderSpaing = 30;
 
 Vector2 CancelImagePos = Vector2{ 125, 35 };
 
-constexpr int FadeDurationTime = 0;
 constexpr int FadeDelayTime = 1000;
 
 #pragma endregion
@@ -62,7 +61,7 @@ void BattleSceneStageState::Render() const
 void BattleSceneStageState::Exit()
 {
 	SetColor();
-	CircleFade(FadeDurationTime,FadeDelayTime);
+	CircleFade(FadeDelayTime);
 	CLS();
 }
 
@@ -71,49 +70,6 @@ void BattleSceneStageState::StageChange(int stage)
 	scene.curStage = stage;
 	scene.ChangeState(BattleSceneEnum::Battle);
 }
-
-void BattleSceneStageState::CircleFade(int duration, int delay)
-{
-	Vector2 pos;
-	string text = "&";
-
-	int fadeFrameDelay = duration / WIDTH;
-
-	bool left;
-
-	for (int i = 0;i < WIDTH;++i)
-	{
-		left = true;
-		for (int j = 0;j < HEIGHT;++j)
-		{
-			if (left) pos = Vector2(i, j);
-			else pos = Vector2(WIDTH - i - 1, j);
-			BoolReverse(left);
-			GotoXY(pos);
-			cout << text;
-		}
-		Sleep(fadeFrameDelay);
-	}
-
-	Sleep(delay);
-
-	text = " ";
-	for (int i = 0;i < WIDTH;++i)
-	{
-		left = true;
-		for (int j = 0;j < HEIGHT;++j)
-		{
-			if (left) pos = Vector2(i, j);
-			else pos = Vector2(WIDTH - i - 1, j);
-			BoolReverse(left);
-			GotoXY(pos);
-			cout << text;
-		}
-		Sleep(fadeFrameDelay);
-	}
-
-}
-
 
 #pragma endregion
 
@@ -146,3 +102,44 @@ void BattleSceneBattleState::Exit()
 #pragma endregion
 
 
+void CircleFade(int delay)
+{
+	Vector2 pos;
+	string text = " ";
+
+	int fadeFrameDelay = duration / WIDTH;
+
+	bool left;
+	SetColor(Color::WHITE, Color::WHITE);
+	for (int i = 0;i < WIDTH;++i)
+	{
+		left = true;
+		for (int j = 0;j < HEIGHT;++j)
+		{
+			if (left) pos = Vector2(i, j);
+			else pos = Vector2(WIDTH - i - 1, j);
+			BoolReverse(left);
+			GotoXY(pos);
+			cout << text;
+		}
+		Sleep(fadeFrameDelay);
+	}
+
+	Sleep(delay);
+
+	SetColor();
+	for (int i = 0;i < WIDTH;++i)
+	{
+		left = true;
+		for (int j = 0;j < HEIGHT;++j)
+		{
+			if (left) pos = Vector2(i, j);
+			else pos = Vector2(WIDTH - i - 1, j);
+			BoolReverse(left);
+			GotoXY(pos);
+			cout << text;
+		}
+		Sleep(fadeFrameDelay);
+	}
+
+}

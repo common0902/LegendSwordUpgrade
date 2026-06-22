@@ -22,8 +22,6 @@ public:
 public:
 	void StageChange(int stage);
 
-public:
-	void CircleFade(int duration, int delay);
 
 public:
 	int curStage;
@@ -47,7 +45,7 @@ public:
 };
 
 
-
+void CircleFade(int delay);
 
 
 
