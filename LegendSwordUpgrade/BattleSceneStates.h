@@ -6,15 +6,29 @@
 class BattleSceneStageState : public BattleSceneState
 {
 public:
-	BattleSceneStageState(BattleScene& scene) : BattleSceneState(scene) {}
+	BattleSceneStageState(BattleScene& scene) : BattleSceneState(scene)
+	{
+		Init();
+	}
 	virtual ~BattleSceneStageState() = default;
 
 public:
+	void Init();
 	void Enter() override;
 	void Update() override;
 	void Render() const override;
 	void Exit() override;
 
+public:
+	void StageChange(int stage);
+
+public:
+	void CircleFade(int duration, int delay);
+
+public:
+	int curStage;
+	bool isMouseCancelButton = false;
+	bool* OnMouseStaageButton;
 };
 
 

@@ -32,19 +32,15 @@ public:
 	FSM fsm;
 
 public:
-	float curPlayerHp = 0;
+	int curPlayerHp = 0;
 	int curDamage = 0;
 	vector<wstring> curSwordImage;
 	string swordName;
 
 public:
-	const int maxStage = 10;
-	bool isExit = false;
-	int curState = 1;
+	const int maxStage = 5;
+	int curStage = 1;
 	int curClearStage = 0;
-	int curPhase = 1;
-	int prevPhase = 1;
-	int curMaxPhase = 1;
 
 public:
 	void StatSetting();
@@ -55,6 +51,8 @@ public:
 
 public:
 	int GetMaxPhase(int stage) const;
+	void ChangeScene(int scene);
+	void ChangeState(BattleSceneEnum state);
 };
 
 
@@ -63,6 +61,7 @@ ULONGLONG GetDeltaTime(ULONGLONG lastTime);
 bool Delay(int type, ULONGLONG time);
 bool Delay(DelayType type, ULONGLONG time);
 void GotoXY(Vector2 pos);
+bool IsGotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
 bool Random(int probability);
 void DrawImage(vector<wstring> image, int x, int y, int maxWIDTH, int maxHEIGHT);

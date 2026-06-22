@@ -82,7 +82,6 @@ void BattleScene::DrawCurrentSword() const
 	GotoXY(BaseUIPos + Vector2{ 1, 23 });
 	string swordText = "ÇöÀç °Ë : " + swordName;
 	cout << CenterText(swordText, swordImageWidth);
-
 }
 
 #pragma endregion
@@ -94,6 +93,17 @@ int BattleScene::GetMaxPhase(int stage) const
 
 
 	return stage * 5;
+}
+
+void BattleScene::ChangeScene(int scene)
+{
+	fsm.Exit();
+	state.fsm.ChangeState(scene);
+}
+
+void BattleScene::ChangeState(BattleSceneEnum state)
+{
+	fsm.ChangeState(state);
 }
 
 #pragma endregion
@@ -125,6 +135,11 @@ bool Delay(DelayType type, ULONGLONG time)
 void GotoXY(Vector2 pos)
 {
 	GotoXY(pos.x, pos.y);
+}
+
+bool IsGotoXY(Vector2 pos)
+{
+	return IsGotoXY(pos.x,pos.y);
 }
 
 int GetRandomRange(int min, int max)
