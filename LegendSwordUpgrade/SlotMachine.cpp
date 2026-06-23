@@ -38,7 +38,6 @@ void SlotMachine::Init(GameState& gameState)
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
-		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
 		L"⣇⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣸",
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
@@ -96,20 +95,20 @@ void SlotMachine::Init(GameState& gameState)
 		L"  `Y888Y'  ",
 		L"    `Y'    "
 		});
-	slotArt.push_back(
+	/*slotArt.push_back(
 		{
 		L"   _   ",
 		L"  (_)  ",
 		L" (_)(_)",
 		L"  _|_  "
-		});
+		});*/
 
 	state = &gameState;
 
 	slotNum = { 0, 1, 2 };
 	rolling = false;
 	startTime = 0;
-	rollingTime = 2000;
+	rollingTime = 1500;
 	lastChangeTime = 0;
 	changeInterval = 100;
 	resultShowInterval = 400;
@@ -196,9 +195,9 @@ void SlotMachine::Update()
 			case 3:
 				getItem = L"♥";
 				break;
-			case 4:
+			/*case 4:
 				getItem = L"♧";
-				break;
+				break;*/
 			}
 
 		}
@@ -394,8 +393,8 @@ void SlotMachine::RenderInfoUI(int renderX, int renderY) const
 	wcout << L"공격속도: " << state->player.attackSpeed;
 	GotoXY(renderX + 2, renderY + 7 + yOffset + 3);
 	wcout << L"체력: " << state->player.MaxHp;
-	GotoXY(renderX + 2, renderY + 7 + yOffset + 4);
-	wcout << L"무기 강화 성공 확률: " << state->curSword.GetSuccessChance();
+	/*GotoXY(renderX + 2, renderY + 7 + yOffset + 4);
+	wcout << L"무기 강화 성공 확률: " << state->curSword.GetSuccessChance();*/
 
 	GotoXY(13, 28);
 	wcout << L"실패 확률: " << state->ChgData.failPercent << L"%";

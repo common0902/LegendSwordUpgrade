@@ -8,7 +8,7 @@ void ShopScene::Enter()
 	srand((unsigned int)time(nullptr));
 	SetConsoleGameTitle(L"SHOP");
 	slotMachine.Init(state);
-	state.ChgData.UpdateWeaponUpgradePercent();
+	//state.ChgData.UpdateWeaponUpgradePercent();
 	//SetConsoleSize(85, 40);
 }
 void ShopScene::Update()
@@ -22,8 +22,8 @@ void ShopScene::Update()
 
 	if (GetKeyDown(VK_SPACE) && slotMachine.CanRoll())
 	{
-		if (state.gold >= 15)
-			state.gold -= 15;
+		if (state.gold >= 150)
+			state.gold -= 150;
 		else return;
 
 		int p = rand() % 100 + 1;
@@ -37,7 +37,7 @@ void ShopScene::Update()
 	if (!result.item.empty())
 	{
 		int getTotem = result.superSuccess ? 5 : 1;
-		state.gold += result.superSuccess ? 1000 : 250;
+		state.gold += result.superSuccess ? 10000 : 2000;
 
 		state.ChgData.haveTotem[result.item].first += getTotem;
 		if (result.item == L"7")
@@ -46,14 +46,14 @@ void ShopScene::Update()
 			{
 				iter->second.first += getTotem;
 			}
-			state.gold += 1000;
+			state.gold += 20000;
 		}
 		else if (result.item == L"$")
 		{
-			state.gold += 500;
+			state.gold += 30000;
 		}
 
-		state.ChgData.UpdateWeaponUpgradePercent();
+		//state.ChgData.UpdateWeaponUpgradePercent();
 	}
 
 	state.player.ApplyTotem(state.ChgData);  
