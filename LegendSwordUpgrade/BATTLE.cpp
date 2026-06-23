@@ -14,6 +14,8 @@ void BattleScene::Init()
 	fsm.AddState(BattleSceneEnum::Stage, new BattleSceneStageState(*this));
 	fsm.AddState(BattleSceneEnum::Battle, new BattleSceneBattleState(*this));
 	fsm.AddState(BattleSceneEnum::Clear, new BattleSceneClearState(*this));
+
+	state.player.ApplyTotem(state.ChgData);
 }
 
 void BattleScene::Enter()

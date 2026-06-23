@@ -227,6 +227,8 @@ void BattleSceneBattleState::Render() const
 
 #pragma endregion
 
+
+
 }
 
 void BattleSceneBattleState::Exit()
