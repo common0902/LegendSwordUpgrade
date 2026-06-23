@@ -140,7 +140,7 @@ void BattleSceneStageState::StageChange(int stage)
 void BattleSceneBattleState::Enter()
 {
 	curStage = scene.curStage;
-
+	playerDamage = scene.state.PmsData.storedDamage;
 	SetEnemyData();
 
 	Sleep(StartBattleDelay);
