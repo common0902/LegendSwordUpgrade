@@ -1,6 +1,6 @@
 #pragma once
 #include"BattleSceneState.h"
-
+#include"Console.h"
 
 
 class BattleSceneStageState : public BattleSceneState
@@ -52,10 +52,14 @@ public:
 	Enemy* enemy;
 
 public:
+	ULONGLONG lastAttackTime;
+
+
+public:
 	int playerCurHp = 0;
 	int playerMaxHp = 0;
 	int playerDamage = 0;
-
+	int playerAttackSpeed = 10;
 };
 
 void CircleFade(int delay);

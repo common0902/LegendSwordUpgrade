@@ -25,6 +25,10 @@ constexpr int OneSecond = 1000;
 Vector2 HealthBarPos = Vector2(30,5);
 constexpr int PlayerHelathBarSize = 50;
 
+Vector2 EnemyDrawPos = Vector2(50, 15);
+
+ULONGLONG DefaultAttackSpeed = 1000;
+
 #pragma endregion
 
 #pragma endregion
@@ -40,6 +44,7 @@ void BattleSceneStageState::Init()
 void BattleSceneStageState::Enter()
 {
 	for (int i = 0;i < scene.maxStage;++i) {
+	
 		prevOnMouseStageButton[i] = true;
 		OnMouseStageButton[i] = false;
 	}
@@ -100,6 +105,7 @@ void BattleSceneStageState::Exit()
 	SetColor();
 	CircleFade(FadeDelayTime);
 	CLS();
+
 }
 
 void BattleSceneStageState::StageChange(int stage)
@@ -127,26 +133,34 @@ void BattleSceneBattleState::Enter()
 	}
 	CLS();
 
-	playerCurHp = 20;
+	playerCurHp = 10;
 	playerMaxHp = 20;
 }
 
 void BattleSceneBattleState::Update()
 {
+	static int a = 0;
+	if (DelayButton(EnemyDrawPos, enemy->image, PlayerAttackDelay, DefaultAttackSpeed / playerAttackSpeed))
+	{
+		a += 1;
+		GotoXY(60 + a, 35);
+		cout << "1";
+	}
+
 
 }
 
 void BattleSceneBattleState::Render() const
 {
-	string batText = GetBarString(playerCurHp, playerMaxHp, PlayerHelathBarSize);
+	string barText = GetBarString(playerCurHp, playerMaxHp, PlayerHelathBarSize);
 	Color barColor = GetHealthColor(playerCurHp, playerMaxHp);
 
 	GotoXY(HealthBarPos);
 	SetColor(barColor);
-	cout << batText;
-
-
-
+	cout << barText;
+	
+	DrawImage(enemy->image, EnemyDrawPos);
+	
 }
 
 void BattleSceneBattleState::Exit()
@@ -157,33 +171,36 @@ void BattleSceneBattleState::Exit()
 
 void BattleSceneBattleState::SetEnemyData()
 {
+
+	delete enemy;
+
 	Enemy* a;
 
-	vector<wstring> image = { L"123",L"13" };
+	vector<wstring> image = NumderImage[4];
 
 	if (curStage == 1)
 	{
-		a = new Enemy(image, 100, 10);
+		a = new Enemy(image, 100, 10,1);
 	}
 	else if (curStage == 2)
 	{
-		a = new Enemy(image, 200, 50);
+		a = new Enemy(image, 200, 50, 1);
 	}
 	else if (curStage == 3)
 	{
-		a = new Enemy(image, 300, 100);
+		a = new Enemy(image, 300, 100, 1);
 	}
 	else if (curStage == 4)
 	{
-		a = new Enemy(image, 500, 75);
+		a = new Enemy(image, 500, 75, 1);
 	}
 	else if (curStage == 5)
 	{
-		a = new Enemy(image, 1000, 200);
+		a = new Enemy(image, 1000, 200, 1);
 	}
-	else a = new Enemy(image, 1, 1);
+	else a = new Enemy(image, 1, 1, 1);
+
 	
-	delete enemy;
 
 	enemy = a;
 }

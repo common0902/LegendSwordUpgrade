@@ -3,7 +3,6 @@
 #define NextLine cout << "\n";
 
 Vector2 BaseUIPos = { 120,5 };
-Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 
 #pragma region BattleSceneMethod
@@ -67,7 +66,6 @@ ULONGLONG GetDeltaTime(ULONGLONG lastTime)
 bool Delay(int type,ULONGLONG delay)
 {
 	static std::map<int, ULONGLONG> lastTimeDict;
-	if (lastTimeDict[type] == 0) lastTimeDict[type] = GetTickCount64();
 	ULONGLONG delta = GetDeltaTime(lastTimeDict[type]);
 	if (delta < delay) return false;
 	lastTimeDict[type] = GetTickCount64();
@@ -207,12 +205,6 @@ void Typing(string text, int delay,bool endl)
 		CanSkipSleep(delay);
 	}
 	if (endl) cout << "\n";
-}
-
-void ScreenReset()
-{
-	DrawImage(ScreenResetText, Vector2{ 0, 0 });
-	GotoXY(0, 0);
 }
 
 void WaitInput()

@@ -6,7 +6,7 @@
 
 enum DelayType
 {
-	EnemyType,PlayerType,PlayerAttackType
+	PlayerAttackDelay
 };
 
 enum BattleSceneEnum
@@ -61,7 +61,6 @@ string CenterText(string text, int size);
 void SkipBreak();
 void CanSkipSleep(int delay);
 void Typing(string text, int delay,bool endl = true);
-void ScreenReset();
 void WaitInput();
 int GetIntInput(int min, int max);
 bool InputYorN();
