@@ -63,12 +63,17 @@ ULONGLONG GetDeltaTime(ULONGLONG lastTime)
 	return GetTickCount64() - lastTime;
 }
 
+std::map<int, ULONGLONG> lastDelayTimeDict;
+
+ULONGLONG GetDelayDeltaTime(int type)
+{
+	return GetDeltaTime(lastDelayTimeDict[type]);;
+}
+
 bool Delay(int type,ULONGLONG delay)
 {
-	static std::map<int, ULONGLONG> lastTimeDict;
-	ULONGLONG delta = GetDeltaTime(lastTimeDict[type]);
-	if (delta < delay) return false;
-	lastTimeDict[type] = GetTickCount64();
+	if (GetDelayDeltaTime(type) < delay) return false;
+	lastDelayTimeDict[type] = GetTickCount64();
 	return true;
 }
 

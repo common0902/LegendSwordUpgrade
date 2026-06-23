@@ -50,18 +50,17 @@ public:
 public:
 	ULONGLONG lastAttackTime;
 	Vector2 curEnemyDrawPos;
-	bool isHit;
 
 public:
 	int playerCurHp = 0;
 	int playerMaxHp = 0;
 	int playerDamage = 0;
-	int playerAttackSpeed = 10;
+	int playerAttackSpeed = 1;
 
 public:
 	void SetEnemyData();
 	void PlayerAttack(int damage);
-	string GetAttackDelayBarString();
+	string GetAttackDelayBarString(int value, int maxValue, int barWidth, string fillChar = "■", string emptyChar = "□") const;
 
 };
 

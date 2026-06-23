@@ -27,10 +27,12 @@ constexpr int EnemyHelathBarSize = 50;
 
 Vector2 DefaultEnemyPos = Vector2(50, 5);
 
-ULONGLONG DefaultAttackSpeed = 1000;
+ULONGLONG DefaultAttackDelay = 1000;
 
 ULONGLONG HitAfterTime = 100;
 
+Vector2 AttackDelayVatPos = Vector2(60,40);
+int AttackDelayBarSize = 20;
 #pragma endregion
 
 #pragma endregion
@@ -146,7 +148,7 @@ void BattleSceneBattleState::Enter()
 void BattleSceneBattleState::Update()
 {
 
-	if (DelayButton(curEnemyDrawPos, enemy->image, DelayType::PlayerAttackDelay, DefaultAttackSpeed / playerAttackSpeed))
+	if (DelayButton(curEnemyDrawPos, enemy->image, DelayType::PlayerAttackDelay, DefaultAttackDelay / playerAttackSpeed))
 	{
 		SetAfterValue(BattleAfterType::EnemyHit, HitAfterTime);
 		PlayerAttack(playerDamage);
@@ -159,6 +161,10 @@ void BattleSceneBattleState::Render() const
 {
 
 #pragma region Health
+	GotoXY(EnemyHealthBarPos + Vector2(0,-1));
+	string enemyNameText = CenterText(enemy->name,EnemyHelathBarSize*2);
+	cout << enemyNameText;
+
 	string barText = GetBarString(enemy->curHp, enemy->maxHp, EnemyHelathBarSize);
 	Color barColor = GetHealthColor(enemy->curHp, enemy->maxHp);
 
@@ -172,8 +178,23 @@ void BattleSceneBattleState::Render() const
 	SetColor(GetAfterValue(BattleAfterType::EnemyHit) ? Color::RED : Color::WHITE);
 	DrawImage(enemy->image, curEnemyDrawPos);
 
+#pragma endregion
+
+#pragma region AttackDelay
+
+	int AttackDelayDelte = static_cast<int>(GetDelayDeltaTime(DelayType::PlayerAttackDelay));
+	int AttackDelay = static_cast<int>(DefaultAttackDelay / playerAttackSpeed);
+
+	if (AttackDelayDelte > AttackDelay) AttackDelayDelte = AttackDelay;
+
+	std::string AttackDelayText = GetAttackDelayBarString(AttackDelayDelte, AttackDelay, AttackDelayBarSize);
+
+	GotoXY(AttackDelayVatPos);
+	SetColor(Color::LIGHT_YELLOW);
+	cout << AttackDelayText;
 
 #pragma endregion
+
 
 }
 
@@ -196,30 +217,30 @@ void BattleSceneBattleState::SetEnemyData()
 
 	if (curStage == 1)
 	{
-		a = new Enemy(image, 100, 10,1);
+		a = new Enemy("고블린", image, 100, 10, 1);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 2)
 	{
-		a = new Enemy(image, 200, 50, 1);
+		a = new Enemy("오크", image, 200, 50, 1);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 3)
 	{
-		a = new Enemy(image, 300, 100, 1);
+		a = new Enemy("암흑 마법사", image, 300, 100, 1);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 4)
 	{
-		a = new Enemy(image, 500, 75, 1);
+		a = new Enemy("골렘", image, 500, 75, 1);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 5)
 	{
-		a = new Enemy(image, 1000, 200, 1);
+		a = new Enemy("거미", image, 1000, 200, 1);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
-	else a = new Enemy(image, 1, 1, 1);
+	else a = new Enemy("애러", image, 1, 1, 1);
 
 	enemy = a;
 }
@@ -229,9 +250,28 @@ void BattleSceneBattleState::PlayerAttack(int damage)
 
 }
 
-string BattleSceneBattleState::GetAttackDelayBarString()
+std::string BattleSceneBattleState::GetAttackDelayBarString(int value, int maxValue, int barWidth, string fillChar, string emptyChar) const
 {
-	return string();
+	if (maxValue < 1) maxValue = 1;
+	if (barWidth < 1) return "";
+
+	if (value < 0) value = 0;
+	if (value > maxValue) value = maxValue;
+
+	int fillValue = barWidth * value / maxValue;
+	int startFill = (barWidth - fillValue) / 2;
+
+	string text = "";
+
+	for (int i = 0; i < barWidth; ++i)
+	{
+		if (i >= startFill && i < startFill + fillValue)
+			text += fillChar;
+		else
+			text += emptyChar;
+	}
+
+	return text;
 }
 
 #pragma endregion

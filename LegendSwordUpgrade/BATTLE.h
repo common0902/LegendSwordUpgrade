@@ -49,6 +49,7 @@ public:
 
 
 ULONGLONG GetDeltaTime(ULONGLONG lastTime);
+ULONGLONG GetDelayDeltaTime(int key);
 bool Delay(int type, ULONGLONG time);
 bool Delay(DelayType type, ULONGLONG time);
 void GotoXY(Vector2 pos);
