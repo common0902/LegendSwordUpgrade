@@ -1,4 +1,4 @@
-﻿    #include "UpgradeAsciiArt.h"
+    #include "UpgradeAsciiArt.h"
     #include "console.h"
     #include"GameState.h"
 

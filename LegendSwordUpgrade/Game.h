@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "GameState.h"
 #include "console.h"
 #include "Enums.h"

@@ -1,4 +1,4 @@
-﻿#include "UPGRADE.h"
+#include "UPGRADE.h"
 #include "Console.h"
 
 constexpr int INFO_BOX_X = 2;

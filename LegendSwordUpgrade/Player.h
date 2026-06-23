@@ -1,12 +1,14 @@
-﻿#pragma once
+#pragma once
 #include "Sword.h"
+struct CHGData;
+
 class Player
 {
 public:
-	int maxHp;
+	int attackSpeed;
 	int str;
-	int attackProbability = 0;
+	int MaxHp;
 
-
+	void ApplyTotem(const CHGData& data);
 };
 

@@ -1,19 +1,15 @@
-﻿#include "Console.h"
+#include "Console.h"
 #include "SHOP.h"
-#include "CHGAsciiArt.h"
-static AsciiObjs objs;
 
 void ShopScene::Enter()
 {
 	//state.ChgData
 	cout << "Shop";
-	objs.currentGold = state.gold;
-	objs.items = &state.ChgData.haveTotem;
 	srand((unsigned int)time(nullptr));
-
-	CHGAsciiInit(objs);
+	SetConsoleGameTitle(L"SHOP");
+	slotMachine.Init(state);
+	//SetConsoleSize(85, 40);
 }
-
 void ShopScene::Update()
 {
 	if (GetKeyDown(VK_ESCAPE))
@@ -22,52 +18,55 @@ void ShopScene::Update()
 		return;
 	}
 
-    if (GetKeyDown(VK_SPACE) && !objs.rolling)
-    {
-        objs.startTime = GetTickCount64();
-        objs.rolling = true;
+
+	if (GetKeyDown(VK_SPACE) && slotMachine.CanRoll())
+	{
+		if (state.gold >= 15)
+			state.gold -= 15;
+		else return;
 
 		int p = rand() % 100 + 1;
-		if (p < state.ChgData.failPercent)
-		{
-			objs.success = false;
-			objs.superSuccess = false;
-		}
-		else if (p < state.ChgData.successPercent)
-		{
-			objs.success = true;
-			objs.superSuccess = false;
-		}
-		else
-		{
-			objs.success = false;
-			objs.superSuccess = true;
-		}
-    }
-
-	if (!objs.getItem.empty())
-	{
-		wstring itemS;
-
-		if (objs.success)
-			state.ChgData.haveTotem[objs.getItem] += 1;
-		else if (objs.superSuccess)
-			state.ChgData.haveTotem[objs.getItem] += 5;
-
-		objs.getItem.clear();
+		bool success = (p >= state.ChgData.failPercent) &&
+			(p < state.ChgData.failPercent + state.ChgData.successPercent);
+		bool super = (p >= state.ChgData.failPercent + state.ChgData.successPercent);
+		slotMachine.StartRoll(success, super);
+		GotoXY(0, 40);
+		wcout << std::setw(3) << p;
 	}
 
-	CHGAsciiUpdate(objs);
-	//state.ChgData.haveTotem[]
+	RollResult result = slotMachine.ConsumeResult();
+	if (!result.item.empty())
+	{
+		int getTotem = result.superSuccess ? 5 : 1;
+		state.gold += result.superSuccess ? 1000 : 250;
+
+		state.ChgData.haveTotem[result.item].first += getTotem;
+		if (result.item == L"7")
+		{
+			for (auto iter = state.ChgData.haveTotem.begin(); iter != state.ChgData.haveTotem.end(); iter++)
+			{
+				iter->second.first += getTotem;
+			}
+			state.gold += 1000;
+		}
+		else if (result.item == L"$")
+		{
+			state.gold += 500;
+		}
+
+	}
+
+	state.player.ApplyTotem(state.ChgData);   // 토템 개수 → Player 스탯 실시간 반영
+	slotMachine.Update();
 }
 
 void ShopScene::Render() const
 {
-	CHGAsciiRender(objs);
-	
+	slotMachine.Render();
 }
 
 void ShopScene::Exit()
 {
 
 }
+

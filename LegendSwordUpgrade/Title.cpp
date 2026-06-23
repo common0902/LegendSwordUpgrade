@@ -27,7 +27,7 @@ void TitleScene::Update()
 void TitleScene::Render() const
 {
 	GotoXY(0, 0);
-	cout << "Å×½º¿ë Title";
+	cout << "í…ŒìŠ¤ìš© Title";
 	const string lables[] = { "SHOP", "UPGRADE", "BATTLE" };
 	for (int i = 0;i < 3;++i)
 	{

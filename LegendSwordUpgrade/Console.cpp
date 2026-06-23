@@ -1,4 +1,10 @@
-﻿#include "Console.h"
+#include "Console.h"
+
+void ConfigureConsoleEncoding()
+{
+	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
+}
 
 void SetUnicodeMode()
 {
@@ -280,11 +286,6 @@ void DrawBox(int x, int y, int width, int height)
 	cout << "┘";
 }
 
-bool GetKey(int vKey)
-{
-	// 지금 딱 이 프레임에 눌렸냐
-	return GetAsyncKeyState(vKey) & 0x8000;
-}
 
 
 // 전역변수 금지
@@ -292,6 +293,13 @@ bool GetKey(int vKey)
 constexpr int KEY_COUNT = 256;
 static bool prevDown[KEY_COUNT] = {};
 static bool curDown[KEY_COUNT] = {};
+
+bool GetKey(int vKey)
+{
+	// 지금 딱 이 프레임에 눌렸냐
+	return curDown[vKey];
+}
+
 bool GetKeyDown(int vKey)
 {
 	return curDown[vKey] && !prevDown[vKey];
@@ -304,7 +312,7 @@ bool GetKeyDown(int vKey)
 }
 void UpdateInput()
 {
-	for (int i = 0; i < 256; ++i)
+	for (int i = 0; i < KEY_COUNT; ++i)
 	{
 		prevDown[i] = curDown[i];
 		curDown[i] = GetAsyncKeyState(i) & 0x8000;
@@ -324,6 +332,7 @@ void FrameSync(int fps)
 	prevTick = GetTickCount64();
 }
 
+
 POINT GetMouseCellPos()
 {
 	POINT pt;
@@ -338,6 +347,16 @@ POINT GetMouseCellPos()
 	POINT cellPos = { pt.x / fontInfo.dwFontSize.X,
 					  pt.y / fontInfo.dwFontSize.Y };
 	return cellPos;
+}
+
+bool GetMouse(MouseButton btn)
+{
+	return GetKey(btn);
+}
+
+bool GetMouseDown(MouseButton btn)
+{
+	return GetKeyDown(btn);
 }
 
 

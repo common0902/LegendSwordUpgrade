@@ -1,4 +1,4 @@
-﻿#include "Sword.h"
+#include "Sword.h"
 
 float Sword::GetSuccessChance() const
 {

@@ -2,16 +2,21 @@
 #include"GameState.h"
 #include"SceneState.h"
 #include"Enemy.h"
-#include"EventControler.h"
+#include"BattleSceneStates.h"
 
 enum DelayType
 {
-	EnemyType,PlayerType,TestType
+	PlayerAttackDelay
 };
 
-enum BattleEventType
+enum BattleAfterType
 {
-	Heal, EnemyBattle,Null
+	EnemyHit
+};
+
+enum BattleSceneEnum
+{
+	Stage,Battle
 };
 
 
@@ -20,44 +25,25 @@ class BattleScene : public SceneState
 public:
 	BattleScene(GameState& gameState) : SceneState(gameState)
 	{
-
-	};
+		Init();
+	}
+	void Init();
 	void Enter() override;
 	void Update() override;
 	void Render() const override;
 	void Exit() override;
 	
 public:
-	int curPlayerHp = 0;
-	int curDamage = 0;
-	int attackProbability = 0;
-	vector<wstring> curSwordImage;
-	string swordName;
+	FSM fsm;
 
 public:
-	bool isExit = false;
-	EventControler eventControler;
-	int curState = 1;
+	const int maxStage = 5;
+	int curStage = 1;
 	int curClearStage = 0;
-	int curPhase = 1;
-	int curMaxPhase = 1;
-public:
-	void StatSetting();
-	void StageSetting();
-	void StageChoose();
-	int StageInput(Vector2 inputPos);
-	void SwordSetting();
-	void EventSetting();
-
-	void DrawBaseUI() const;
-	void DrawPlayerStat() const;
-	void DrawCurrentSword() const;
-
-	void StageClear();
 
 public:
-	BattleEventType GetRandomEvent() const;
-	int GetMaxPhase(int stage) const;
+	void ChangeScene(int scene);
+	void ChangeState(BattleSceneEnum state);
 };
 
 
@@ -66,20 +52,20 @@ ULONGLONG GetDeltaTime(ULONGLONG lastTime);
 bool Delay(int type, ULONGLONG time);
 bool Delay(DelayType type, ULONGLONG time);
 void GotoXY(Vector2 pos);
+bool IsGotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
 bool Random(int probability);
 void DrawImage(vector<wstring> image, int x, int y, int maxWIDTH, int maxHEIGHT);
 void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size);
 void DrawImage(vector<wstring> image, Vector2 pos);
 Color GetHealthColor(int curHp, int maxHp);
-string GetBarString(int value, int maxValue, int barWidth, const string& fillChar = "¡á", const string& emptyChar = "¡à");
+string GetBarString(int value, int maxValue, int barWidth, const string& fillChar = "â– ", const string& emptyChar = "â–¡");
 string GetIntString(int value);
 string GetEmptyString(int size);
 string CenterText(string text, int size);
 void SkipBreak();
 void CanSkipSleep(int delay);
 void Typing(string text, int delay,bool endl = true);
-void ScreenReset();
 void WaitInput();
 int GetIntInput(int min, int max);
 bool InputYorN();
@@ -87,3 +73,15 @@ string ToString(int value);
 void CLS();
 bool IsNumder(const string text);
 int ToInt(const string text);
+Vector2 GetMousePos();
+Vector2 GetSize(vector<wstring> image);
+bool IsMouseUp(Vector2 leftUpPos, Vector2 rightDownPos);
+bool IsMouseUp(Vector2 leftUpPos, vector<wstring> image);
+bool IsButtonClick(Vector2 leftUpPos,Vector2 rightDownPos);
+bool IsButtonClick(Vector2 leftUpPos, vector<wstring> image);
+bool DelayButton(Vector2 leftPos, vector<wstring> image,
+	int type, ULONGLONG delay);
+void BoolReverse(bool& value);
+
+void SetAfterValue(int key, ULONGLONG afterTime);
+bool GetAfterValue(int key);

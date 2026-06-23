@@ -1,186 +1,35 @@
 #include "BATTLE.h"
-#include"BattleSceneEvents.cpp"
 
 #define NextLine cout << "\n";
 
 Vector2 BaseUIPos = { 120,5 };
-Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 
-const int maxStage = 20;
-const int eventCount = 5;
-
 #pragma region BattleSceneMethod
+
+#pragma region BattleSceneFsm
+
+void BattleScene::Init()
+{
+	fsm.AddState(BattleSceneEnum::Stage, new BattleSceneStageState(*this));
+	fsm.AddState(BattleSceneEnum::Battle, new BattleSceneBattleState(*this));
+}
 
 void BattleScene::Enter()
 {
 	CLS();
-	isExit = false;
-
-	StatSetting();
-	
-	StageSetting();
-	if (isExit) {
-		state.fsm.ChangeState((int)Scene::TITLE);
-		return;
-	}
-	SwordSetting();
-
-	EventSetting();
-
-	DrawImage(BaseBattleUI, BaseUIPos);
-	DrawBaseUI();
-}
-
-void BattleScene::StatSetting()
-{
-	curSwordImage = TestSwordImage;
-	state.player.maxHp = 100;
-	curPlayerHp = state.player.maxHp;
-	curDamage = 10;
-	swordName = "∏ÆøÏ ¬Ø¬Ø ∞À";
-}
-
-void BattleScene::StageSetting() {
-	
-	bool b;
-	while (true)
-	{
-		StageChoose();
-		if (isExit) return;
-
-		NextLine
-
-		Typing("¿¸≈ıΩ√¿€    Y/N", 10);
-
-		b = InputYorN();
-
-		if (b) break;
-		else ScreenReset();
-	}
-}
-
-void BattleScene::StageChoose()
-{
-	SkipBreak();
-	Typing("«√∑π¿Ã«“ Ω∫≈◊¿Ã¡ˆ∏¶ ¿‘∑¬«ÿ ¡÷ººø‰.\n", 10);
-
-	for (int i = 1;i <= maxStage;++i)
-	{
-		if (i <= curClearStage + 1)
-			SetColor();
-		else
-			SetColor(Color::RED);
-
-		Typing(std::to_string(i) + " ", 10, false);
-	}
-	SetColor();
-	cout << "√Îº“\n";
-	SkipBreak();
-
-	curState = StageInput(Vector2{0,5});
-
-	if (isExit) return;
-
-	curPhase = 1;
-	curMaxPhase = GetMaxPhase(curState);
-
-	Typing(std::to_string(curState) + "Ω∫≈◊¿Ã¡ˆ º±≈√µ ", 10);
-}
-
-int BattleScene::StageInput(Vector2 inputPos)
-{
-	int stage;
-	string input;
-	while (true)
-	{
-		cin >> input;
-		if (input == "√Îº“")
-		{
-			isExit = true;
-			return -1;
-		}
-		else if (!IsNumder(input))
-		{
-			cout << "¿ﬂ∏¯µ» ¿‘∑¬¿‘¥œ¥Ÿ.\n";
-			continue;
-		}
-		stage = ToInt(input);
-		if (stage < 1 || stage > maxStage)
-		{
-			cout << "¡∏¿Á«œ¡ˆ æ ¥¬ Ω∫≈◊¿Ã¡ˆ ¿‘¥œ¥Ÿ.\n";
-		}
-		else if (stage > curClearStage + 1)
-		{
-			cout << "¿Ã¿¸ Ω∫≈◊¿Ã¡ˆ∞° ≈¨∏ÆæÓ µ«¡ˆ æ æ“Ω¿¥œ¥Ÿ.\n";
-		}
-		else break;
-	}
-	isExit = false;
-	return stage;
-}
-
-void BattleScene::SwordSetting()
-{
-	
-
-}
-
-void BattleScene::EventSetting()
-{
-	eventControler.AddEvent(BattleEventType::Heal, new HealEvent(*this));
-
-
+	fsm.ChangeState(BattleSceneEnum::Stage);
 }
 
 void BattleScene::Update()
 {
-	ScreenReset();
 	SkipBreak();
-
-	GotoXY(60, 20);
-	string text = "∆‰¿Ã¡Ó : " + ToString(curPhase) + "/" + ToString(curMaxPhase);
-	Typing(text, 10);
-	CanSkipSleep(500);
-	GotoXY(60, 20);
-	Typing(string(text.length(), ' '), 10);
-
-	GotoXY(0, 0);
-	Typing("∆‰¿Ã¡Ó : " + ToString(curPhase) + "/" + ToString(curMaxPhase) + "\n",10);
-
-	BattleEventType battleType = GetRandomEvent();
-	eventControler.Start(battleType);
-
-	SkipBreak();
-	CanSkipSleep(2000);
-
-	if (curPhase == curMaxPhase) StageClear();
-	else curPhase += 1;
-	
-	
-}
-
-void BattleScene::StageClear()
-{
-	ScreenReset();
-	SkipBreak();
-
-	GotoXY(60, 20);
-	Typing("Ω∫≈◊¿Ã¡ˆ ≈¨∏ÆæÓ!", 50);
-
-	CanSkipSleep(1500);
-
-	GotoXY(50, 25);
-	cout << "Ω∫≈◊¿Ã¡ˆ∏¶ ≥™∞°∑¡∏È æ∆π´ ≈∞≥™ ¥©∏£ººø‰.";
-
-	WaitInput();
-
-	state.fsm.ChangeState((int)Scene::TITLE);
+	fsm.Update();
 }
 
 void BattleScene::Render() const
 {
-	DrawBaseUI();
+	fsm.Render();
 }
 
 void BattleScene::Exit()
@@ -188,48 +37,22 @@ void BattleScene::Exit()
 	CLS();
 }
 
-void BattleScene::DrawBaseUI() const
+#pragma endregion
+
+#pragma region Phase
+
+void BattleScene::ChangeScene(int scene)
 {
-	DrawPlayerStat();
-	DrawCurrentSword();
+	fsm.Exit();
+	state.fsm.ChangeState(scene);
 }
 
-void BattleScene::DrawPlayerStat() const
+void BattleScene::ChangeState(BattleSceneEnum state)
 {
-	GotoXY(BaseUIPos + Vector2(2,2));
-	cout << "√º∑¬ : " << GetIntString(curPlayerHp) << "/" << GetIntString(state.player.maxHp) << "        ";
-	
-	GotoXY(BaseUIPos + Vector2(2,3));
-	SetColor(GetHealthColor(curPlayerHp, state.player.maxHp));
-	cout << GetBarString(curPlayerHp, state.player.maxHp, 10);
-	SetColor();
-
-	GotoXY(BaseUIPos + Vector2(2,4));
-	cout << "∞¯∞›∑¬ : " << GetIntString(curDamage) << "    ";
+	fsm.ChangeState(state);
 }
 
-void BattleScene::DrawCurrentSword() const
-{
-	DrawImage(curSwordImage, BaseUIPos + Vector2{ 2,7 }, swordImageMaxSize);
-
-	GotoXY(BaseUIPos + Vector2{ 1, 23 });
-	string swordText = "«ˆ¿Á ∞À : " + swordName;
-	cout << CenterText(swordText, swordImageWidth);
-
-}
-
-BattleEventType BattleScene::GetRandomEvent() const
-{
-
-	return BattleEventType::Heal;
-}
-
-int BattleScene::GetMaxPhase(int stage) const
-{
-
-
-	return stage * 5;
-}
+#pragma endregion
 
 #pragma endregion
 
@@ -243,7 +66,6 @@ ULONGLONG GetDeltaTime(ULONGLONG lastTime)
 bool Delay(int type,ULONGLONG delay)
 {
 	static std::map<int, ULONGLONG> lastTimeDict;
-	if (lastTimeDict[type] == 0) lastTimeDict[type] = GetTickCount64();
 	ULONGLONG delta = GetDeltaTime(lastTimeDict[type]);
 	if (delta < delay) return false;
 	lastTimeDict[type] = GetTickCount64();
@@ -260,6 +82,11 @@ void GotoXY(Vector2 pos)
 	GotoXY(pos.x, pos.y);
 }
 
+bool IsGotoXY(Vector2 pos)
+{
+	return IsGotoXY(pos.x,pos.y);
+}
+
 int GetRandomRange(int min, int max)
 {
 	int d = max - min;
@@ -271,20 +98,20 @@ bool Random(int probability)
 	return GetRandomRange(0, 100) < probability;
 }
 
-void DrawImage(vector<wstring> image, int x, int y,int maxWIDTH,int maxHEIGHT)
+void DrawImage(const vector<wstring> image, int x, int y,int maxWIDTH,int maxHEIGHT)
 {
 	SetUnicodeMode();
-	int size = (unsigned int)image.size();
-	int minHEIGHT = size < maxHEIGHT ? size : maxHEIGHT;
-	size = static_cast<int>(image[0].length());
-	int minWIDTH = size < maxWIDTH ? size : maxWIDTH;;
-	for (int i = 0;i < minHEIGHT;++i)
+	if (image.empty() || maxWIDTH <= 0 || maxHEIGHT <= 0)
+		return;
+
+	const int minHEIGHT = std::min(static_cast<int>(image.size()), maxHEIGHT);
+
+	for (int i = 0; i < minHEIGHT; ++i)
 	{
+		const int minWIDTH = std::min(static_cast<int>(image[i].length()), maxWIDTH);
+
 		GotoXY(x, y + i);
-		for (int j = 0;j < minWIDTH;++j)
-		{
-			wcout << image[i][j];
-		}
+		wcout.write(image[i].data(), minWIDTH);
 	}
 	SetDefaultMode();
 }
@@ -380,12 +207,6 @@ void Typing(string text, int delay,bool endl)
 	if (endl) cout << "\n";
 }
 
-void ScreenReset()
-{
-	DrawImage(ScreenResetText, Vector2{ 0, 0 });
-	GotoXY(0, 0);
-}
-
 void WaitInput()
 {
 	SkipBreak();
@@ -403,8 +224,8 @@ int GetIntInput(int min, int max)
 		{
 			cin.clear();
 			cin.ignore(1000, '\n');
-			cout << "¿ﬂ∏¯µ» ¿‘∑¬¿‘¥œ¥Ÿ.\n" << min << "~"
-				<< max << "ªÁ¿Ã º˝¿⁄∏¶ ¿‘∑¬«œººø‰.\n";
+			cout << "ÏûòÎ™ªÎêú ÏûÖÎ†•ÏûÖÎãàÎã§.\n" << min << "~"
+				<< max << "ÏÇ¨Ïù¥ Ïà´ÏûêÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî.\n";
 			continue;
 		}
 		else
@@ -430,7 +251,7 @@ bool InputYorN()
 			break;
 		}
 		else {
-			cout << "¿ﬂ∏¯µ» ¿‘∑¬¿‘¥œ¥Ÿ.\n";
+			cout << "ÏûòÎ™ªÎêú ÏûÖÎ†•ÏûÖÎãàÎã§.\n";
 		}
 	}
 	SkipBreak();
@@ -444,6 +265,7 @@ string ToString(int value)
 
 void CLS()
 {
+	SetColor();
 	system("cls");
 }
 
@@ -461,6 +283,68 @@ bool IsNumder(const string text)
 int ToInt(const string text)
 {
 	return std::stoi(text);
+}
+
+Vector2 GetMousePos()
+{
+	POINT point = GetMouseCellPos();
+	return Vector2{point.x,point.y};
+}
+
+Vector2 GetSize(vector<wstring> image)
+{
+	return Vector2(static_cast<int>(image[0].length()), static_cast<int>(image.size())) + Vector2(-1,-1);
+}
+
+bool IsMouseUp(Vector2 leftUpPos, Vector2 rightDownPos)
+{
+	Vector2 pos = GetMousePos();
+
+	if (leftUpPos.x > pos.x || pos.x > rightDownPos.x) return false;
+	if (leftUpPos.y > pos.y || pos.y > rightDownPos.y) return false;
+
+	return true;
+}
+
+bool IsMouseUp(Vector2 leftUpPos, vector<wstring> image)
+{
+	return IsMouseUp(leftUpPos, leftUpPos + GetSize(image));
+}
+
+bool IsButtonClick(Vector2 leftUpPos, Vector2 rightDownPos)
+{
+	if (!GetMouseDown(MouseButton::LEFT)) return false;
+
+	return IsMouseUp(leftUpPos, rightDownPos);
+}
+
+bool IsButtonClick(Vector2 leftUpPos, vector<wstring> image)
+{
+	return IsButtonClick(leftUpPos, leftUpPos + GetSize(image));
+}
+
+bool DelayButton(Vector2 leftPos, vector<wstring> image,
+	int type , ULONGLONG delay)
+{
+	return IsButtonClick(leftPos,image) && Delay(type,delay);
+}
+
+void BoolReverse(bool& value)
+{
+	value = !value;
+}
+
+std::map<int, ULONGLONG> AfterValueMap;
+
+void SetAfterValue(int key, ULONGLONG afterTime)
+{
+	ULONGLONG endTime = GetTickCount64() + afterTime;
+	if (AfterValueMap[key] < endTime) AfterValueMap[key] = endTime;
+}
+
+bool GetAfterValue(int key)
+{
+	return AfterValueMap[key] >= GetTickCount64();
 }
 
 #pragma endregion
