@@ -221,7 +221,6 @@ void BattleSceneBattleState::SetEnemyData()
 	}
 	else a = new Enemy(image, 1, 1, 1);
 
-
 	enemy = a;
 }
 
