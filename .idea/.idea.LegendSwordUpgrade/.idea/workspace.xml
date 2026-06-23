@@ -4,30 +4,37 @@
     <projectFile>LegendSwordUpgrade/LegendSwordUpgrade.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc0507de-7875-47ca-b15a-f29e48c1cc02" name="변경" comment="" />
+    <list default="true" id="cc0507de-7875-47ca-b15a-f29e48c1cc02" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.LegendSwordUpgrade/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LegendSwordUpgrade/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LegendSwordUpgrade/CHGAsciiArt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/LegendSwordUpgrade/CHGAsciiArt.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LegendSwordUpgrade/Player.h" beforeDir="false" afterPath="$PROJECT_DIR$/LegendSwordUpgrade/Player.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "riwoo0902"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;riwoo0902&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/common0902/LegendSwordUpgrade.git",
-    "accountId": "9af3fb4e-ced3-451c-9ca2-b6e2823d5a0a"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/common0902/LegendSwordUpgrade.git&quot;,
+    &quot;accountId&quot;: &quot;9af3fb4e-ced3-451c-9ca2-b6e2823d5a0a&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="3EeHe4LKYVnIpxrJjfLoOHTstWV" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,12 +42,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "C/C++ 프로젝트.LegendSwordUpgrade.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "LRW",
+    "git-widget-placeholder": "Lrw",
     "junie.onboarding.icon.badge.shown": "true",
+    "nodejs_package_manager_path": "npm",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -75,6 +84,8 @@
       <option name="presentableId" value="Default" />
       <updated>1780532207977</updated>
       <workItem from="1780532210261" duration="98000" />
+      <workItem from="1782111616389" duration="172000" />
+      <workItem from="1782122927244" duration="54000" />
     </task>
     <servers />
   </component>

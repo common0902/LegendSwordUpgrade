@@ -4,6 +4,11 @@
 struct Vector2
 {
 public:
+	Vector2()
+	{
+		x = 0;
+		y = 0;
+	}
 	Vector2(int startx, int starty)
 	{
 		x = startx;
@@ -31,6 +36,10 @@ public:
 	Vector2 operator* (Vector2 p)
 	{
 		return Vector2{ x * p.x,y * p.y };
+	}
+	Vector2 operator/ (int p)
+	{
+		return Vector2{ x / p, y / p };
 	}
 	bool operator==(Vector2 p)
 	{

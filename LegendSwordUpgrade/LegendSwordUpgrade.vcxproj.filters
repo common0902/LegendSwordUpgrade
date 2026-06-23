@@ -131,9 +131,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyData.h">
-      <Filter>Main\헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="UpgradeAsciiArt.h">
       <Filter>Main\헤더 파일</Filter>
     </ClInclude>

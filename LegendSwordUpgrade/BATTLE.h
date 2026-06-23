@@ -6,7 +6,12 @@
 
 enum DelayType
 {
-	EnemyType,PlayerType,PlayerAttackType
+	PlayerAttackDelay
+};
+
+enum BattleAfterType
+{
+	EnemyHit
 };
 
 enum BattleSceneEnum
@@ -32,29 +37,13 @@ public:
 	FSM fsm;
 
 public:
-	float curPlayerHp = 0;
-	int curDamage = 0;
-	vector<wstring> curSwordImage;
-	string swordName;
-
-public:
-	const int maxStage = 10;
-	bool isExit = false;
-	int curState = 1;
+	const int maxStage = 5;
+	int curStage = 1;
 	int curClearStage = 0;
-	int curPhase = 1;
-	int prevPhase = 1;
-	int curMaxPhase = 1;
 
 public:
-	void StatSetting();
-
-	void DrawBaseUI() const;
-	void DrawPlayerStat() const;
-	void DrawCurrentSword() const;
-
-public:
-	int GetMaxPhase(int stage) const;
+	void ChangeScene(int scene);
+	void ChangeState(BattleSceneEnum state);
 };
 
 
@@ -63,20 +52,20 @@ ULONGLONG GetDeltaTime(ULONGLONG lastTime);
 bool Delay(int type, ULONGLONG time);
 bool Delay(DelayType type, ULONGLONG time);
 void GotoXY(Vector2 pos);
+bool IsGotoXY(Vector2 pos);
 int GetRandomRange(int min, int max);
 bool Random(int probability);
 void DrawImage(vector<wstring> image, int x, int y, int maxWIDTH, int maxHEIGHT);
 void DrawImage(vector<wstring> image, Vector2 pos, Vector2 size);
 void DrawImage(vector<wstring> image, Vector2 pos);
 Color GetHealthColor(int curHp, int maxHp);
-string GetBarString(int value, int maxValue, int barWidth, const string& fillChar = "¡á", const string& emptyChar = "¡à");
+string GetBarString(int value, int maxValue, int barWidth, const string& fillChar = "â– ", const string& emptyChar = "â–¡");
 string GetIntString(int value);
 string GetEmptyString(int size);
 string CenterText(string text, int size);
 void SkipBreak();
 void CanSkipSleep(int delay);
 void Typing(string text, int delay,bool endl = true);
-void ScreenReset();
 void WaitInput();
 int GetIntInput(int min, int max);
 bool InputYorN();
@@ -92,3 +81,7 @@ bool IsButtonClick(Vector2 leftUpPos,Vector2 rightDownPos);
 bool IsButtonClick(Vector2 leftUpPos, vector<wstring> image);
 bool DelayButton(Vector2 leftPos, vector<wstring> image,
 	int type, ULONGLONG delay);
+void BoolReverse(bool& value);
+
+void SetAfterValue(int key, ULONGLONG afterTime);
+bool GetAfterValue(int key);

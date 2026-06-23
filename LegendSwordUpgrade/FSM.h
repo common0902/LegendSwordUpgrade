@@ -20,7 +20,11 @@ public:
 		curScene = stateMap[key];
 		if (curScene != nullptr) curScene->Enter();
 	}
-	
+	void Exit()
+	{
+		if (curScene != nullptr) curScene->Exit();
+		curScene = nullptr;
+	}
 public:
 	void Update()
 	{

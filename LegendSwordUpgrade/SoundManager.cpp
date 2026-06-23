@@ -1,4 +1,4 @@
-﻿#include "SoundManager.h"
+#include "SoundManager.h"
 #include "fmod.hpp"
 #pragma comment(lib, "fmod_vc.lib") 
 SoundManager* SoundManager::m_pInst = nullptr;

@@ -1,4 +1,10 @@
-﻿#include "Console.h"
+#include "Console.h"
+
+void ConfigureConsoleEncoding()
+{
+	SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
+}
 
 void SetUnicodeMode()
 {

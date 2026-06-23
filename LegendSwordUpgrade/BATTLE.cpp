@@ -3,7 +3,6 @@
 #define NextLine cout << "\n";
 
 Vector2 BaseUIPos = { 120,5 };
-Vector2 swordImageMaxSize = { swordImageWidth ,swordImageHeigth };
 Vector2 screenCenter = { WIDTH /2,HEIGHT/2};
 
 #pragma region BattleSceneMethod
@@ -40,60 +39,17 @@ void BattleScene::Exit()
 
 #pragma endregion
 
-#pragma region Setting
-
-void BattleScene::StatSetting()
-{
-	curSwordImage = TestSwordImage;
-	state.player.MaxHp = 10;
-	curPlayerHp = state.player.MaxHp;
-	curDamage = 10;
-	swordName = "¸®¿ì Â¯Â¯ °Ë";
-}
-
-#pragma endregion
-
-#pragma region Draw
-
-void BattleScene::DrawBaseUI() const
-{
-	DrawPlayerStat();
-	DrawCurrentSword();
-}
-
-void BattleScene::DrawPlayerStat() const
-{
-	GotoXY(BaseUIPos + Vector2(2,2));
-	cout << "Ã¼·Â : " << GetIntString(curPlayerHp) << "/" << GetIntString(state.player.MaxHp) << "        ";
-	
-	GotoXY(BaseUIPos + Vector2(2,3));
-	SetColor(GetHealthColor(curPlayerHp, state.player.MaxHp));
-	cout << GetBarString(curPlayerHp, state.player.MaxHp, 10);
-	SetColor();
-
-	GotoXY(BaseUIPos + Vector2(2,4));
-	cout << "°ø°Ý·Â : " << GetIntString(curDamage) << "    ";
-}
-
-void BattleScene::DrawCurrentSword() const
-{
-	DrawImage(curSwordImage, BaseUIPos + Vector2{ 2,7 }, swordImageMaxSize);
-
-	GotoXY(BaseUIPos + Vector2{ 1, 23 });
-	string swordText = "ÇöÀç °Ë : " + swordName;
-	cout << CenterText(swordText, swordImageWidth);
-
-}
-
-#pragma endregion
-
 #pragma region Phase
 
-int BattleScene::GetMaxPhase(int stage) const
+void BattleScene::ChangeScene(int scene)
 {
+	fsm.Exit();
+	state.fsm.ChangeState(scene);
+}
 
-
-	return stage * 5;
+void BattleScene::ChangeState(BattleSceneEnum state)
+{
+	fsm.ChangeState(state);
 }
 
 #pragma endregion
@@ -110,7 +66,6 @@ ULONGLONG GetDeltaTime(ULONGLONG lastTime)
 bool Delay(int type,ULONGLONG delay)
 {
 	static std::map<int, ULONGLONG> lastTimeDict;
-	if (lastTimeDict[type] == 0) lastTimeDict[type] = GetTickCount64();
 	ULONGLONG delta = GetDeltaTime(lastTimeDict[type]);
 	if (delta < delay) return false;
 	lastTimeDict[type] = GetTickCount64();
@@ -127,6 +82,11 @@ void GotoXY(Vector2 pos)
 	GotoXY(pos.x, pos.y);
 }
 
+bool IsGotoXY(Vector2 pos)
+{
+	return IsGotoXY(pos.x,pos.y);
+}
+
 int GetRandomRange(int min, int max)
 {
 	int d = max - min;
@@ -138,20 +98,20 @@ bool Random(int probability)
 	return GetRandomRange(0, 100) < probability;
 }
 
-void DrawImage(vector<wstring> image, int x, int y,int maxWIDTH,int maxHEIGHT)
+void DrawImage(const vector<wstring> image, int x, int y,int maxWIDTH,int maxHEIGHT)
 {
 	SetUnicodeMode();
-	int size = (unsigned int)image.size();
-	int minHEIGHT = size < maxHEIGHT ? size : maxHEIGHT;
-	size = static_cast<int>(image[0].length());
-	int minWIDTH = size < maxWIDTH ? size : maxWIDTH;;
-	for (int i = 0;i < minHEIGHT;++i)
+	if (image.empty() || maxWIDTH <= 0 || maxHEIGHT <= 0)
+		return;
+
+	const int minHEIGHT = std::min(static_cast<int>(image.size()), maxHEIGHT);
+
+	for (int i = 0; i < minHEIGHT; ++i)
 	{
+		const int minWIDTH = std::min(static_cast<int>(image[i].length()), maxWIDTH);
+
 		GotoXY(x, y + i);
-		for (int j = 0;j < minWIDTH;++j)
-		{
-			wcout << image[i][j];
-		}
+		wcout.write(image[i].data(), minWIDTH);
 	}
 	SetDefaultMode();
 }
@@ -247,12 +207,6 @@ void Typing(string text, int delay,bool endl)
 	if (endl) cout << "\n";
 }
 
-void ScreenReset()
-{
-	DrawImage(ScreenResetText, Vector2{ 0, 0 });
-	GotoXY(0, 0);
-}
-
 void WaitInput()
 {
 	SkipBreak();
@@ -270,8 +224,8 @@ int GetIntInput(int min, int max)
 		{
 			cin.clear();
 			cin.ignore(1000, '\n');
-			cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n" << min << "~"
-				<< max << "»çÀÌ ¼ýÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\n";
+			cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤.\n" << min << "~"
+				<< max << "ì‚¬ì´ ìˆ«ìžë¥¼ ìž…ë ¥í•˜ì„¸ìš”.\n";
 			continue;
 		}
 		else
@@ -297,7 +251,7 @@ bool InputYorN()
 			break;
 		}
 		else {
-			cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n";
+			cout << "ìž˜ëª»ëœ ìž…ë ¥ìž…ë‹ˆë‹¤.\n";
 		}
 	}
 	SkipBreak();
@@ -311,6 +265,7 @@ string ToString(int value)
 
 void CLS()
 {
+	SetColor();
 	system("cls");
 }
 
@@ -374,6 +329,23 @@ bool DelayButton(Vector2 leftPos, vector<wstring> image,
 	return IsButtonClick(leftPos,image) && Delay(type,delay);
 }
 
+void BoolReverse(bool& value)
+{
+	value = !value;
+}
+
+std::map<int, ULONGLONG> AfterValueMap;
+
+void SetAfterValue(int key, ULONGLONG afterTime)
+{
+	ULONGLONG endTime = GetTickCount64() + afterTime;
+	if (AfterValueMap[key] < endTime) AfterValueMap[key] = endTime;
+}
+
+bool GetAfterValue(int key)
+{
+	return AfterValueMap[key] >= GetTickCount64();
+}
 
 #pragma endregion
 

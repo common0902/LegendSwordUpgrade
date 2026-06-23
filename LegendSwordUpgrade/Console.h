@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include<iostream>
 #include<conio.h>
 #define NOMINMAX
@@ -18,6 +18,7 @@ using std::endl;
 using std::wcout;
 
 // 아스키 아트
+void ConfigureConsoleEncoding();
 void SetUnicodeMode();
 void SetDefaultMode();
 

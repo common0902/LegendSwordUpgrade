@@ -1,4 +1,4 @@
-﻿#include "Console.h"
+#include "Console.h"
 #include "Game.h"
 #include"GameState.h"
 

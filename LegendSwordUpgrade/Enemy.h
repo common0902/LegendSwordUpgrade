@@ -1,15 +1,15 @@
 #pragma once
-#include "EnemyData.h"
 
 class Enemy
 {
 public:
-	Enemy(EnemyData data)
+	Enemy(vector<wstring> enemyImage, int enemyMaxHp, int enemyDamage, int enemyAttackSpeed)
 	{
-		maxHp = data.hp;
-		curHp = maxHp;
-		damage = data.damage;
-		image = data.Image;
+		maxHp = enemyMaxHp;
+		curHp = enemyMaxHp;
+		damage = enemyDamage;
+		image = enemyImage;
+		attackSppeed = enemyAttackSpeed;
 	}
 	virtual ~Enemy()
 	{
@@ -20,4 +20,5 @@ public:
 	int curHp;
 	int maxHp;
 	int damage;
+	int attackSppeed;
 };
