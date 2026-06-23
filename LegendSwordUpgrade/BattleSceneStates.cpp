@@ -22,12 +22,14 @@ Vector2 NumderCountDownPos = Vector2(65, 15);
 constexpr int StartBattleDelay = 1000;
 constexpr int OneSecond = 1000;
 
-Vector2 HealthBarPos = Vector2(30,5);
-constexpr int PlayerHelathBarSize = 50;
+Vector2 EnemyHealthBarPos = Vector2(30,2);
+constexpr int EnemyHelathBarSize = 50;
 
-Vector2 EnemyDrawPos = Vector2(50, 15);
+Vector2 DefaultEnemyPos = Vector2(50, 5);
 
 ULONGLONG DefaultAttackSpeed = 1000;
+
+ULONGLONG HitAfterTime = 100;
 
 #pragma endregion
 
@@ -63,7 +65,11 @@ void BattleSceneStageState::Update()
 	{
 		prevOnMouseStageButton[i] = OnMouseStageButton[i];
 		OnMouseStageButton[i] = IsMouseUp(pos, NumderImage[i]);
-		if (OnMouseStageButton[i] && GetMouseDown(MouseButton::LEFT)) StageChange(i + 1);
+		if (OnMouseStageButton[i] && GetMouseDown(MouseButton::LEFT))
+		{
+			StageChange(i + 1);
+			return;
+		}
 		pos.x += NumderSpaing;
 	}
 
@@ -139,12 +145,11 @@ void BattleSceneBattleState::Enter()
 
 void BattleSceneBattleState::Update()
 {
-	static int a = 0;
-	if (DelayButton(EnemyDrawPos, enemy->image, PlayerAttackDelay, DefaultAttackSpeed / playerAttackSpeed))
+
+	if (DelayButton(curEnemyDrawPos, enemy->image, DelayType::PlayerAttackDelay, DefaultAttackSpeed / playerAttackSpeed))
 	{
-		a += 1;
-		GotoXY(60 + a, 35);
-		cout << "1";
+		SetAfterValue(BattleAfterType::EnemyHit, HitAfterTime);
+		PlayerAttack(playerDamage);
 	}
 
 
@@ -152,15 +157,24 @@ void BattleSceneBattleState::Update()
 
 void BattleSceneBattleState::Render() const
 {
-	string barText = GetBarString(playerCurHp, playerMaxHp, PlayerHelathBarSize);
-	Color barColor = GetHealthColor(playerCurHp, playerMaxHp);
 
-	GotoXY(HealthBarPos);
+#pragma region Health
+	string barText = GetBarString(enemy->curHp, enemy->maxHp, EnemyHelathBarSize);
+	Color barColor = GetHealthColor(enemy->curHp, enemy->maxHp);
+
+	GotoXY(EnemyHealthBarPos);
 	SetColor(barColor);
 	cout << barText;
-	
-	DrawImage(enemy->image, EnemyDrawPos);
-	
+#pragma endregion
+
+#pragma region Enemy
+
+	SetColor(GetAfterValue(BattleAfterType::EnemyHit) ? Color::RED : Color::WHITE);
+	DrawImage(enemy->image, curEnemyDrawPos);
+
+
+#pragma endregion
+
 }
 
 void BattleSceneBattleState::Exit()
@@ -176,33 +190,49 @@ void BattleSceneBattleState::SetEnemyData()
 
 	Enemy* a;
 
-	vector<wstring> image = NumderImage[4];
+	vector<wstring> image = EnemyImage[curStage-1];
+
+	curEnemyDrawPos = DefaultEnemyPos;
 
 	if (curStage == 1)
 	{
 		a = new Enemy(image, 100, 10,1);
+		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 2)
 	{
 		a = new Enemy(image, 200, 50, 1);
+		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 3)
 	{
 		a = new Enemy(image, 300, 100, 1);
+		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 4)
 	{
 		a = new Enemy(image, 500, 75, 1);
+		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 5)
 	{
 		a = new Enemy(image, 1000, 200, 1);
+		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else a = new Enemy(image, 1, 1, 1);
 
-	
 
 	enemy = a;
+}
+
+void BattleSceneBattleState::PlayerAttack(int damage)
+{
+
+}
+
+string BattleSceneBattleState::GetAttackDelayBarString()
+{
+	return string();
 }
 
 #pragma endregion

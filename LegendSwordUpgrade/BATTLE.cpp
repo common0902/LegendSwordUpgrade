@@ -98,20 +98,20 @@ bool Random(int probability)
 	return GetRandomRange(0, 100) < probability;
 }
 
-void DrawImage(vector<wstring> image, int x, int y,int maxWIDTH,int maxHEIGHT)
+void DrawImage(const vector<wstring> image, int x, int y,int maxWIDTH,int maxHEIGHT)
 {
 	SetUnicodeMode();
-	int size = (unsigned int)image.size();
-	int minHEIGHT = size < maxHEIGHT ? size : maxHEIGHT;
-	size = static_cast<int>(image[0].length());
-	int minWIDTH = size < maxWIDTH ? size : maxWIDTH;;
-	for (int i = 0;i < minHEIGHT;++i)
+	if (image.empty() || maxWIDTH <= 0 || maxHEIGHT <= 0)
+		return;
+
+	const int minHEIGHT = std::min(static_cast<int>(image.size()), maxHEIGHT);
+
+	for (int i = 0; i < minHEIGHT; ++i)
 	{
+		const int minWIDTH = std::min(static_cast<int>(image[i].length()), maxWIDTH);
+
 		GotoXY(x, y + i);
-		for (int j = 0;j < minWIDTH;++j)
-		{
-			wcout << image[i][j];
-		}
+		wcout.write(image[i].data(), minWIDTH);
 	}
 	SetDefaultMode();
 }
@@ -332,6 +332,19 @@ bool DelayButton(Vector2 leftPos, vector<wstring> image,
 void BoolReverse(bool& value)
 {
 	value = !value;
+}
+
+std::map<int, ULONGLONG> AfterValueMap;
+
+void SetAfterValue(int key, ULONGLONG afterTime)
+{
+	ULONGLONG endTime = GetTickCount64() + afterTime;
+	if (AfterValueMap[key] < endTime) AfterValueMap[key] = endTime;
+}
+
+bool GetAfterValue(int key)
+{
+	return AfterValueMap[key] >= GetTickCount64();
 }
 
 #pragma endregion

@@ -9,6 +9,11 @@ enum DelayType
 	PlayerAttackDelay
 };
 
+enum BattleAfterType
+{
+	EnemyHit
+};
+
 enum BattleSceneEnum
 {
 	Stage,Battle
@@ -77,3 +82,6 @@ bool IsButtonClick(Vector2 leftUpPos, vector<wstring> image);
 bool DelayButton(Vector2 leftPos, vector<wstring> image,
 	int type, ULONGLONG delay);
 void BoolReverse(bool& value);
+
+void SetAfterValue(int key, ULONGLONG afterTime);
+bool GetAfterValue(int key);

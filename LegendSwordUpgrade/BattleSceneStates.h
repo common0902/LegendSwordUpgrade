@@ -1,7 +1,6 @@
 #pragma once
 #include"BattleSceneState.h"
-#include"Console.h"
-
+#include"GameState.h"
 
 class BattleSceneStageState : public BattleSceneState
 {
@@ -45,24 +44,29 @@ public:
 	void Exit() override;
 
 public:
- 	void SetEnemyData();
-
-public:
 	int curStage;
 	Enemy* enemy;
 
 public:
 	ULONGLONG lastAttackTime;
-
+	Vector2 curEnemyDrawPos;
+	bool isHit;
 
 public:
 	int playerCurHp = 0;
 	int playerMaxHp = 0;
 	int playerDamage = 0;
 	int playerAttackSpeed = 10;
+
+public:
+	void SetEnemyData();
+	void PlayerAttack(int damage);
+	string GetAttackDelayBarString();
+
 };
 
 void CircleFade(int delay);
+
 
 
 
