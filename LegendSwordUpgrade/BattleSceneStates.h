@@ -79,7 +79,7 @@ public:
 
 };
 
-void CircleFade(int delay);
+void ScreenFade(int delay);
 
 
 
