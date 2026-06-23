@@ -16,7 +16,7 @@ enum BattleAfterType
 
 enum BattleSceneEnum
 {
-	Stage,Battle
+	Stage,Battle,Clear
 };
 
 
@@ -86,3 +86,7 @@ void BoolReverse(bool& value);
 
 void SetAfterValue(int key, ULONGLONG afterTime);
 bool GetAfterValue(int key);
+void SetConsolePos(int x, int y);
+void SetConsolePos(Vector2 vec);
+Vector2 GetRandomPos(int power);
+void ConsoleShake(int power,int delay);

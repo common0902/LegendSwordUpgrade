@@ -33,7 +33,18 @@ ULONGLONG HitAfterTime = 100;
 
 Vector2 AttackDelayVatPos = Vector2(60,40);
 int AttackDelayBarSize = 20;
+
+int AttackShakeDelay = 50;
+int AttackShakePower = 50;
 #pragma endregion
+
+#pragma region Clear
+
+Vector2 ClearTextPos = Vector2(70,25);
+Vector2 ClearButtonPos = Vector2(65, 30);
+
+#pragma endregion
+
 
 #pragma endregion
 
@@ -141,19 +152,20 @@ void BattleSceneBattleState::Enter()
 	}
 	CLS();
 
-	playerCurHp = 10;
-	playerMaxHp = 20;
 }
 
 void BattleSceneBattleState::Update()
 {
-
 	if (DelayButton(curEnemyDrawPos, enemy->image, DelayType::PlayerAttackDelay, DefaultAttackDelay / playerAttackSpeed))
 	{
 		SetAfterValue(BattleAfterType::EnemyHit, HitAfterTime);
-		PlayerAttack(playerDamage);
+		bool exit = false;
+		PlayerAttack(playerDamage + 1, exit);
+		if (exit) return;
+		Render();
+		ConsoleShake(AttackShakePower, AttackShakeDelay);
 	}
-
+	
 
 }
 
@@ -250,8 +262,18 @@ void BattleSceneBattleState::SetEnemyData()
 	enemy = a;
 }
 
-void BattleSceneBattleState::PlayerAttack(int damage)
+void BattleSceneBattleState::PlayerAttack(int damage,bool& exit)
 {
+	enemy->curHp -= damage;
+	exit = false;
+
+	if (enemy->curHp <= 0)
+	{
+		exit = true;
+		scene.ChangeState(BattleSceneEnum::Clear);
+		return;
+	}
+
 
 }
 
@@ -277,6 +299,38 @@ std::string BattleSceneBattleState::GetAttackDelayBarString(int value, int maxVa
 	}
 
 	return text;
+}
+
+#pragma endregion
+
+#pragma region BattleSceneClearState
+
+
+void BattleSceneClearState::Enter()
+{
+	CircleFade(FadeDelayTime);
+
+	GotoXY(ClearTextPos);
+	Typing("스테이지 클리어!", 10);
+}
+
+void BattleSceneClearState::Update()
+{
+	if (IsButtonClick(ClearButtonPos, ClearButtonImage))
+	{
+		scene.ChangeScene((int)Scene::TITLE);
+		return;
+	}
+}
+
+void BattleSceneClearState::Render() const
+{
+	DrawImage(ClearButtonImage, ClearButtonPos);
+}
+
+void BattleSceneClearState::Exit()
+{
+	CLS();
 }
 
 #pragma endregion
@@ -322,3 +376,5 @@ void CircleFade(int delay)
 }
 
 #pragma endregion
+
+

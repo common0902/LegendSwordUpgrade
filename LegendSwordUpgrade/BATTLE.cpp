@@ -13,6 +13,7 @@ void BattleScene::Init()
 {
 	fsm.AddState(BattleSceneEnum::Stage, new BattleSceneStageState(*this));
 	fsm.AddState(BattleSceneEnum::Battle, new BattleSceneBattleState(*this));
+	fsm.AddState(BattleSceneEnum::Clear, new BattleSceneClearState(*this));
 }
 
 void BattleScene::Enter()
@@ -352,6 +353,38 @@ bool GetAfterValue(int key)
 	return AfterValueMap[key] >= GetTickCount64();
 }
 
+void SetConsolePos(int x, int y)
+{
+	HWND hWnd = GetConsoleWindow();
+	RECT rt = {};
+
+	GetWindowRect(hWnd, &rt);
+
+	int originX = rt.left;
+	int originY = rt.top;
+
+	SetWindowPos(hWnd, nullptr,
+		originX + x,
+		originY + y, 0, 0, SWP_NOSIZE);
+}
+void SetConsolePos(Vector2 vec)
+{
+	SetConsolePos(vec.x, vec.y);
+}
+Vector2 GetRandomPos(int power)
+{
+	int offsetX = rand() % (2 * power + 1) - power;
+	int offsetY = rand() % (2 * power + 1) - power;
+
+	return Vector2(offsetX, offsetY);
+}
+void ConsoleShake(int power, int delay)
+{
+	Vector2 vec = GetRandomPos(power);
+	SetConsolePos(vec);
+	Sleep(delay);
+	SetConsolePos(vec * -1);
+}
 #pragma endregion
 
 

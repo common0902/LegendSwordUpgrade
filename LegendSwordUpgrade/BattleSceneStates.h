@@ -59,8 +59,23 @@ public:
 
 public:
 	void SetEnemyData();
-	void PlayerAttack(int damage);
+	void PlayerAttack(int damage,bool& exit);
 	string GetAttackDelayBarString(int value, int maxValue, int barWidth, string fillChar = "■", string emptyChar = "□") const;
+
+};
+
+class BattleSceneClearState : public BattleSceneState
+{
+public:
+	BattleSceneClearState(BattleScene& scene) : BattleSceneState(scene) {}
+	virtual ~BattleSceneClearState() = default;
+
+public:
+	void Enter() override;
+	void Update() override;
+	void Render() const override;
+	void Exit() override;
+
 
 };
 
