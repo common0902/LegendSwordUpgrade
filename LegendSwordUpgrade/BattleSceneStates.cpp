@@ -176,7 +176,6 @@ void BattleSceneBattleState::Update()
 			return;
 		}
 	}
-
 }
 
 void BattleSceneBattleState::Render() const
@@ -223,8 +222,6 @@ void BattleSceneBattleState::Render() const
 	cout << AttackDelayText;
 
 #pragma endregion
-
-
 
 }
 
