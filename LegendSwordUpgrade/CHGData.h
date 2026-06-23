@@ -24,7 +24,7 @@ struct CHGData
 
 	bool slotPlaying = false;
 
-	void UpdateWeaponUpgradePercent()
+	/*void UpdateWeaponUpgradePercent()
 	{
 		weaponUpgradeSuccessPercent = haveTotem.at(L"♧").first;
 	}*/
