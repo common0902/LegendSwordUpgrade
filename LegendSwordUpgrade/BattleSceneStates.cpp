@@ -37,14 +37,15 @@ int AttackDelayBarSize = 20;
 int AttackShakeDelay = 50;
 int AttackShakePower = 50;
 
-Vector2 PlayerHealthBarPos = Vector2(50,39);
-constexpr int PlayerHealthBarSize = 10;
+Vector2 PlayerHealthBarPos = Vector2(60,39);
+Vector2 PlayerNamePos = Vector2(75, 38);
+constexpr int PlayerHealthBarSize = 20;
 
 #pragma endregion
 
 #pragma region Clear
 
-Vector2 ClearTextPos = Vector2(70,25);
+Vector2 ClearTextPos = Vector2(71,25);
 Vector2 ClearButtonPos = Vector2(65, 30);
 
 #pragma endregion
@@ -236,7 +237,7 @@ void BattleSceneBattleState::Render() const
 	SetColor(GetHealthColor(playerCurHp, playerMaxHp));
 	GotoXY(PlayerHealthBarPos);
 	cout << playerHealthBarText;
-	GotoXY(65,38);
+	GotoXY(PlayerNamePos);
 	SetColor();
 	cout << "Player";
 }
