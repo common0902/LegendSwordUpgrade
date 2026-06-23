@@ -36,6 +36,10 @@ int AttackDelayBarSize = 20;
 
 int AttackShakeDelay = 50;
 int AttackShakePower = 50;
+
+Vector2 PlayerHealthBarPos = Vector2(50,40);
+constexpr int PlayerHealthBarSize = 10;
+
 #pragma endregion
 
 #pragma region Clear
@@ -228,7 +232,13 @@ void BattleSceneBattleState::Render() const
 #pragma endregion
 
 
-
+	string playerHealthBarText = GetBarString(playerCurHp, playerMaxHp, PlayerHealthBarSize);
+	SetColor(GetHealthColor(playerCurHp, playerMaxHp));
+	GotoXY(PlayerHealthBarPos);
+	cout << playerHealthBarText;
+	GotoXY(65,39);
+	SetColor();
+	cout << "Player";
 }
 
 void BattleSceneBattleState::Exit()
