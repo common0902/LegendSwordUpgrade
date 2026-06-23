@@ -224,6 +224,8 @@ void BattleSceneBattleState::Render() const
 
 #pragma endregion
 
+
+
 }
 
 void BattleSceneBattleState::Exit()
@@ -244,30 +246,30 @@ void BattleSceneBattleState::SetEnemyData()
 
 	if (curStage == 1)
 	{
-		a = new Enemy("고블린", image, 100, 10, 1);
+		a = new Enemy("고블린", image, 1000, 5, 1);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 2)
 	{
-		a = new Enemy("오크", image, 200, 50, 1);
+		a = new Enemy("오크", image, 2000, 10, 1000);
 		curEnemyDrawPos += Vector2(0, 5);
 	}
 	else if (curStage == 3)
 	{
-		a = new Enemy("암흑 마법사", image, 300, 100, 1);
+		a = new Enemy("암흑 마법사", image, 3000, 30, 1000);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 4)
 	{
-		a = new Enemy("골렘", image, 500, 75, 1);
+		a = new Enemy("골렘", image, 5000, 50, 1000);
 		curEnemyDrawPos += Vector2(0, 7);
 	}
 	else if (curStage == 5)
 	{
-		a = new Enemy("거미", image, 1000, 200, 1);
+		a = new Enemy("거미", image, 10000, 100, 1000);
 		curEnemyDrawPos += Vector2(0, 5);
 	}
-	else a = new Enemy("애러", image, 1, 1, 1);
+	else a = new Enemy("애러", image, 1, 1, 1000);
 
 	enemy = a;
 }
@@ -318,6 +320,11 @@ std::string BattleSceneBattleState::GetAttackDelayBarString(int value, int maxVa
 
 void BattleSceneClearState::Enter()
 {
+	if (scene.curStage == 5)
+	{
+		scene.ChangeScene((int)Scene::Win);
+		return;
+	}
 	ScreenFade(FadeDelayTime);
 
 	GotoXY(ClearTextPos);
