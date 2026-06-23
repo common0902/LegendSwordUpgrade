@@ -72,6 +72,9 @@
     <ClCompile Include="BattleSceneStates.cpp">
       <Filter>Main\LRW</Filter>
     </ClCompile>
+    <ClCompile Include="Win.cpp">
+      <Filter>Main\소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -151,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="BattleSceneStates.h">
       <Filter>Main\LRW</Filter>
+    </ClInclude>
+    <ClInclude Include="Win.h">
+      <Filter>Main\소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

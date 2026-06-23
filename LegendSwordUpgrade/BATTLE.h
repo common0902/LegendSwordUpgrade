@@ -6,7 +6,7 @@
 
 enum DelayType
 {
-	PlayerAttackDelay
+	PlayerAttackDelay,EnemtAttackDelay
 };
 
 enum BattleAfterType
@@ -16,7 +16,7 @@ enum BattleAfterType
 
 enum BattleSceneEnum
 {
-	Stage,Battle
+	Stage,Battle,Clear
 };
 
 
@@ -49,6 +49,7 @@ public:
 
 
 ULONGLONG GetDeltaTime(ULONGLONG lastTime);
+ULONGLONG GetDelayDeltaTime(int key);
 bool Delay(int type, ULONGLONG time);
 bool Delay(DelayType type, ULONGLONG time);
 void GotoXY(Vector2 pos);
@@ -85,3 +86,7 @@ void BoolReverse(bool& value);
 
 void SetAfterValue(int key, ULONGLONG afterTime);
 bool GetAfterValue(int key);
+void SetConsolePos(int x, int y);
+void SetConsolePos(Vector2 vec);
+Vector2 GetRandomPos(int power);
+void ConsoleShake(int power,int delay);

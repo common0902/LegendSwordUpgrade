@@ -50,22 +50,36 @@ public:
 public:
 	ULONGLONG lastAttackTime;
 	Vector2 curEnemyDrawPos;
-	bool isHit;
 
 public:
 	int playerCurHp = 0;
 	int playerMaxHp = 0;
 	int playerDamage = 0;
-	int playerAttackSpeed = 10;
+	int playerAttackSpeed = 1;
 
 public:
 	void SetEnemyData();
-	void PlayerAttack(int damage);
-	string GetAttackDelayBarString();
+	void PlayerAttack(int damage,bool& exit);
+	string GetAttackDelayBarString(int value, int maxValue, int barWidth, string fillChar = "■", string emptyChar = "□") const;
 
 };
 
-void CircleFade(int delay);
+class BattleSceneClearState : public BattleSceneState
+{
+public:
+	BattleSceneClearState(BattleScene& scene) : BattleSceneState(scene) {}
+	virtual ~BattleSceneClearState() = default;
+
+public:
+	void Enter() override;
+	void Update() override;
+	void Render() const override;
+	void Exit() override;
+
+
+};
+
+void ScreenFade(int delay);
 
 
 

@@ -7,6 +7,7 @@
 #include "BATTLE.h"
 #include "Title.h"
 #include "GameOver.h"
+#include "Win.h"
 
 void Init(GameState& state);
 void Update(GameState& state);
