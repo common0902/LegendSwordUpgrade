@@ -122,7 +122,7 @@ void BattleSceneStageState::Render() const
 void BattleSceneStageState::Exit()
 {
 	SetColor();
-	CircleFade(FadeDelayTime);
+	ScreenFade(FadeDelayTime);
 	CLS();
 
 }
@@ -166,6 +166,16 @@ void BattleSceneBattleState::Update()
 		ConsoleShake(AttackShakePower, AttackShakeDelay);
 	}
 	
+	if (Delay(DelayType::EnemtAttackDelay,enemy-> attackSppeed))
+	{
+		playerCurHp -= enemy->damage;
+		if (playerCurHp <= 0)
+		{
+			ScreenFade(FadeDelayTime);
+			scene.ChangeScene((int)Scene::GAMEOVER);
+			return;
+		}
+	}
 
 }
 
@@ -250,12 +260,12 @@ void BattleSceneBattleState::SetEnemyData()
 	else if (curStage == 4)
 	{
 		a = new Enemy("골렘", image, 500, 75, 1);
-		curEnemyDrawPos += Vector2(0, 0);
+		curEnemyDrawPos += Vector2(0, 7);
 	}
 	else if (curStage == 5)
 	{
 		a = new Enemy("거미", image, 1000, 200, 1);
-		curEnemyDrawPos += Vector2(0, 0);
+		curEnemyDrawPos += Vector2(0, 5);
 	}
 	else a = new Enemy("애러", image, 1, 1, 1);
 
@@ -308,7 +318,7 @@ std::string BattleSceneBattleState::GetAttackDelayBarString(int value, int maxVa
 
 void BattleSceneClearState::Enter()
 {
-	CircleFade(FadeDelayTime);
+	ScreenFade(FadeDelayTime);
 
 	GotoXY(ClearTextPos);
 	Typing("스테이지 클리어!", 10);
@@ -337,7 +347,7 @@ void BattleSceneClearState::Exit()
 
 #pragma region Method
 
-void CircleFade(int delay)
+void ScreenFade(int delay)
 {
 	Vector2 pos;
 	string text = " ";

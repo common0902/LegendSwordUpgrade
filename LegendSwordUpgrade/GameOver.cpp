@@ -2,6 +2,8 @@
 
 void GameOverScene::Enter()
 {
+	GotoXY(70,25);
+	SetColor(Color::RED);
 	cout << "GameOver";
 }
 

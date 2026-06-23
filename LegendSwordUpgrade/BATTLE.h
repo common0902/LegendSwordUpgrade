@@ -6,7 +6,7 @@
 
 enum DelayType
 {
-	PlayerAttackDelay
+	PlayerAttackDelay,EnemtAttackDelay
 };
 
 enum BattleAfterType
