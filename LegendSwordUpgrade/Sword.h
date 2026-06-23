@@ -24,5 +24,7 @@ public:
     float GetDownChance() const;
     UpgradeResult TryUpgrade();
     bool IsMaxTier() const;
+    int GetDamageByTier(int t) const;
+    int GetUpgradeCostByTier(int t) const;
     int GetSellCost() const;
 };

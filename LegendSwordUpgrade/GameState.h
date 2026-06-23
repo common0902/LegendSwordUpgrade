@@ -22,7 +22,7 @@ struct GameState
 	Player player;
 	ULONGLONG curTime;
 
-	int gold = 1000;
+	int gold = 100000;
 	Sword curSword;
 
 	CHGData ChgData;

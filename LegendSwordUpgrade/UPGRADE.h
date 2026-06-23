@@ -3,6 +3,8 @@
 #include "SceneState.h"
 #include "UpgradeAsciiArt.h"
 
+enum class AnimState { NONE, SLIDE_DOWN, SLIDE_UP, EXPLODE };
+
 class UpgradeScene : public SceneState
 {
 public:
@@ -16,10 +18,17 @@ private:
     void RenderInfo()    const;
     void RenderControl() const;
     void RenderResult()  const;
+    void RenderAnim()    const; 
+    void StartAnim();       
+    void RenderStored() const;
 
 private:
     PMSAsciiObjs  asciiObjs;
     UpgradeResult lastResult = UpgradeResult::SUCCESS;
     bool          hasResult = false;
-    ULONGLONG     resultTime = 0;
+
+    bool          skipAnim = false;       
+    AnimState     animState = AnimState::NONE;
+    ULONGLONG     animStart = 0;
+    int           prevTier = 0;           
 };
