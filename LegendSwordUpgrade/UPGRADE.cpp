@@ -36,7 +36,7 @@ void UpgradeScene::StartAnim()
         animState = AnimState::SLIDE_DOWN;
     else if (lastResult == UpgradeResult::DOWN)
         animState = AnimState::SLIDE_UP;
-    else // BREAK
+    else 
         animState = AnimState::EXPLODE;
 }
 
