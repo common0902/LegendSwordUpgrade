@@ -37,7 +37,7 @@ int AttackDelayBarSize = 20;
 int AttackShakeDelay = 50;
 int AttackShakePower = 50;
 
-Vector2 PlayerHealthBarPos = Vector2(50,40);
+Vector2 PlayerHealthBarPos = Vector2(50,39);
 constexpr int PlayerHealthBarSize = 10;
 
 #pragma endregion
@@ -236,7 +236,7 @@ void BattleSceneBattleState::Render() const
 	SetColor(GetHealthColor(playerCurHp, playerMaxHp));
 	GotoXY(PlayerHealthBarPos);
 	cout << playerHealthBarText;
-	GotoXY(65,39);
+	GotoXY(65,38);
 	SetColor();
 	cout << "Player";
 }
@@ -259,7 +259,7 @@ void BattleSceneBattleState::SetEnemyData()
 
 	if (curStage == 1)
 	{
-		a = new Enemy("고블린", image, 1000, 5, 1);
+		a = new Enemy("고블린", image, 1000, 5, 1000);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 2)
