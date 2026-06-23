@@ -8,6 +8,7 @@ void ShopScene::Enter()
 	srand((unsigned int)time(nullptr));
 	SetConsoleGameTitle(L"SHOP");
 	slotMachine.Init(state);
+	state.ChgData.UpdateWeaponUpgradePercent();
 	//SetConsoleSize(85, 40);
 }
 void ShopScene::Update()
@@ -30,8 +31,6 @@ void ShopScene::Update()
 			(p < state.ChgData.failPercent + state.ChgData.successPercent);
 		bool super = (p >= state.ChgData.failPercent + state.ChgData.successPercent);
 		slotMachine.StartRoll(success, super);
-		GotoXY(0, 40);
-		wcout << std::setw(3) << p;
 	}
 
 	RollResult result = slotMachine.ConsumeResult();
@@ -54,9 +53,10 @@ void ShopScene::Update()
 			state.gold += 500;
 		}
 
+		state.ChgData.UpdateWeaponUpgradePercent();
 	}
 
-	state.player.ApplyTotem(state.ChgData);   // 토템 개수 → Player 스탯 실시간 반영
+	state.player.ApplyTotem(state.ChgData);  
 	slotMachine.Update();
 }
 

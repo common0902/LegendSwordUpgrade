@@ -38,6 +38,7 @@ void SlotMachine::Init(GameState& gameState)
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
+		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
 		L"⣇⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣀⣸",
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
 		L"⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸",
@@ -94,6 +95,13 @@ void SlotMachine::Init(GameState& gameState)
 		L"`Y8888888Y'",
 		L"  `Y888Y'  ",
 		L"    `Y'    "
+		});
+	slotArt.push_back(
+		{
+		L"   _   ",
+		L"  (_)  ",
+		L" (_)(_)",
+		L"  _|_  "
 		});
 
 	state = &gameState;
@@ -187,6 +195,10 @@ void SlotMachine::Update()
 				break;
 			case 3:
 				getItem = L"♥";
+				break;
+			case 4:
+				getItem = L"♧";
+				break;
 			}
 
 		}
@@ -356,11 +368,17 @@ void SlotMachine::RenderInfoUI(int renderX, int renderY) const
 	wcout << L"보유 골드: " << std::setw(4) << state->gold;
 	GotoXY(renderX + 2, renderY + 3);
 	wcout << L"보유 토템: ";
-	GotoXY(renderX + 2, renderY + 4);
+
+	int idx = 0;
+	const int perRow = 4;   
+	const int cellW = 6;    
 	for (auto item = state->ChgData.haveTotem.begin(); item != state->ChgData.haveTotem.end(); ++item)
 	{
-		wcout << item->first + L" X ";
-		wcout << item->second.first << L"|";
+		int row = idx / perRow;
+		int col = idx % perRow;
+		GotoXY(renderX + 2 + col * cellW, renderY + 4 + row);  
+		wcout << item->first << L" X " << item->second.first << "|";
+		idx++;
 	}
 
 	int yOffset = 0;
@@ -376,6 +394,8 @@ void SlotMachine::RenderInfoUI(int renderX, int renderY) const
 	wcout << L"공격속도: " << state->player.attackSpeed;
 	GotoXY(renderX + 2, renderY + 7 + yOffset + 3);
 	wcout << L"체력: " << state->player.MaxHp;
+	GotoXY(renderX + 2, renderY + 7 + yOffset + 4);
+	wcout << L"무기 강화 성공 확률: " << state->curSword.GetSuccessChance();
 
 	GotoXY(13, 28);
 	wcout << L"실패 확률: " << state->ChgData.failPercent << L"%";
