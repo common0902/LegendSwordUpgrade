@@ -19,7 +19,7 @@ void Init(GameState& state)
 	state.fsm.AddState((int)Scene::SHOP, new ShopScene(state));
 	state.fsm.AddState((int)Scene::BATTLE, new BattleScene(state));
 	state.fsm.AddState((int)Scene::GAMEOVER, new GameOverScene(state));
-
+	state.fsm.AddState((int)Scene::Win, new WinScene(state));
 
 	state.fsm.ChangeState((int)Scene::TITLE);
 }

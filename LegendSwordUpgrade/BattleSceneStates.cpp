@@ -27,11 +27,29 @@ constexpr int EnemyHelathBarSize = 50;
 
 Vector2 DefaultEnemyPos = Vector2(50, 5);
 
-ULONGLONG DefaultAttackSpeed = 1000;
+ULONGLONG DefaultAttackDelay = 1000;
 
 ULONGLONG HitAfterTime = 100;
 
+Vector2 AttackDelayVatPos = Vector2(60,40);
+int AttackDelayBarSize = 20;
+
+int AttackShakeDelay = 50;
+int AttackShakePower = 50;
+
+Vector2 PlayerHealthBarPos = Vector2(60,39);
+Vector2 PlayerNamePos = Vector2(75, 38);
+constexpr int PlayerHealthBarSize = 20;
+
 #pragma endregion
+
+#pragma region Clear
+
+Vector2 ClearTextPos = Vector2(71,25);
+Vector2 ClearButtonPos = Vector2(65, 30);
+
+#pragma endregion
+
 
 #pragma endregion
 
@@ -109,7 +127,7 @@ void BattleSceneStageState::Render() const
 void BattleSceneStageState::Exit()
 {
 	SetColor();
-	CircleFade(FadeDelayTime);
+	ScreenFade(FadeDelayTime);
 	CLS();
 
 }
@@ -127,6 +145,10 @@ void BattleSceneStageState::StageChange(int stage)
 void BattleSceneBattleState::Enter()
 {
 	curStage = scene.curStage;
+	playerDamage = scene.state.PmsData.storedDamage;
+	playerAttackSpeed = scene.state.player.attackSpeed;
+	playerMaxHp = scene.state.player.MaxHp;
+	playerCurHp = playerMaxHp;
 
 	SetEnemyData();
 
@@ -139,48 +161,90 @@ void BattleSceneBattleState::Enter()
 	}
 	CLS();
 
-	playerCurHp = 10;
-	playerMaxHp = 20;
 }
 
 void BattleSceneBattleState::Update()
 {
-
-	if (DelayButton(curEnemyDrawPos, enemy->image, DelayType::PlayerAttackDelay, DefaultAttackSpeed / playerAttackSpeed))
+	if (DelayButton(curEnemyDrawPos, enemy->image, DelayType::PlayerAttackDelay, DefaultAttackDelay / playerAttackSpeed))
 	{
 		SetAfterValue(BattleAfterType::EnemyHit, HitAfterTime);
-		PlayerAttack(playerDamage);
+		bool exit = false;
+		PlayerAttack(playerDamage + 1, exit);
+		if (exit) return;
+		Render();
+		ConsoleShake(AttackShakePower, AttackShakeDelay);
 	}
-
-
+	
+	if (Delay(DelayType::EnemtAttackDelay,enemy-> attackSppeed))
+	{
+		playerCurHp -= enemy->damage;
+		if (playerCurHp <= 0)
+		{
+			ScreenFade(FadeDelayTime);
+			scene.ChangeScene((int)Scene::GAMEOVER);
+			return;
+		}
+	}
 }
 
 void BattleSceneBattleState::Render() const
 {
 
-#pragma region Health
+#pragma region EnemyHealth
+
 	string barText = GetBarString(enemy->curHp, enemy->maxHp, EnemyHelathBarSize);
 	Color barColor = GetHealthColor(enemy->curHp, enemy->maxHp);
 
 	GotoXY(EnemyHealthBarPos);
 	SetColor(barColor);
 	cout << barText;
+
 #pragma endregion
 
-#pragma region Enemy
+#pragma region EnemyName
+
+	SetColor();
+	GotoXY(EnemyHealthBarPos + Vector2(0, -1));
+	string enemyNameText = CenterText(enemy->name, EnemyHelathBarSize * 2);
+	cout << enemyNameText;
+
+#pragma endregion
+
+#pragma region EnemyImage
 
 	SetColor(GetAfterValue(BattleAfterType::EnemyHit) ? Color::RED : Color::WHITE);
 	DrawImage(enemy->image, curEnemyDrawPos);
 
+#pragma endregion
+
+#pragma region AttackDelay
+
+	int AttackDelayDelte = static_cast<int>(GetDelayDeltaTime(DelayType::PlayerAttackDelay));
+	int AttackDelay = static_cast<int>(DefaultAttackDelay / playerAttackSpeed);
+
+	if (AttackDelayDelte > AttackDelay) AttackDelayDelte = AttackDelay;
+
+	std::string AttackDelayText = GetAttackDelayBarString(AttackDelayDelte, AttackDelay, AttackDelayBarSize);
+
+	GotoXY(AttackDelayVatPos);
+	SetColor(Color::LIGHT_YELLOW);
+	cout << AttackDelayText;
 
 #pragma endregion
 
+
+	string playerHealthBarText = GetBarString(playerCurHp, playerMaxHp, PlayerHealthBarSize);
+	SetColor(GetHealthColor(playerCurHp, playerMaxHp));
+	GotoXY(PlayerHealthBarPos);
+	cout << playerHealthBarText;
+	GotoXY(PlayerNamePos);
+	SetColor();
+	cout << "Player";
 }
 
 void BattleSceneBattleState::Exit()
 {
 	CLS();
-
 }
 
 void BattleSceneBattleState::SetEnemyData()
@@ -196,49 +260,115 @@ void BattleSceneBattleState::SetEnemyData()
 
 	if (curStage == 1)
 	{
-		a = new Enemy(image, 100, 10,1);
+		a = new Enemy("고블린", image, 1000, 5, 1000);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 2)
 	{
-		a = new Enemy(image, 200, 50, 1);
-		curEnemyDrawPos += Vector2(0, 0);
+		a = new Enemy("오크", image, 2000, 10, 1000);
+		curEnemyDrawPos += Vector2(0, 5);
 	}
 	else if (curStage == 3)
 	{
-		a = new Enemy(image, 300, 100, 1);
+		a = new Enemy("암흑 마법사", image, 3000, 30, 1000);
 		curEnemyDrawPos += Vector2(0, 0);
 	}
 	else if (curStage == 4)
 	{
-		a = new Enemy(image, 500, 75, 1);
-		curEnemyDrawPos += Vector2(0, 0);
+		a = new Enemy("골렘", image, 5000, 50, 1000);
+		curEnemyDrawPos += Vector2(0, 7);
 	}
 	else if (curStage == 5)
 	{
-		a = new Enemy(image, 1000, 200, 1);
-		curEnemyDrawPos += Vector2(0, 0);
+		a = new Enemy("거미", image, 10000, 100, 1000);
+		curEnemyDrawPos += Vector2(0, 5);
 	}
-	else a = new Enemy(image, 1, 1, 1);
+	else a = new Enemy("애러", image, 1, 1, 1000);
 
 	enemy = a;
 }
 
-void BattleSceneBattleState::PlayerAttack(int damage)
+void BattleSceneBattleState::PlayerAttack(int damage,bool& exit)
 {
+	enemy->curHp -= damage;
+	exit = false;
+
+	if (enemy->curHp <= 0)
+	{
+		exit = true;
+		scene.ChangeState(BattleSceneEnum::Clear);
+		return;
+	}
+
 
 }
 
-string BattleSceneBattleState::GetAttackDelayBarString()
+std::string BattleSceneBattleState::GetAttackDelayBarString(int value, int maxValue, int barWidth, string fillChar, string emptyChar) const
 {
-	return string();
+	if (maxValue < 1) maxValue = 1;
+	if (barWidth < 1) return "";
+
+	if (value < 0) value = 0;
+	if (value > maxValue) value = maxValue;
+
+	int fillValue = barWidth * value / maxValue;
+	int startFill = (barWidth - fillValue) / 2;
+
+	string text = "";
+
+	for (int i = 0; i < barWidth; ++i)
+	{
+		if (i >= startFill && i < startFill + fillValue)
+			text += fillChar;
+		else
+			text += emptyChar;
+	}
+
+	return text;
+}
+
+#pragma endregion
+
+#pragma region BattleSceneClearState
+
+
+void BattleSceneClearState::Enter()
+{
+	if (scene.curStage == 5)
+	{
+		scene.ChangeScene((int)Scene::Win);
+		return;
+	}
+	ScreenFade(FadeDelayTime);
+
+	GotoXY(ClearTextPos);
+	Typing("스테이지 클리어!", 10);
+}
+
+void BattleSceneClearState::Update()
+{
+	if (IsButtonClick(ClearButtonPos, ClearButtonImage))
+	{
+		scene.ChangeScene((int)Scene::TITLE);
+		return;
+	}
+}
+
+void BattleSceneClearState::Render() const
+{
+	DrawImage(ClearButtonImage, ClearButtonPos);
+}
+
+void BattleSceneClearState::Exit()
+{
+	CLS();
 }
 
 #pragma endregion
 
 #pragma region Method
 
-void CircleFade(int delay)
+void ScreenFade(int delay)
 {
 	Vector2 pos;
 	string text = " ";
@@ -277,3 +407,5 @@ void CircleFade(int delay)
 }
 
 #pragma endregion
+
+

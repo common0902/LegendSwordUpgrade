@@ -3,8 +3,9 @@
 class Enemy
 {
 public:
-	Enemy(vector<wstring> enemyImage, int enemyMaxHp, int enemyDamage, int enemyAttackSpeed)
+	Enemy(string enemyName,vector<wstring> enemyImage, int enemyMaxHp, int enemyDamage, int enemyAttackSpeed)
 	{
+		name = enemyName;
 		maxHp = enemyMaxHp;
 		curHp = enemyMaxHp;
 		damage = enemyDamage;
@@ -16,6 +17,7 @@ public:
 
 	}
 public:
+	string name;
 	vector<wstring> image;
 	int curHp;
 	int maxHp;

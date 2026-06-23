@@ -1,4 +1,5 @@
 #include "Sword.h"
+#include "GameState.h"
 
 float Sword::GetSuccessChance() const
 {
