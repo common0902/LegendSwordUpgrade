@@ -141,6 +141,10 @@ void BattleSceneBattleState::Enter()
 {
 	curStage = scene.curStage;
 	playerDamage = scene.state.PmsData.storedDamage;
+	playerAttackSpeed = scene.state.player.attackSpeed;
+	playerMaxHp = scene.state.player.MaxHp;
+	playerCurHp = playerMaxHp;
+
 	SetEnemyData();
 
 	Sleep(StartBattleDelay);
