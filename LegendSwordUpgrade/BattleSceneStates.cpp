@@ -140,6 +140,10 @@ void BattleSceneStageState::StageChange(int stage)
 void BattleSceneBattleState::Enter()
 {
 	curStage = scene.curStage;
+	playerDamage = scene.state.PmsData.storedDamage;
+	playerAttackSpeed = scene.state.player.attackSpeed;
+	playerMaxHp = scene.state.player.MaxHp;
+	playerCurHp = playerMaxHp;
 
 	SetEnemyData();
 
@@ -176,7 +180,6 @@ void BattleSceneBattleState::Update()
 			return;
 		}
 	}
-
 }
 
 void BattleSceneBattleState::Render() const
@@ -223,8 +226,6 @@ void BattleSceneBattleState::Render() const
 	cout << AttackDelayText;
 
 #pragma endregion
-
-
 
 }
 
