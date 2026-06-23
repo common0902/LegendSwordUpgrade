@@ -1,8 +1,6 @@
 #include "UPGRADE.h"
 #include "Console.h"
 
-constexpr int RESULT_DISPLAY_MS = 1500;
-
 constexpr int INFO_BOX_X = 2;
 constexpr int INFO_BOX_Y = 10;
 constexpr int INFO_BOX_W = 24;
@@ -11,39 +9,110 @@ constexpr int INFO_BOX_H = 12;
 constexpr int CTRL_BOX_X = WIDTH - 28;
 constexpr int CTRL_BOX_Y = 10;
 constexpr int CTRL_BOX_W = 26;
-constexpr int CTRL_BOX_H = 7;
+constexpr int CTRL_BOX_H = 9;
+
+constexpr int SLIDE_DURATION_MS = 500; // 슬라이드 시간
+constexpr int EXPLODE_DURATION_MS = 500; // 폭발 대기 시간 (화면 흔들림과 맞춤)
 
 void UpgradeScene::Enter()
 {
     PMSAsciiInit(asciiObjs);
     hasResult = false;
+    animState = AnimState::NONE;
     system("cls");
+}
+
+void UpgradeScene::StartAnim()
+{
+    if (skipAnim)
+    {
+        animState = AnimState::NONE;
+        return;
+    }
+
+    animStart = GetTickCount64();
+
+    if (lastResult == UpgradeResult::SUCCESS)
+        animState = AnimState::SLIDE_DOWN;
+    else if (lastResult == UpgradeResult::DOWN)
+        animState = AnimState::SLIDE_UP;
+    else // BREAK
+        animState = AnimState::EXPLODE;
+}
+
+void UpgradeScene::RenderStored() const
+{
+    int sx = WIDTH - 28;
+    int sy = 1;
+
+    SetColor(Color::WHITE);
+    GotoXY(sx, sy);
+    cout << "보관 중인 검";
+
+    DrawBox(sx, sy + 1, 26, 4);
+
+    int tx = sx + 2;
+    int ty = sy + 2;
+
+    if (state.PmsData.hasStored)
+    {
+        SetColor(Color::LIGHT_GREEN);
+        GotoXY(tx, ty);
+        cout << "+" << state.PmsData.storedTier << " "
+            << GetSwordName(state.PmsData.storedTier);
+        GotoXY(tx, ty + 1);
+        cout << "공격력: " << state.PmsData.storedDamage << "   ";
+    }
+    else
+    {
+        SetColor(Color::GRAY);
+        GotoXY(tx, ty);
+        cout << "(비어 있음)        ";
+        GotoXY(tx, ty + 1);
+        cout << "                   ";
+    }
+    SetColor();
 }
 
 void UpgradeScene::Update()
 {
+    if (GetKeyDown('T'))
+        skipAnim = !skipAnim;
+
+    if (animState != AnimState::NONE)
+    {
+        ULONGLONG elapsed = GetTickCount64() - animStart;
+        int duration = (animState == AnimState::EXPLODE)
+            ? EXPLODE_DURATION_MS : SLIDE_DURATION_MS;
+
+        if (GetKeyDown('T') || elapsed >= duration)
+        {
+            animState = AnimState::NONE;
+            ClearSwordArea(); 
+        }
+        return; 
+    }
+
     if (GetKeyDown(VK_ESCAPE))
     {
         state.fsm.ChangeState((int)Scene::TITLE);
         return;
     }
 
-    bool showingResult = hasResult &&
-        (GetTickCount64() - resultTime < RESULT_DISPLAY_MS);
-    if (showingResult) return;
-
     if (GetKeyDown(VK_RETURN))
     {
         if (state.curSword.IsMaxTier())              return;
         if (state.gold < state.curSword.upgradeCost) return;
 
+        prevTier = state.curSword.tier;
         state.gold -= state.curSword.upgradeCost;
         lastResult = state.curSword.TryUpgrade();
         hasResult = true;
-        resultTime = GetTickCount64();
 
         if (lastResult == UpgradeResult::BREAK)
             ShakeConsoleWindow(8, 400, 30);
+
+        StartAnim();
     }
 
     if (GetKeyDown('S'))
@@ -53,41 +122,69 @@ void UpgradeScene::Update()
         hasResult = false;
         system("cls");
     }
+
+    if (GetKeyDown('B'))
+    {
+        state.PmsData.storedDamage = state.curSword.damage;
+        state.PmsData.storedTier = state.curSword.tier;
+        state.PmsData.hasStored = true;
+
+        state.curSword = Sword{};
+        system("cls");
+    }
 }
 
 void UpgradeScene::Render() const
 {
     Sword& sw = state.curSword;
 
-    // 타이틀
-    SetColor(Color::WHITE);
-    GotoXY(2, 1);
-    cout << " _  _  _  _  _  _  _  _  _  _ ";
-    GotoXY(2, 2);
-    cout << "| |/ /  / _|| __|  / _|| || ||_|";
-    GotoXY(2, 3);
-    cout << "| / /  | |_ | _|  | |_ | __ | _ ";
-    GotoXY(2, 4);
-    cout << "|_|\\_\\  \\__||___|  \\__||_||_||_|";
+    RenderTitle(2, 1);
 
-    // 검 이름
     string name = "+" + std::to_string(sw.tier) + "  " + GetSwordName(sw.tier);
     int nameX = WIDTH / 2 - (int)name.size() / 2;
     SetColor(Color::WHITE);
     GotoXY(nameX, 2);
     cout << name << "     ";
 
-    // 검 이미지
-    PMSAsciiRender(asciiObjs, sw.tier);
+    if (animState != AnimState::NONE)
+        RenderAnim();
+    else
+        PMSAsciiRender(asciiObjs, sw.tier);
 
-    // 골드
     SetColor(Color::YELLOW);
     GotoXY(INFO_BOX_X, INFO_BOX_Y + INFO_BOX_H + 1);
     cout << "골드: " << state.gold << "G     ";
 
     RenderInfo();
     RenderControl();
+    RenderStored();
     RenderResult();
+}
+
+void UpgradeScene::RenderAnim() const
+{
+    ULONGLONG elapsed = GetTickCount64() - animStart;
+
+    if (animState == AnimState::SLIDE_DOWN)
+    {
+        float t = (float)elapsed / SLIDE_DURATION_MS;
+        if (t > 1.0f) t = 1.0f;
+        int offsetY = (int)(SWORD_HEIGHT * t);
+        PMSAsciiRenderTwoSlide(asciiObjs, prevTier, state.curSword.tier, offsetY, true);
+    }
+    else if (animState == AnimState::SLIDE_UP)
+    {
+        float t = (float)elapsed / SLIDE_DURATION_MS;
+        if (t > 1.0f) t = 1.0f;
+        int offsetY = (int)(SWORD_HEIGHT * t);
+        PMSAsciiRenderTwoSlide(asciiObjs, prevTier, state.curSword.tier, offsetY, false);
+    }
+    else if (animState == AnimState::EXPLODE)
+    {
+        PMSAsciiRenderExplosion(asciiObjs);
+    }
+
+    RenderTitle(2, 1);
 }
 
 void UpgradeScene::RenderInfo() const
@@ -146,31 +243,34 @@ void UpgradeScene::RenderControl() const
     SetColor(Color::WHITE);
     GotoXY(tx, ty);     cout << "[ENTER] 강화하기";
     GotoXY(tx, ty + 1); cout << "[S]     판매하기";
-    GotoXY(tx, ty + 2); cout << "[ESC]   돌아가기";
+    GotoXY(tx, ty + 2); cout << "[B]     보관하기";
+    GotoXY(tx, ty + 3); cout << "[ESC]   돌아가기";
+    GotoXY(tx, ty + 4);
+    if (skipAnim)
+    {
+        SetColor(Color::LIGHT_RED);
+        cout << "[T]     스킵 ON ";
+    }
+    else
+    {
+        SetColor(Color::LIGHT_GREEN);
+        cout << "[T]     스킵 OFF";
+    }
 }
 
 void UpgradeScene::RenderResult() const
 {
     if (!hasResult) return;
 
-    bool showingResult = (GetTickCount64() - resultTime < RESULT_DISPLAY_MS);
-
     int rx = CTRL_BOX_X + 2;
     int ry = CTRL_BOX_Y + CTRL_BOX_H + 1;
 
     GotoXY(rx, ry);
-    if (!showingResult)
-    {
-        SetColor(Color::WHITE);
-        cout << "                        ";
-        return;
-    }
-
     switch (lastResult)
     {
     case UpgradeResult::SUCCESS:
         SetColor(Color::LIGHT_GREEN);
-        cout << "★ 강화 성공! +" << state.curSword.tier << " ★";
+        cout << "★ 강화 성공! +" << state.curSword.tier << " ★      ";
         break;
     case UpgradeResult::DOWN:
         SetColor(Color::LIGHT_YELLOW);

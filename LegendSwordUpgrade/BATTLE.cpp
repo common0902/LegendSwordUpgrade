@@ -13,6 +13,7 @@ void BattleScene::Init()
 {
 	fsm.AddState(BattleSceneEnum::Stage, new BattleSceneStageState(*this));
 	fsm.AddState(BattleSceneEnum::Battle, new BattleSceneBattleState(*this));
+	fsm.AddState(BattleSceneEnum::Clear, new BattleSceneClearState(*this));
 }
 
 void BattleScene::Enter()
@@ -63,12 +64,17 @@ ULONGLONG GetDeltaTime(ULONGLONG lastTime)
 	return GetTickCount64() - lastTime;
 }
 
+std::map<int, ULONGLONG> lastDelayTimeDict;
+
+ULONGLONG GetDelayDeltaTime(int type)
+{
+	return GetDeltaTime(lastDelayTimeDict[type]);;
+}
+
 bool Delay(int type,ULONGLONG delay)
 {
-	static std::map<int, ULONGLONG> lastTimeDict;
-	ULONGLONG delta = GetDeltaTime(lastTimeDict[type]);
-	if (delta < delay) return false;
-	lastTimeDict[type] = GetTickCount64();
+	if (GetDelayDeltaTime(type) < delay) return false;
+	lastDelayTimeDict[type] = GetTickCount64();
 	return true;
 }
 
@@ -347,6 +353,38 @@ bool GetAfterValue(int key)
 	return AfterValueMap[key] >= GetTickCount64();
 }
 
+void SetConsolePos(int x, int y)
+{
+	HWND hWnd = GetConsoleWindow();
+	RECT rt = {};
+
+	GetWindowRect(hWnd, &rt);
+
+	int originX = rt.left;
+	int originY = rt.top;
+
+	SetWindowPos(hWnd, nullptr,
+		originX + x,
+		originY + y, 0, 0, SWP_NOSIZE);
+}
+void SetConsolePos(Vector2 vec)
+{
+	SetConsolePos(vec.x, vec.y);
+}
+Vector2 GetRandomPos(int power)
+{
+	int offsetX = rand() % (2 * power + 1) - power;
+	int offsetY = rand() % (2 * power + 1) - power;
+
+	return Vector2(offsetX, offsetY);
+}
+void ConsoleShake(int power, int delay)
+{
+	Vector2 vec = GetRandomPos(power);
+	SetConsolePos(vec);
+	Sleep(delay);
+	SetConsolePos(vec * -1);
+}
 #pragma endregion
 
 

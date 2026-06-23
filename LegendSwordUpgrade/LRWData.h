@@ -37,6 +37,10 @@ public:
 	{
 		return Vector2{ x * p.x,y * p.y };
 	}
+	Vector2 operator* (int p)
+	{
+		return Vector2{ x * p,y * p };
+	}
 	Vector2 operator/ (int p)
 	{
 		return Vector2{ x / p, y / p };

@@ -37,6 +37,7 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="UPGRADE.cpp" />
     <ClCompile Include="UpgradeAsciiArt.cpp" />
+    <ClCompile Include="Win.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractState.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="UPGRADE.h" />
     <ClInclude Include="UpgradeAsciiArt.h" />
+    <ClInclude Include="Win.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="LegendSwordUpgrade.rc" />
