@@ -160,10 +160,7 @@ void BattleSceneBattleState::Update()
 void BattleSceneBattleState::Render() const
 {
 
-#pragma region Health
-	GotoXY(EnemyHealthBarPos + Vector2(0,-1));
-	string enemyNameText = CenterText(enemy->name,EnemyHelathBarSize*2);
-	cout << enemyNameText;
+#pragma region EnemyHealth
 
 	string barText = GetBarString(enemy->curHp, enemy->maxHp, EnemyHelathBarSize);
 	Color barColor = GetHealthColor(enemy->curHp, enemy->maxHp);
@@ -171,9 +168,19 @@ void BattleSceneBattleState::Render() const
 	GotoXY(EnemyHealthBarPos);
 	SetColor(barColor);
 	cout << barText;
+
 #pragma endregion
 
-#pragma region Enemy
+#pragma region EnemyName
+
+	SetColor();
+	GotoXY(EnemyHealthBarPos + Vector2(0, -1));
+	string enemyNameText = CenterText(enemy->name, EnemyHelathBarSize * 2);
+	cout << enemyNameText;
+
+#pragma endregion
+
+#pragma region EnemyImage
 
 	SetColor(GetAfterValue(BattleAfterType::EnemyHit) ? Color::RED : Color::WHITE);
 	DrawImage(enemy->image, curEnemyDrawPos);
@@ -195,13 +202,11 @@ void BattleSceneBattleState::Render() const
 
 #pragma endregion
 
-
 }
 
 void BattleSceneBattleState::Exit()
 {
 	CLS();
-
 }
 
 void BattleSceneBattleState::SetEnemyData()
@@ -223,7 +228,7 @@ void BattleSceneBattleState::SetEnemyData()
 	else if (curStage == 2)
 	{
 		a = new Enemy("오크", image, 200, 50, 1);
-		curEnemyDrawPos += Vector2(0, 0);
+		curEnemyDrawPos += Vector2(0, 5);
 	}
 	else if (curStage == 3)
 	{
